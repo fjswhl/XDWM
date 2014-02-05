@@ -13,14 +13,14 @@
 		3E97675C18A1299800AE48D3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3E97675A18A1299800AE48D3 /* InfoPlist.strings */; };
 		3E97675E18A1299800AE48D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E97675D18A1299800AE48D3 /* main.m */; };
 		3E97676218A1299800AE48D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E97676118A1299800AE48D3 /* AppDelegate.m */; };
-		3E97676518A1299800AE48D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E97676318A1299800AE48D3 /* Main.storyboard */; };
 		3E97676A18A1299800AE48D3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E97676918A1299800AE48D3 /* Images.xcassets */; };
 		3E97677118A1299800AE48D3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E97677018A1299800AE48D3 /* XCTest.framework */; };
 		3E97677218A1299800AE48D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E97675118A1299800AE48D3 /* Foundation.framework */; };
 		3E97677318A1299800AE48D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E97675518A1299800AE48D3 /* UIKit.framework */; };
 		3E97677B18A1299900AE48D3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3E97677918A1299900AE48D3 /* InfoPlist.strings */; };
 		3E97677D18A1299900AE48D3 /* XDWMTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E97677C18A1299900AE48D3 /* XDWMTests.m */; };
-		3E97678818A13B6000AE48D3 /* LINOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E97678718A13B6000AE48D3 /* LINOrderViewController.m */; };
+		3ECAF93418A25EBF007D3ECE /* LINOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ECAF93318A25EBF007D3ECE /* LINOrderViewController.m */; };
+		3ECAF93918A26304007D3ECE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3ECAF93818A26304007D3ECE /* Main.storyboard */; };
 		3ECED71218A14CB6007B3FC8 /* LINPickFoodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ECED71118A14CB6007B3FC8 /* LINPickFoodViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -45,7 +45,6 @@
 		3E97675F18A1299800AE48D3 /* XDWM-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XDWM-Prefix.pch"; sourceTree = "<group>"; };
 		3E97676018A1299800AE48D3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3E97676118A1299800AE48D3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		3E97676418A1299800AE48D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3E97676918A1299800AE48D3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3E97676F18A1299800AE48D3 /* XDWMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XDWMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E97677018A1299800AE48D3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -53,7 +52,8 @@
 		3E97677A18A1299900AE48D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3E97677C18A1299900AE48D3 /* XDWMTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XDWMTests.m; sourceTree = "<group>"; };
 		3E97678618A13B6000AE48D3 /* LINOrderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINOrderViewController.h; sourceTree = "<group>"; };
-		3E97678718A13B6000AE48D3 /* LINOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINOrderViewController.m; sourceTree = "<group>"; };
+		3ECAF93318A25EBF007D3ECE /* LINOrderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINOrderViewController.m; sourceTree = "<group>"; };
+		3ECAF93818A26304007D3ECE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3ECED71018A14CB6007B3FC8 /* LINPickFoodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINPickFoodViewController.h; sourceTree = "<group>"; };
 		3ECED71118A14CB6007B3FC8 /* LINPickFoodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINPickFoodViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,11 +117,11 @@
 			children = (
 				3E97676018A1299800AE48D3 /* AppDelegate.h */,
 				3E97676118A1299800AE48D3 /* AppDelegate.m */,
-				3E97676318A1299800AE48D3 /* Main.storyboard */,
+				3ECAF93818A26304007D3ECE /* Main.storyboard */,
 				3E97676918A1299800AE48D3 /* Images.xcassets */,
 				3E97675818A1299800AE48D3 /* Supporting Files */,
 				3E97678618A13B6000AE48D3 /* LINOrderViewController.h */,
-				3E97678718A13B6000AE48D3 /* LINOrderViewController.m */,
+				3ECAF93318A25EBF007D3ECE /* LINOrderViewController.m */,
 				3ECED71018A14CB6007B3FC8 /* LINPickFoodViewController.h */,
 				3ECED71118A14CB6007B3FC8 /* LINPickFoodViewController.m */,
 			);
@@ -237,8 +237,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E97676A18A1299800AE48D3 /* Images.xcassets in Resources */,
+				3ECAF93918A26304007D3ECE /* Main.storyboard in Resources */,
 				3E97675C18A1299800AE48D3 /* InfoPlist.strings in Resources */,
-				3E97676518A1299800AE48D3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,10 +257,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E97678818A13B6000AE48D3 /* LINOrderViewController.m in Sources */,
 				3E97676218A1299800AE48D3 /* AppDelegate.m in Sources */,
 				3E97675E18A1299800AE48D3 /* main.m in Sources */,
 				3ECED71218A14CB6007B3FC8 /* LINPickFoodViewController.m in Sources */,
+				3ECAF93418A25EBF007D3ECE /* LINOrderViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,14 +289,6 @@
 				3E97675B18A1299800AE48D3 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		3E97676318A1299800AE48D3 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3E97676418A1299800AE48D3 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		3E97677918A1299900AE48D3 /* InfoPlist.strings */ = {

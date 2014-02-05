@@ -12,5 +12,5 @@
 
 @property (strong, nonatomic) NSArray *foodList;
 
-@property (nonatomic) NSInteger kFoodKindIndex;
+@property (nonatomic) NSInteger foodKindIndex;
 @end
