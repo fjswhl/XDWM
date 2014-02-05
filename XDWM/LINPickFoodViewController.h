@@ -11,5 +11,6 @@
 @interface LINPickFoodViewController : UITableViewController
 
 @property (strong, nonatomic) NSArray *foodList;
+
 @property (nonatomic) NSInteger kFoodKindIndex;
 @end
