@@ -33,14 +33,7 @@
     
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-    if (self.tabBarController.tabBar.hidden == YES) {
-            [self.tabBarController.tabBar setHidden:NO];
 
-    }
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -85,9 +78,6 @@
 //    UILabel *titleLabel = (UILabel *)[cell.contentView viewWithTag:1];
     
     self.kFoodKindIndex = indexPath.row + 1;
-    [UIView animateWithDuration:0.5f animations:^{
-        [self.tabBarController.tabBar setHidden:YES];
-    }];
     
     [self performSegueWithIdentifier:@"performFoodSegue" sender:self];
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];

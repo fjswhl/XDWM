@@ -7,6 +7,12 @@
 //
 
 #import "LINPickFoodViewController.h"
+#import "UIImageView+WebCache.h"
+
+//服务器上执行脚本的主目录
+#define __PHPDIR__ @"waibao/ordermeal/ios_end/"
+//图片存储目录
+#define __IMGDIR__ @"http://192.168.1.100/waibao/ordermeal/shop/assets/default/img/"
 
 @interface LINPickFoodViewController ()
 
@@ -26,13 +32,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.foodList = [NSMutableArray new];
+    [self fetchGoodsInfo];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.foodList = [NSArray arrayWithObjects:@"fsadf",@"fsadf", nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,67 +63,81 @@
     return [self.foodList count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 96;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [UITableViewCell new];
-    }
-    // Configure the cell...
     
+    UILabel *label = (UILabel *)[cell.contentView viewWithTag:4];
+    label.layer.borderColor = [UIColor redColor].CGColor;
+    label.layer.borderWidth = 1.5;
+    label.layer.cornerRadius = 6;
+    
+    
+    
+    UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:1];
+    UILabel *title = (UILabel *)[cell.contentView viewWithTag:2];
+    UILabel *price = (UILabel *)[cell.contentView viewWithTag:3];
+    
+    LINGoodModel *good = self.foodList[indexPath.row];
+    NSString *imgName = [good goodImg];
+    [img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, imgName]]];
+    title.text = good.goodName;
+    price.text = good.goodPrice;
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)fetchGoodsInfo{
+    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:@"192.168.1.100:80"];
+    NSString *index = [NSString stringWithFormat:@"%i", self.foodKindIndex];
+    NSDictionary *infoDic = @{@"key": index};
+    
+    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"fetchgood.php"] params:infoDic httpMethod:@"POST"];
+    
+    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+        NSData *reData = [completedOperation responseData];
+        NSString *st = [[NSString alloc] initWithData:reData encoding:enc];
+
+        NSDictionary *goodInfo = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+        
+        //下面将获取的数据写入模型
+        NSArray *keys = [goodInfo allKeys];
+        for (NSString *key in keys) {
+            NSDictionary *aGood = [goodInfo objectForKey:key];
+            LINGoodModel *aGoodModel = [[LINGoodModel alloc] initWithDictionary:aGood];
+            [self.foodList addObject:aGoodModel];
+        }
+        [self.tableView reloadData];
+    } errorHandler:nil];
+    
+    [engine enqueueOperation:op];
+    
+
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

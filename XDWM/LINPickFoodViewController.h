@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LINGoodModel.h"
+#import "MKNetworkEngine.h"
+#import "MKNetworkOperation.h"
 @interface LINPickFoodViewController : UITableViewController
 
-@property (strong, nonatomic) NSArray *foodList;
-
+@property (strong, nonatomic) NSMutableArray *foodList;
 @property (nonatomic) NSInteger foodKindIndex;
+
 @end

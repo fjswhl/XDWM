@@ -7,12 +7,27 @@
 //
 
 #import "AppDelegate.h"
-
+#import "MKNetworkEngine.h"
+#import "MKNetworkOperation.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:@"192.168.1.100:80"];
+    NSDictionary *dic = @{@"key1": @"test1", @"key2":@"test2"};
+    MKNetworkOperation *op = [engine operationWithPath:@"test.php" params:dic httpMethod:@"POST"];
+    [engine enqueueOperation:op];
+    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+                NSLog(@"%@", [completedOperation responseString]);
+    } errorHandler:nil];
+//    [op onCompletion:^(MKNetworkOperation *completedOperation) {
+//        NSLog(@"%@", [completedOperation responseString]);
+//    } onError:^(NSError *error) {
+//        NSLog(@"error");
+//    }];
+    
+    NSLog(@"%@", [op responseString]);
     return YES;
 }
 							
