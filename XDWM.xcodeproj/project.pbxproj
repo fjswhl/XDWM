@@ -47,6 +47,8 @@
 		3ED2AFDB18A652B0001AE706 /* UIImage+MultiFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2AFCB18A652B0001AE706 /* UIImage+MultiFormat.m */; };
 		3ED2AFDC18A652B0001AE706 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2AFCD18A652B0001AE706 /* UIImage+WebP.m */; };
 		3ED2AFDD18A652B0001AE706 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2AFCF18A652B0001AE706 /* UIImageView+WebCache.m */; };
+		3ED2AFE118A65FA9001AE706 /* LINUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2AFE018A65FA9001AE706 /* LINUserModel.m */; };
+		3ED2AFE418A661DB001AE706 /* LINOrderList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2AFE318A661DB001AE706 /* LINOrderList.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +135,10 @@
 		3ED2AFCD18A652B0001AE706 /* UIImage+WebP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WebP.m"; sourceTree = "<group>"; };
 		3ED2AFCE18A652B0001AE706 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		3ED2AFCF18A652B0001AE706 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
+		3ED2AFDF18A65FA9001AE706 /* LINUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINUserModel.h; sourceTree = "<group>"; };
+		3ED2AFE018A65FA9001AE706 /* LINUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINUserModel.m; sourceTree = "<group>"; };
+		3ED2AFE218A661DB001AE706 /* LINOrderList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINOrderList.h; sourceTree = "<group>"; };
+		3ED2AFE318A661DB001AE706 /* LINOrderList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINOrderList.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,17 +200,13 @@
 		3E97675718A1299800AE48D3 /* XDWM */ = {
 			isa = PBXGroup;
 			children = (
+				3ED2AFE518A66385001AE706 /* Lin's Module */,
+				3ED2AFDE18A65F78001AE706 /* Model */,
 				3E97676018A1299800AE48D3 /* AppDelegate.h */,
 				3E97676118A1299800AE48D3 /* AppDelegate.m */,
 				3ECAF93818A26304007D3ECE /* Main.storyboard */,
 				3E97676918A1299800AE48D3 /* Images.xcassets */,
 				3E97675818A1299800AE48D3 /* Supporting Files */,
-				3E97678618A13B6000AE48D3 /* LINOrderViewController.h */,
-				3ECAF93318A25EBF007D3ECE /* LINOrderViewController.m */,
-				3ECED71018A14CB6007B3FC8 /* LINPickFoodViewController.h */,
-				3ECED71118A14CB6007B3FC8 /* LINPickFoodViewController.m */,
-				3ED2AFAF18A62156001AE706 /* LINGoodModel.h */,
-				3ED2AFB018A62156001AE706 /* LINGoodModel.m */,
 			);
 			path = XDWM;
 			sourceTree = "<group>";
@@ -318,6 +320,30 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
+		3ED2AFDE18A65F78001AE706 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3ED2AFAF18A62156001AE706 /* LINGoodModel.h */,
+				3ED2AFB018A62156001AE706 /* LINGoodModel.m */,
+				3ED2AFDF18A65FA9001AE706 /* LINUserModel.h */,
+				3ED2AFE018A65FA9001AE706 /* LINUserModel.m */,
+				3ED2AFE218A661DB001AE706 /* LINOrderList.h */,
+				3ED2AFE318A661DB001AE706 /* LINOrderList.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		3ED2AFE518A66385001AE706 /* Lin's Module */ = {
+			isa = PBXGroup;
+			children = (
+				3E97678618A13B6000AE48D3 /* LINOrderViewController.h */,
+				3ECAF93318A25EBF007D3ECE /* LINOrderViewController.m */,
+				3ECED71018A14CB6007B3FC8 /* LINPickFoodViewController.h */,
+				3ECED71118A14CB6007B3FC8 /* LINPickFoodViewController.m */,
+			);
+			name = "Lin's Module";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -424,6 +450,7 @@
 				3ED2AFA918A61679001AE706 /* NSString+MKNetworkKitAdditions.m in Sources */,
 				3ED2AFD218A652B0001AE706 /* SDImageCache.m in Sources */,
 				3ED2AFD018A652B0001AE706 /* MKAnnotationView+WebCache.m in Sources */,
+				3ED2AFE118A65FA9001AE706 /* LINUserModel.m in Sources */,
 				3ED2AFA518A61679001AE706 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				3ED2AFDB18A652B0001AE706 /* UIImage+MultiFormat.m in Sources */,
 				3E97676218A1299800AE48D3 /* AppDelegate.m in Sources */,
@@ -447,6 +474,7 @@
 				3ED2AFDD18A652B0001AE706 /* UIImageView+WebCache.m in Sources */,
 				3ED2AFD518A652B0001AE706 /* SDWebImageDownloader.m in Sources */,
 				3ED2AFA618A61679001AE706 /* NSData+MKBase64.m in Sources */,
+				3ED2AFE418A661DB001AE706 /* LINOrderList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

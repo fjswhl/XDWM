@@ -15,6 +15,7 @@
 #define __GOODINTRO__   @"goods_introduce"
 #define __GOODPIC__     @"goods_big_img"
 #define __GOODCTIME__   @"goods_create_time"
+
 @interface LINGoodModel : NSObject
 @property (strong, nonatomic) NSString *goodName;
 @property (strong, nonatomic) NSString *goodHotel;
