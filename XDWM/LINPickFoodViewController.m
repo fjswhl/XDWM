@@ -9,6 +9,7 @@
 #import "LINPickFoodViewController.h"
 #import "UIImageView+WebCache.h"
 #import "ADDRMACRO.h"
+#import "CXAlertView.h"
 
 @interface LINPickFoodViewController ()
 
@@ -133,6 +134,8 @@
 
 - (void)buy{
     NSLog(@"I wannna buy");
+    
+    
 }
 
 @end

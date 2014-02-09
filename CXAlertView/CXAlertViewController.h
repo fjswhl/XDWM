@@ -13,6 +13,4 @@
 
 @property (nonatomic, strong) CXAlertView *alertView;
 
-@property (nonatomic, assign) BOOL rootViewControllerPrefersStatusBarHidden;
-
 @end
