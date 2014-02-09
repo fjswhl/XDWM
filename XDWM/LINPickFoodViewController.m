@@ -10,9 +10,10 @@
 #import "UIImageView+WebCache.h"
 
 //服务器上执行脚本的主目录
-#define __PHPDIR__ @"waibao/ordermeal/ios_end/"
+#define __HOSTNAME__    @"192.168.1.100"
+#define __PHPDIR__      @"waibao/ordermeal/ios_end/"
 //图片存储目录
-#define __IMGDIR__ @"http://192.168.1.100/waibao/ordermeal/shop/assets/default/img/"
+#define __IMGDIR__      @"http://192.168.1.100/waibao/ordermeal/shop/assets/default/img/"
 
 @interface LINPickFoodViewController ()
 
@@ -77,8 +78,6 @@
     label.layer.borderWidth = 1.5;
     label.layer.cornerRadius = 6;
     
-    
-    
     UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:1];
     UILabel *title = (UILabel *)[cell.contentView viewWithTag:2];
     UILabel *price = (UILabel *)[cell.contentView viewWithTag:3];
@@ -88,11 +87,28 @@
     [img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, imgName]]];
     title.text = good.goodName;
     price.text = good.goodPrice;
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buy)];
+    [label addGestureRecognizer:tapGestureRecognizer];
+    
+    if (indexPath.row % 2 == 0) {
+        cell.contentView.backgroundColor = [UIColor colorWithRed:255/255.0 green:248/255.0 blue:220/255.0 alpha:1.0];
+    }
+    if (indexPath.row % 2 == 1) {
+        cell.contentView.backgroundColor = [UIColor whiteColor];
+    }
     return cell;
 }
 
+#pragma mark - tableview delegate
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    return nil;
+}
+
+#pragma mark - interaction method
+
 - (void)fetchGoodsInfo{
-    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:@"192.168.1.100:80"];
+    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
     NSString *index = [NSString stringWithFormat:@"%i", self.foodKindIndex];
     NSDictionary *infoDic = @{@"key": index};
     
@@ -118,6 +134,10 @@
     [engine enqueueOperation:op];
     
 
+}
+
+- (void)buy{
+    NSLog(@"I wannna buy");
 }
 
 @end

@@ -16,6 +16,7 @@
 #define __USERADDR__        @"user_add";
 #define __USERLOUHAO__      @"user_louhao";
 #define __USERSUSHEHAO__    @"user_sushehao";
+#define __USERQUHAO__       @"user_quhao";
 #define __USERZUOYOU__      @"user_zuoyou";
 #define __USERPOINT__       @"user_point";
 

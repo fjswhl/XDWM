@@ -21,11 +21,6 @@
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
                 NSLog(@"%@", [completedOperation responseString]);
     } errorHandler:nil];
-//    [op onCompletion:^(MKNetworkOperation *completedOperation) {
-//        NSLog(@"%@", [completedOperation responseString]);
-//    } onError:^(NSError *error) {
-//        NSLog(@"error");
-//    }];
     
     NSLog(@"%@", [op responseString]);
     return YES;
