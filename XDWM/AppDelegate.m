@@ -9,14 +9,17 @@
 #import "AppDelegate.h"
 #import "MKNetworkEngine.h"
 #import "MKNetworkOperation.h"
+
+#import "ADDRMACRO.h"
+#include "LINUserModel.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
     MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:@"192.168.1.100:80"];
-    NSDictionary *dic = @{@"key1": @"test1", @"key2":@"test2"};
-    MKNetworkOperation *op = [engine operationWithPath:@"test.php" params:dic httpMethod:@"POST"];
+    NSDictionary *dic = @{__USERNAME__: @"test"};
+    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__, @"user_register.php"] params:dic httpMethod:@"POST"];
     [engine enqueueOperation:op];
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
                 NSLog(@"%@", [completedOperation responseString]);
