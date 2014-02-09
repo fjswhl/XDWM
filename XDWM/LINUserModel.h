@@ -8,17 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-#define __USERNAME__        @"username";
-#define __PASSWORD__        @"password";
-#define __USERSEX__         @"user_sex";
-#define __USEREMAIL__       @"user_email";
-#define __USERTEL__         @"user_tel";
-#define __USERADDR__        @"user_add";
-#define __USERLOUHAO__      @"user_louhao";
-#define __USERSUSHEHAO__    @"user_sushehao";
-#define __USERQUHAO__       @"user_quhao";
-#define __USERZUOYOU__      @"user_zuoyou";
-#define __USERPOINT__       @"user_point";
+#define __USERNAME__        @"username"
+#define __PASSWORD__        @"password"
+#define __USERSEX__         @"user_sex"
+#define __USEREMAIL__       @"user_email"
+#define __USERTEL__         @"user_tel"
+#define __USERADDR__        @"user_add"
+#define __USERLOUHAO__      @"user_louhao"
+#define __USERSUSHEHAO__    @"user_sushehao"
+#define __USERQUHAO__       @"user_quhao"
+#define __USERZUOYOU__      @"user_zuoyou"
+#define __USERPOINT__       @"user_point"
 
 @interface LINUserModel : NSObject
 

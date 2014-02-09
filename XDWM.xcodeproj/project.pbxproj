@@ -151,6 +151,7 @@
 		3ED2AFE918A6909B001AE706 /* 公告.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "公告.png"; sourceTree = "<group>"; };
 		3ED2AFEA18A6909B001AE706 /* 记录.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "记录.png"; sourceTree = "<group>"; };
 		3ED2AFEB18A6909B001AE706 /* 留言.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "留言.png"; sourceTree = "<group>"; };
+		3ED2AFF218A76B8D001AE706 /* ADDRMACRO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADDRMACRO.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,6 +342,7 @@
 		3ED2AFDE18A65F78001AE706 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3ED2AFF218A76B8D001AE706 /* ADDRMACRO.h */,
 				3ED2AFAF18A62156001AE706 /* LINGoodModel.h */,
 				3ED2AFB018A62156001AE706 /* LINGoodModel.m */,
 				3ED2AFDF18A65FA9001AE706 /* LINUserModel.h */,

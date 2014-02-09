@@ -8,12 +8,7 @@
 
 #import "LINPickFoodViewController.h"
 #import "UIImageView+WebCache.h"
-
-//服务器上执行脚本的主目录
-#define __HOSTNAME__    @"192.168.1.100"
-#define __PHPDIR__      @"waibao/ordermeal/ios_end/"
-//图片存储目录
-#define __IMGDIR__      @"http://192.168.1.100/waibao/ordermeal/shop/assets/default/img/"
+#import "ADDRMACRO.h"
 
 @interface LINPickFoodViewController ()
 
