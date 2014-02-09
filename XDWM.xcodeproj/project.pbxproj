@@ -56,6 +56,11 @@
 		3ED2AFF018A6909B001AE706 /* 记录.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ED2AFEA18A6909B001AE706 /* 记录.png */; };
 		3ED2AFF118A6909B001AE706 /* 留言.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ED2AFEB18A6909B001AE706 /* 留言.png */; };
 		3ED2AFF818A77C84001AE706 /* LINRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2AFF718A77C84001AE706 /* LINRootViewController.m */; };
+		3ED2B00418A77F41001AE706 /* CXAlertBackgroundWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2AFFB18A77F41001AE706 /* CXAlertBackgroundWindow.m */; };
+		3ED2B00518A77F41001AE706 /* CXAlertButtonContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2AFFD18A77F41001AE706 /* CXAlertButtonContainerView.m */; };
+		3ED2B00618A77F41001AE706 /* CXAlertButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2AFFF18A77F41001AE706 /* CXAlertButtonItem.m */; };
+		3ED2B00718A77F41001AE706 /* CXAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2B00118A77F41001AE706 /* CXAlertView.m */; };
+		3ED2B00818A77F41001AE706 /* CXAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2B00318A77F41001AE706 /* CXAlertViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +160,16 @@
 		3ED2AFF218A76B8D001AE706 /* ADDRMACRO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADDRMACRO.h; sourceTree = "<group>"; };
 		3ED2AFF618A77C84001AE706 /* LINRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LINRootViewController.h; path = ../LINRootViewController.h; sourceTree = "<group>"; };
 		3ED2AFF718A77C84001AE706 /* LINRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LINRootViewController.m; path = ../LINRootViewController.m; sourceTree = "<group>"; };
+		3ED2AFFA18A77F41001AE706 /* CXAlertBackgroundWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXAlertBackgroundWindow.h; sourceTree = "<group>"; };
+		3ED2AFFB18A77F41001AE706 /* CXAlertBackgroundWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXAlertBackgroundWindow.m; sourceTree = "<group>"; };
+		3ED2AFFC18A77F41001AE706 /* CXAlertButtonContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXAlertButtonContainerView.h; sourceTree = "<group>"; };
+		3ED2AFFD18A77F41001AE706 /* CXAlertButtonContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXAlertButtonContainerView.m; sourceTree = "<group>"; };
+		3ED2AFFE18A77F41001AE706 /* CXAlertButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXAlertButtonItem.h; sourceTree = "<group>"; };
+		3ED2AFFF18A77F41001AE706 /* CXAlertButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXAlertButtonItem.m; sourceTree = "<group>"; };
+		3ED2B00018A77F41001AE706 /* CXAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXAlertView.h; sourceTree = "<group>"; };
+		3ED2B00118A77F41001AE706 /* CXAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXAlertView.m; sourceTree = "<group>"; };
+		3ED2B00218A77F41001AE706 /* CXAlertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXAlertViewController.h; sourceTree = "<group>"; };
+		3ED2B00318A77F41001AE706 /* CXAlertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXAlertViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +218,7 @@
 		3E97675018A1299800AE48D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3ED2AFF918A77F41001AE706 /* CXAlertView */,
 				3ED2AFB218A652B0001AE706 /* SDWebImage */,
 				3ED2AF8D18A61679001AE706 /* MKNetworkKit */,
 				3E97675118A1299800AE48D3 /* Foundation.framework */,
@@ -369,6 +385,23 @@
 			name = "Lin's Module";
 			sourceTree = "<group>";
 		};
+		3ED2AFF918A77F41001AE706 /* CXAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				3ED2AFFA18A77F41001AE706 /* CXAlertBackgroundWindow.h */,
+				3ED2AFFB18A77F41001AE706 /* CXAlertBackgroundWindow.m */,
+				3ED2AFFC18A77F41001AE706 /* CXAlertButtonContainerView.h */,
+				3ED2AFFD18A77F41001AE706 /* CXAlertButtonContainerView.m */,
+				3ED2AFFE18A77F41001AE706 /* CXAlertButtonItem.h */,
+				3ED2AFFF18A77F41001AE706 /* CXAlertButtonItem.m */,
+				3ED2B00018A77F41001AE706 /* CXAlertView.h */,
+				3ED2B00118A77F41001AE706 /* CXAlertView.m */,
+				3ED2B00218A77F41001AE706 /* CXAlertViewController.h */,
+				3ED2B00318A77F41001AE706 /* CXAlertViewController.m */,
+			);
+			path = CXAlertView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -477,6 +510,7 @@
 			files = (
 				3ED2AFDA18A652B0001AE706 /* UIImage+GIF.m in Sources */,
 				3ED2AFD718A652B0001AE706 /* SDWebImageManager.m in Sources */,
+				3ED2B00718A77F41001AE706 /* CXAlertView.m in Sources */,
 				3ED2AFD618A652B0001AE706 /* SDWebImageDownloaderOperation.m in Sources */,
 				3ED2AFA918A61679001AE706 /* NSString+MKNetworkKitAdditions.m in Sources */,
 				3ED2AFD218A652B0001AE706 /* SDImageCache.m in Sources */,
@@ -487,8 +521,10 @@
 				3E97676218A1299800AE48D3 /* AppDelegate.m in Sources */,
 				3ED2AFAD18A61679001AE706 /* MKNetworkOperation.m in Sources */,
 				3ED2AFAA18A61679001AE706 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,
+				3ED2B00418A77F41001AE706 /* CXAlertBackgroundWindow.m in Sources */,
 				3ED2AFDC18A652B0001AE706 /* UIImage+WebP.m in Sources */,
 				3ED2AFD818A652B0001AE706 /* SDWebImagePrefetcher.m in Sources */,
+				3ED2B00818A77F41001AE706 /* CXAlertViewController.m in Sources */,
 				3ED2AFAC18A61679001AE706 /* MKNetworkEngine.m in Sources */,
 				3ED2AFA718A61679001AE706 /* NSDate+RFC1123.m in Sources */,
 				3ED2AFA818A61679001AE706 /* NSDictionary+RequestEncoding.m in Sources */,
@@ -496,12 +532,14 @@
 				3ED2AFD118A652B0001AE706 /* NSData+ImageContentType.m in Sources */,
 				3ED2AFD418A652B0001AE706 /* SDWebImageDecoder.m in Sources */,
 				3ED2AFAB18A61679001AE706 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
+				3ED2B00518A77F41001AE706 /* CXAlertButtonContainerView.m in Sources */,
 				3ED2AFD918A652B0001AE706 /* UIButton+WebCache.m in Sources */,
 				3E97675E18A1299800AE48D3 /* main.m in Sources */,
 				3ED2AFAE18A61679001AE706 /* Reachability.m in Sources */,
 				3ED2AFF818A77C84001AE706 /* LINRootViewController.m in Sources */,
 				3ECED71218A14CB6007B3FC8 /* LINPickFoodViewController.m in Sources */,
 				3ECAF93418A25EBF007D3ECE /* LINOrderViewController.m in Sources */,
+				3ED2B00618A77F41001AE706 /* CXAlertButtonItem.m in Sources */,
 				3ED2AFB118A62156001AE706 /* LINGoodModel.m in Sources */,
 				3ED2AFDD18A652B0001AE706 /* UIImageView+WebCache.m in Sources */,
 				3ED2AFD518A652B0001AE706 /* SDWebImageDownloader.m in Sources */,
