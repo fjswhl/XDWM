@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "LINUserModel.h"
-@interface LINRootViewController : UITableViewController
-
-@property (nonatomic, strong)   LINUserModel *user;
+@interface LINRootViewController : UITabBarController
+@property (strong, nonatomic) LINUserModel *user;
 @end

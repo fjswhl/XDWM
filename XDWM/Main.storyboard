@@ -139,10 +139,10 @@
             </objects>
             <point key="canvasLocation" x="1278" y="156"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Root View Controller-->
         <scene sceneID="GSb-WX-q4Q">
             <objects>
-                <tabBarController definesPresentationContext="YES" id="7Nj-nm-hGh" sceneMemberID="viewController">
+                <tabBarController definesPresentationContext="YES" id="7Nj-nm-hGh" customClass="LINRootViewController" sceneMemberID="viewController">
                     <keyCommands/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="nvc-ud-pI1">

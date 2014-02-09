@@ -55,7 +55,7 @@
 		3ED2AFEF18A6909B001AE706 /* 公告.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ED2AFE918A6909B001AE706 /* 公告.png */; };
 		3ED2AFF018A6909B001AE706 /* 记录.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ED2AFEA18A6909B001AE706 /* 记录.png */; };
 		3ED2AFF118A6909B001AE706 /* 留言.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ED2AFEB18A6909B001AE706 /* 留言.png */; };
-		3ED2AFF518A77BF5001AE706 /* LINRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2AFF418A77BF5001AE706 /* LINRootViewController.m */; };
+		3ED2AFF818A77C84001AE706 /* LINRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2AFF718A77C84001AE706 /* LINRootViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,8 +153,8 @@
 		3ED2AFEA18A6909B001AE706 /* 记录.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "记录.png"; sourceTree = "<group>"; };
 		3ED2AFEB18A6909B001AE706 /* 留言.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "留言.png"; sourceTree = "<group>"; };
 		3ED2AFF218A76B8D001AE706 /* ADDRMACRO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADDRMACRO.h; sourceTree = "<group>"; };
-		3ED2AFF318A77BF5001AE706 /* LINRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINRootViewController.h; sourceTree = "<group>"; };
-		3ED2AFF418A77BF5001AE706 /* LINRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINRootViewController.m; sourceTree = "<group>"; };
+		3ED2AFF618A77C84001AE706 /* LINRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LINRootViewController.h; path = ../LINRootViewController.h; sourceTree = "<group>"; };
+		3ED2AFF718A77C84001AE706 /* LINRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LINRootViewController.m; path = ../LINRootViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -359,12 +359,12 @@
 		3ED2AFE518A66385001AE706 /* Lin's Module */ = {
 			isa = PBXGroup;
 			children = (
+				3ED2AFF618A77C84001AE706 /* LINRootViewController.h */,
+				3ED2AFF718A77C84001AE706 /* LINRootViewController.m */,
 				3E97678618A13B6000AE48D3 /* LINOrderViewController.h */,
 				3ECAF93318A25EBF007D3ECE /* LINOrderViewController.m */,
 				3ECED71018A14CB6007B3FC8 /* LINPickFoodViewController.h */,
 				3ECED71118A14CB6007B3FC8 /* LINPickFoodViewController.m */,
-				3ED2AFF318A77BF5001AE706 /* LINRootViewController.h */,
-				3ED2AFF418A77BF5001AE706 /* LINRootViewController.m */,
 			);
 			name = "Lin's Module";
 			sourceTree = "<group>";
@@ -499,7 +499,7 @@
 				3ED2AFD918A652B0001AE706 /* UIButton+WebCache.m in Sources */,
 				3E97675E18A1299800AE48D3 /* main.m in Sources */,
 				3ED2AFAE18A61679001AE706 /* Reachability.m in Sources */,
-				3ED2AFF518A77BF5001AE706 /* LINRootViewController.m in Sources */,
+				3ED2AFF818A77C84001AE706 /* LINRootViewController.m in Sources */,
 				3ECED71218A14CB6007B3FC8 /* LINPickFoodViewController.m in Sources */,
 				3ECAF93418A25EBF007D3ECE /* LINOrderViewController.m in Sources */,
 				3ED2AFB118A62156001AE706 /* LINGoodModel.m in Sources */,
