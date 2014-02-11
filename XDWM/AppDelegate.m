@@ -18,14 +18,27 @@
 {
     // Override point for customization after application launch.
     MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:@"192.168.1.100:80"];
-    NSDictionary *dic = @{__USERNAME__: @"test"};
-    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__, @"user_register.php"] params:dic httpMethod:@"POST"];
+  //  NSString *username = @"飞哥";
+  //  const char *sss = [username cStringUsingEncoding:NSUTF8StringEncoding];
+  //  NSString *uss  = [NSString stringWithCString:[username cStringUsingEncoding:NSUTF8StringEncoding] encoding:NSUTF8StringEncoding];
+
+    NSDictionary *dic = @{__USERNAME__: @"飞哥"};
+    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__, @"fetch_user_info.php"] params:dic httpMethod:@"POST"];
     [engine enqueueOperation:op];
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
-                NSLog(@"%@", [completedOperation responseString]);
+        NSLog(@"%@", [completedOperation responseString]);
+
+        NSData *data = [completedOperation responseData];
+        NSString *st = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //NSLog(@"%@", st);
+
+        NSData *data2 = [[completedOperation responseString] dataUsingEncoding:NSUTF8StringEncoding];
+        //[NSString alloc] initWithCString:[comp] encoding:<#(NSStringEncoding)#>
     } errorHandler:nil];
     
-    NSLog(@"%@", [op responseString]);
+//    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+//        NSLog(@"%@", [completedOperation responseString]);
+//    } errorHandler:nil];
     return YES;
 }
 							
