@@ -14,15 +14,16 @@
 
 
 @interface LINPickFoodViewController ()
+
 @property (nonatomic)       NSInteger count;
 @property (nonatomic)       CGFloat pickedGoodPrice;
 @property (nonatomic)       CGFloat pickedGoodTotalPrice;
-@property (nonatomic, strong) NSArray *pickedGoodNumber;
+@property (nonatomic, strong) NSMutableArray *pickedGoodNumber;
 @property (nonatomic, strong) NSString *pickedGoodName;
 @property (nonatomic, strong) NSString *createTime;
 @property (nonatomic, strong) NSString *createDay;
-//@property (nonatomic, strong) NSString *pickedGoodPrice;
-//@property (nonatomic, strong) NSString *pickedGoodTotalPrice;
+
+@property (nonatomic) NSInteger flag;////
 @end
 
 @implementation LINPickFoodViewController
@@ -48,12 +49,44 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    if (self.foodKindIndex == 2) {
+        self.navigationItem.title = @"绿茉莉套餐";
+        UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
+        self.navigationItem.titleView = contentView;
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.tag = 1;
+        label.text = @"已选:0/3";
+        label.font = [UIFont fontWithName:@"Helvetica Neue" size:13.0];
+        [label sizeToFit];
+        label.center = CGPointMake(200, 22);
+        [contentView addSubview:label];
+        
+        UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
+        title.text = @"绿茉莉套餐";
+        [title sizeToFit];
+        title.center = CGPointMake(110, 22);
+        [contentView addSubview:title];
+        
+        UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(popUpConfirmView)];
+        self.navigationItem.rightBarButtonItem = rightBarButton;
+    }else if (self.foodKindIndex == 1){
+        self.navigationItem.title = @"锅巴米饭";
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (NSMutableArray *)pickedGoodNumber{
+    if (!_pickedGoodNumber) {
+        _pickedGoodNumber = [[NSMutableArray alloc] init];
+        return _pickedGoodNumber;
+    }
+    return _pickedGoodNumber;
 }
 
 #pragma mark - Table view data source
@@ -98,6 +131,10 @@
     label.layer.borderColor = [UIColor redColor].CGColor;
     label.layer.borderWidth = 1.5;
     label.layer.cornerRadius = 6;
+    //如果是绿茉莉 更改label的名称
+    if (self.foodKindIndex == 2) {
+        label.text = @"加入菜单";
+    }
     
     UIImageView *img = (UIImageView *)[cell.contentView viewWithTag:1];
     UILabel *title = (UILabel *)[cell.contentView viewWithTag:2];
@@ -164,7 +201,6 @@
         }];
         
         for (NSString *key in keys) {
-            NSLog(@"%@", key);
             NSDictionary *aGood = [goodInfo objectForKey:key];
             LINGoodModel *aGoodModel = [[LINGoodModel alloc] initWithDictionary:aGood];
             [self.foodList addObject:aGoodModel];
@@ -182,29 +218,29 @@
     
     UITableViewCell *correspondCell = (UITableViewCell *)v.superview.superview.superview;
     NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:correspondCell];
-    self.pickedGoodNumber = [NSArray arrayWithObjects:@(cellIndexPath.row), nil];
+
     
     LINGoodModel *pickedGood = self.foodList[cellIndexPath.row];
     self.pickedGoodName =   pickedGood.goodName;
     self.pickedGoodPrice = [pickedGood.goodPrice floatValue];
     self.pickedGoodTotalPrice = self.pickedGoodPrice;
-
-    UITableView *infoView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 280, 180) style:UITableViewStylePlain];
-    infoView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5);
-    CXAlertView *confirmOrderView = [[CXAlertView alloc] initWithTitle:@"确认订单" contentView:infoView cancelButtonTitle:@"取消"];
-
-    infoView.backgroundColor = [UIColor clearColor];
-    infoView.delegate = self;
-    infoView.dataSource = self;
-    infoView.tag = 1;
     
-    [confirmOrderView addButtonWithTitle:@"确定" type:CXAlertViewButtonTypeDefault handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
-        [self confirmOrder];
-        [alertView dismiss];
-    }];
-    [confirmOrderView show];
-}
+    if (self.foodKindIndex == 1) {
+        self.pickedGoodNumber = [NSMutableArray arrayWithObjects:@(cellIndexPath.row), nil];
+        [self popUpConfirmView];
+    }else if (self.foodKindIndex == 2){
+        if (self.count < 3) {
+            self.count += 1;
+            [self updateNavBar];
+            [self.pickedGoodNumber addObject:[NSNumber numberWithInteger:cellIndexPath.row]];
+        }
+    }
 
+}
+- (void)updateNavBar{
+    UILabel *label = (UILabel *)[self.navigationItem.titleView viewWithTag:1];
+    label.text = [NSString  stringWithFormat:@"已选:%i/3", self.count];
+}
 - (BOOL)isInfoTableView:(UITableView *)tableview{
     if (tableview.tag == 1) {
         return YES;
@@ -222,7 +258,17 @@
         return cell;
     }else if (indexPath.section == 1){
         if (indexPath.row == 0) {
-            gecell.textLabel.text = @"菜名：糖醋里脊";
+            NSString *firstGoodName = [self.foodList[[self.pickedGoodNumber[0] integerValue]] goodName];
+            gecell.textLabel.text = [NSString stringWithFormat:@"菜名：%@", firstGoodName];
+            if ([self.pickedGoodNumber count] == 3) {
+                gecell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:14];
+            }
+            if ([self.pickedGoodNumber count] > 1) {
+                for (NSInteger i = 1; i < [self.pickedGoodNumber count]; i++) {
+                    NSString *aGoodName = [self.foodList[[self.pickedGoodNumber[i] integerValue]] goodName];
+                    gecell.textLabel.text = [gecell.textLabel.text stringByAppendingFormat:@",%@", aGoodName];
+                }
+            }
         }else if (indexPath.row == 1){
             gecell.textLabel.text = [NSString stringWithFormat: @"单价：%.2f元", self.pickedGoodPrice];
             
@@ -232,8 +278,9 @@
             totalPriceLabel.center = CGPointMake(gecell.textLabel.center.x + 200, gecell.contentView.frame.size.height/2);
             [gecell.contentView addSubview:totalPriceLabel];
         }else if (indexPath.row == 2){
-            if (self.count == 0) {
+            if (self.count == 0 || (self.foodKindIndex == 2 && self.flag == 0)) {
                 self.count = 1;
+                self.flag = 1;
             }
     
             UIStepper *stepper = [[UIStepper alloc] initWithFrame:CGRectMake(170, 0, 70, 29)];
@@ -256,6 +303,7 @@
     }
     return nil;
 }
+
 
 - (void)orderAmountChanged:(UIStepper *)sender{
     NSLog(@"%lf", sender.value);
@@ -306,6 +354,34 @@
     [engine enqueueOperation:op];
     
 }
+
+- (void)popUpConfirmView{
+    if (self.count != 0) {
+        UITableView *infoView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 280, 180) style:UITableViewStylePlain];
+        infoView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5);
+        CXAlertView *confirmOrderView = [[CXAlertView alloc] initWithTitle:@"确认订单" contentView:infoView cancelButtonTitle:nil];
+        
+        infoView.backgroundColor = [UIColor clearColor];
+        infoView.delegate = self;
+        infoView.dataSource = self;
+        infoView.tag = 1;
+        
+        [confirmOrderView addButtonWithTitle:@"取消" type:CXAlertViewButtonTypeDefault handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
+            self.count = 0;
+            self.pickedGoodNumber = [NSMutableArray new];
+            [self updateNavBar];
+            [alertView dismiss];
+        }];
+        [confirmOrderView addButtonWithTitle:@"确定" type:CXAlertViewButtonTypeDefault handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
+            [self confirmOrder];
+            [alertView dismiss];
+        }];
+        [confirmOrderView show];
+    }
+
+}
+
+
 @end
 
 
