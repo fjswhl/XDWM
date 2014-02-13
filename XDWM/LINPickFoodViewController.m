@@ -36,6 +36,7 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -146,15 +147,24 @@
     MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"fetchgood.php"] params:infoDic httpMethod:@"POST"];
     
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
-        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-        NSData *reData = [completedOperation responseData];
-        NSString *st = [[NSString alloc] initWithData:reData encoding:enc];
-
+//        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+//        NSData *reData = [completedOperation responseData];
+//        NSString *st = [[NSString alloc] initWithData:reData encoding:enc];
+        NSString *st = [completedOperation responseString];
         NSDictionary *goodInfo = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
         
         //下面将获取的数据写入模型
-        NSArray *keys = [goodInfo allKeys];
+        NSArray *keys = [[goodInfo allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSInteger in1 = [(NSString *)obj1 integerValue];
+            NSInteger in2 = [(NSString *)obj2 integerValue];
+            if (in1 > in2) {
+                return true;
+            }
+            return false;
+        }];
+        
         for (NSString *key in keys) {
+            NSLog(@"%@", key);
             NSDictionary *aGood = [goodInfo objectForKey:key];
             LINGoodModel *aGoodModel = [[LINGoodModel alloc] initWithDictionary:aGood];
             [self.foodList addObject:aGoodModel];
