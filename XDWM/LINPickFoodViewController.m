@@ -356,7 +356,7 @@
 }
 
 - (void)popUpConfirmView{
-    if (self.count != 0) {
+    if (self.count != 0 || self.foodKindIndex == 1) {
         UITableView *infoView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 280, 180) style:UITableViewStylePlain];
         infoView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5);
         CXAlertView *confirmOrderView = [[CXAlertView alloc] initWithTitle:@"确认订单" contentView:infoView cancelButtonTitle:nil];
