@@ -8,6 +8,13 @@
 
 #import "LINOrderViewController.h"
 #import "LINPickFoodViewController.h"
+#import "SHULoginViewController.h"
+#import "LINUserModel.h"
+#import "LINRootViewController.h"
+#import "MKNetworkEngine.h"
+#import "MKNetworkOperation.h"
+#import "ADDRMACRO.h"
+
 @interface LINOrderViewController ()
 @property (strong, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic) NSInteger kFoodKindIndex;
@@ -24,6 +31,8 @@
     return self;
 }
 
+//          启动时检查用户是否登入，如果没登入，则跳转到登入界面；如果登入了，则把用户信息写到RootViewController下的user属性中
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -31,6 +40,8 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     
+
+    [self fetchGoodInfoToRootVC];
 }
 
 
@@ -91,6 +102,41 @@
         //[segue.destinationViewController setInteger:self.kFoodKindIndex forKey:@"kFoodKindIndex"];
         LINPickFoodViewController *pickVC = segue.destinationViewController;
         [pickVC setFoodKindIndex:self.kFoodKindIndex];
+    }
+}
+
+- (void)fetchGoodInfoToRootVC{
+    NSFileManager *fm = [NSFileManager new];
+    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    if (![fm fileExistsAtPath:[NSString stringWithFormat:@"%@/infoDic.plist", docPath]]) {
+        UINavigationController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"login"];
+        [self presentViewController:loginVC animated:NO completion:nil];
+    }else{
+        NSDictionary *userInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/infoDic.plist", docPath]];
+        
+        LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
+        rootVC.user.userName = userInfo[__USERNAME__];
+        rootVC.user.userPassword = userInfo[__PASSWORD__];
+        
+        MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+        MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_user_info.php"] params:@{__USERNAME__:rootVC.user.userName} httpMethod:@"POST"];
+        [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+            NSString *st = [completedOperation responseString];
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+            rootVC.user.userAddr = dic[__USERADDR__];
+            rootVC.user.userEmail = dic[__USEREMAIL__];
+            rootVC.user.userLouhao = dic[__USERLOUHAO__];
+            rootVC.user.userPoint = dic[__USERPOINT__];
+            rootVC.user.userQuhao = dic[__USERQUHAO__];
+            rootVC.user.userSex = dic[__USERSEX__];
+            rootVC.user.userSushehao = dic[__USERSUSHEHAO__];
+            rootVC.user.userTel = dic[__USERTEL__];
+            rootVC.user.userZuoyou = dic[__USERZUOYOU__];
+            
+        } errorHandler:nil];
+        [engine enqueueOperation:op];
+        
     }
 }
 @end

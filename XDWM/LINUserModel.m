@@ -9,4 +9,5 @@
 #import "LINUserModel.h"
 #import "LINGoodModel.h"
 @implementation LINUserModel
+
 @end

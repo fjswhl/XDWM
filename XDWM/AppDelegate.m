@@ -17,34 +17,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:@"192.168.1.100:80"];
-  //  NSString *username = @"飞哥";
-  //  const char *sss = [username cStringUsingEncoding:NSUTF8StringEncoding];
-  //  NSString *uss  = [NSString stringWithCString:[username cStringUsingEncoding:NSUTF8StringEncoding] encoding:NSUTF8StringEncoding];
-    NSDictionary *dic = @{@"key1":@"10",
-                          @"key2":@"0"};
-    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"messageboard.php"] params:dic httpMethod:@"POST"];
-    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
-        NSString *st = [completedOperation responseString];
-        NSArray *arr = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
 
-    } errorHandler:nil];
-    [engine enqueueOperation:op];
-//    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
-//        NSLog(@"%@", [completedOperation responseString]);
-//
-//        NSData *data = [completedOperation responseData];
-//        NSString *st = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//        //NSLog(@"%@", st);
-//
-//        NSData *data2 = [[completedOperation responseString] dataUsingEncoding:NSUTF8StringEncoding];
-//        //[NSString alloc] initWithCString:[comp] encoding:<#(NSStringEncoding)#>
-//    } errorHandler:nil];
-
-    
-//    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
-//        NSLog(@"%@", [completedOperation responseString]);
-//    } errorHandler:nil];
     return YES;
 }
 							

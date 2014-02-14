@@ -10,4 +10,6 @@
 #import "LINUserModel.h"
 @interface LINRootViewController : UITabBarController
 @property (strong, nonatomic) LINUserModel *user;
+
+- (LINUserModel *)user;
 @end

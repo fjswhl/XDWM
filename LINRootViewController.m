@@ -7,7 +7,7 @@
 //
 
 #import "LINRootViewController.h"
-
+#import "SHULoginViewController.h"
 @interface LINRootViewController ()
 
 @end
@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,4 +37,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (LINUserModel *)user{
+    if (!_user) {
+        _user = [LINUserModel new];
+    }
+    return _user;
+}
 @end

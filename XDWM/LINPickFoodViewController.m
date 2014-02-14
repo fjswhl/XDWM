@@ -41,6 +41,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.foodList = [NSMutableArray new];
     [self fetchGoodsInfo];
 
@@ -251,8 +252,18 @@
     UITableViewCell *gecell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     if (indexPath.section == 0 && indexPath.row == 0) {
         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:nil];
-        cell.textLabel.text = @"收货人：黄凌      18629646590";
-        cell.detailTextLabel.text = @"地址：丁香12号楼I区218右室";
+        LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
+        LINUserModel *user = rootVC.user;
+        NSString *username = user.userName;
+        NSString *userTel = user.userTel;
+        NSString *userAddr = user.userAddr;
+        NSString *userLouhao = user.userLouhao;
+        NSString *userQuhao = user.userQuhao;
+        NSString *userSushehao = user.userSushehao;
+        NSString *userZuoyou = user.userZuoyou;
+        cell.textLabel.text = [NSString stringWithFormat: @"收货人：%@      %@", username, userTel];
+        
+        cell.detailTextLabel.text = [NSString stringWithFormat: @"地址：%@%@号楼%@%@%@室",userAddr, userLouhao,userQuhao,userSushehao,userZuoyou];
         cell.contentView.backgroundColor = [UIColor colorWithRed:135/255.0 green:206/255.0 blue:250/255.0 alpha:1.0];
         
         return cell;

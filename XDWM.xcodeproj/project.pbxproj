@@ -13,6 +13,15 @@
 		3E27F53318AD35CC0010C77C /* 记录.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E27F52F18AD35CC0010C77C /* 记录.png */; };
 		3E27F53418AD35CC0010C77C /* 留言.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E27F53018AD35CC0010C77C /* 留言.png */; };
 		3E27F53618AD35D90010C77C /* 订餐.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E27F53518AD35D90010C77C /* 订餐.png */; };
+		3E27F53B18ADFEF70010C77C /* SHUUserInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F53818ADFEF70010C77C /* SHUUserInfoViewController.m */; };
+		3E27F53C18ADFEF70010C77C /* SHUModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F53A18ADFEF70010C77C /* SHUModifyViewController.m */; };
+		3E27F54418ADFF160010C77C /* SHUCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F53F18ADFF160010C77C /* SHUCommentViewController.m */; };
+		3E27F54518ADFF160010C77C /* SHUCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F54118ADFF160010C77C /* SHUCommentCell.m */; };
+		3E27F54618ADFF160010C77C /* SHUPushCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F54318ADFF160010C77C /* SHUPushCommentViewController.m */; };
+		3E27F54B18ADFF7E0010C77C /* SHULoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F54A18ADFF7E0010C77C /* SHULoginViewController.m */; };
+		3E27F54F18ADFF930010C77C /* SHUSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F54E18ADFF930010C77C /* SHUSignViewController.m */; };
+		3E27F55318ADFFCC0010C77C /* SHUCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F55218ADFFCC0010C77C /* SHUCommentModel.m */; };
+		3E27F55518AE00160010C77C /* Main2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E27F55418AE00160010C77C /* Main2.storyboard */; };
 		3E97675218A1299800AE48D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E97675118A1299800AE48D3 /* Foundation.framework */; };
 		3E97675418A1299800AE48D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E97675318A1299800AE48D3 /* CoreGraphics.framework */; };
 		3E97675618A1299800AE48D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E97675518A1299800AE48D3 /* UIKit.framework */; };
@@ -83,6 +92,23 @@
 		3E27F52F18AD35CC0010C77C /* 记录.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "记录.png"; sourceTree = "<group>"; };
 		3E27F53018AD35CC0010C77C /* 留言.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "留言.png"; sourceTree = "<group>"; };
 		3E27F53518AD35D90010C77C /* 订餐.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "订餐.png"; sourceTree = "<group>"; };
+		3E27F53718ADFEF70010C77C /* SHUUserInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHUUserInfoViewController.h; sourceTree = "<group>"; };
+		3E27F53818ADFEF70010C77C /* SHUUserInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHUUserInfoViewController.m; sourceTree = "<group>"; };
+		3E27F53918ADFEF70010C77C /* SHUModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHUModifyViewController.h; sourceTree = "<group>"; };
+		3E27F53A18ADFEF70010C77C /* SHUModifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHUModifyViewController.m; sourceTree = "<group>"; };
+		3E27F53E18ADFF160010C77C /* SHUCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHUCommentViewController.h; sourceTree = "<group>"; };
+		3E27F53F18ADFF160010C77C /* SHUCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHUCommentViewController.m; sourceTree = "<group>"; };
+		3E27F54018ADFF160010C77C /* SHUCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHUCommentCell.h; sourceTree = "<group>"; };
+		3E27F54118ADFF160010C77C /* SHUCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHUCommentCell.m; sourceTree = "<group>"; };
+		3E27F54218ADFF160010C77C /* SHUPushCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHUPushCommentViewController.h; sourceTree = "<group>"; };
+		3E27F54318ADFF160010C77C /* SHUPushCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHUPushCommentViewController.m; sourceTree = "<group>"; };
+		3E27F54918ADFF7E0010C77C /* SHULoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHULoginViewController.h; sourceTree = "<group>"; };
+		3E27F54A18ADFF7E0010C77C /* SHULoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHULoginViewController.m; sourceTree = "<group>"; };
+		3E27F54D18ADFF930010C77C /* SHUSignViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHUSignViewController.h; sourceTree = "<group>"; };
+		3E27F54E18ADFF930010C77C /* SHUSignViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHUSignViewController.m; sourceTree = "<group>"; };
+		3E27F55118ADFFCC0010C77C /* SHUCommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHUCommentModel.h; sourceTree = "<group>"; };
+		3E27F55218ADFFCC0010C77C /* SHUCommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHUCommentModel.m; sourceTree = "<group>"; };
+		3E27F55418AE00160010C77C /* Main2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main2.storyboard; sourceTree = "<group>"; };
 		3E97674E18A1299800AE48D3 /* XDWM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XDWM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E97675118A1299800AE48D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3E97675318A1299800AE48D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -204,6 +230,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E27F53D18ADFF000010C77C /* UserInfoModule */ = {
+			isa = PBXGroup;
+			children = (
+				3E27F53718ADFEF70010C77C /* SHUUserInfoViewController.h */,
+				3E27F53818ADFEF70010C77C /* SHUUserInfoViewController.m */,
+				3E27F53918ADFEF70010C77C /* SHUModifyViewController.h */,
+				3E27F53A18ADFEF70010C77C /* SHUModifyViewController.m */,
+			);
+			name = UserInfoModule;
+			sourceTree = "<group>";
+		};
+		3E27F54718ADFF1F0010C77C /* CommentModule */ = {
+			isa = PBXGroup;
+			children = (
+				3E27F53E18ADFF160010C77C /* SHUCommentViewController.h */,
+				3E27F53F18ADFF160010C77C /* SHUCommentViewController.m */,
+				3E27F54018ADFF160010C77C /* SHUCommentCell.h */,
+				3E27F54118ADFF160010C77C /* SHUCommentCell.m */,
+				3E27F54218ADFF160010C77C /* SHUPushCommentViewController.h */,
+				3E27F54318ADFF160010C77C /* SHUPushCommentViewController.m */,
+			);
+			name = CommentModule;
+			sourceTree = "<group>";
+		};
+		3E27F54818ADFF660010C77C /* LoginModule */ = {
+			isa = PBXGroup;
+			children = (
+				3E27F54918ADFF7E0010C77C /* SHULoginViewController.h */,
+				3E27F54A18ADFF7E0010C77C /* SHULoginViewController.m */,
+			);
+			name = LoginModule;
+			sourceTree = "<group>";
+		};
+		3E27F54C18ADFF850010C77C /* SignUpModule */ = {
+			isa = PBXGroup;
+			children = (
+				3E27F54D18ADFF930010C77C /* SHUSignViewController.h */,
+				3E27F54E18ADFF930010C77C /* SHUSignViewController.m */,
+			);
+			name = SignUpModule;
+			sourceTree = "<group>";
+		};
+		3E27F55018ADFF970010C77C /* Shu's Module */ = {
+			isa = PBXGroup;
+			children = (
+				3E27F54C18ADFF850010C77C /* SignUpModule */,
+				3E27F54818ADFF660010C77C /* LoginModule */,
+				3E27F54718ADFF1F0010C77C /* CommentModule */,
+				3E27F53D18ADFF000010C77C /* UserInfoModule */,
+			);
+			name = "Shu's Module";
+			sourceTree = "<group>";
+		};
 		3E97674518A1299800AE48D3 = {
 			isa = PBXGroup;
 			children = (
@@ -240,11 +319,13 @@
 		3E97675718A1299800AE48D3 /* XDWM */ = {
 			isa = PBXGroup;
 			children = (
+				3E27F55018ADFF970010C77C /* Shu's Module */,
 				3ED2AFE518A66385001AE706 /* Lin's Module */,
 				3ED2AFDE18A65F78001AE706 /* Model */,
 				3E97676018A1299800AE48D3 /* AppDelegate.h */,
 				3E97676118A1299800AE48D3 /* AppDelegate.m */,
 				3ECAF93818A26304007D3ECE /* Main.storyboard */,
+				3E27F55418AE00160010C77C /* Main2.storyboard */,
 				3E27F52A18AD26140010C77C /* TestViewController.h */,
 				3E27F52B18AD26140010C77C /* TestViewController.m */,
 				3E27F52D18AD35CC0010C77C /* 个人.png */,
@@ -370,6 +451,8 @@
 		3ED2AFDE18A65F78001AE706 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3E27F55118ADFFCC0010C77C /* SHUCommentModel.h */,
+				3E27F55218ADFFCC0010C77C /* SHUCommentModel.m */,
 				3ED2AFF218A76B8D001AE706 /* ADDRMACRO.h */,
 				3ED2AFAF18A62156001AE706 /* LINGoodModel.h */,
 				3ED2AFB018A62156001AE706 /* LINGoodModel.m */,
@@ -502,6 +585,7 @@
 				3E27F53118AD35CC0010C77C /* 个人.png in Resources */,
 				3ECAF93918A26304007D3ECE /* Main.storyboard in Resources */,
 				3E27F53318AD35CC0010C77C /* 记录.png in Resources */,
+				3E27F55518AE00160010C77C /* Main2.storyboard in Resources */,
 				3E97675C18A1299800AE48D3 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,6 +606,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3ED2AFDA18A652B0001AE706 /* UIImage+GIF.m in Sources */,
+				3E27F54F18ADFF930010C77C /* SHUSignViewController.m in Sources */,
+				3E27F53B18ADFEF70010C77C /* SHUUserInfoViewController.m in Sources */,
 				3ED2AFD718A652B0001AE706 /* SDWebImageManager.m in Sources */,
 				3ED2B01C18A78292001AE706 /* CXAlertView.m in Sources */,
 				3ED2AFD618A652B0001AE706 /* SDWebImageDownloaderOperation.m in Sources */,
@@ -535,9 +621,11 @@
 				3E97676218A1299800AE48D3 /* AppDelegate.m in Sources */,
 				3ED2AFAD18A61679001AE706 /* MKNetworkOperation.m in Sources */,
 				3ED2AFAA18A61679001AE706 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,
+				3E27F53C18ADFEF70010C77C /* SHUModifyViewController.m in Sources */,
 				3E27F52C18AD26140010C77C /* TestViewController.m in Sources */,
 				3ED2B01918A78292001AE706 /* CXAlertBackgroundWindow.m in Sources */,
 				3ED2AFDC18A652B0001AE706 /* UIImage+WebP.m in Sources */,
+				3E27F54618ADFF160010C77C /* SHUPushCommentViewController.m in Sources */,
 				3ED2AFD818A652B0001AE706 /* SDWebImagePrefetcher.m in Sources */,
 				3ED2B01D18A78292001AE706 /* CXAlertViewController.m in Sources */,
 				3ED2AFAC18A61679001AE706 /* MKNetworkEngine.m in Sources */,
@@ -545,14 +633,18 @@
 				3ED2B01F18A78292001AE706 /* LFGlassView.m in Sources */,
 				3ED2AFA818A61679001AE706 /* NSDictionary+RequestEncoding.m in Sources */,
 				3ED2AFD318A652B0001AE706 /* SDWebImageCompat.m in Sources */,
+				3E27F54418ADFF160010C77C /* SHUCommentViewController.m in Sources */,
 				3ED2AFD118A652B0001AE706 /* NSData+ImageContentType.m in Sources */,
 				3ED2AFD418A652B0001AE706 /* SDWebImageDecoder.m in Sources */,
 				3ED2AFAB18A61679001AE706 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
+				3E27F55318ADFFCC0010C77C /* SHUCommentModel.m in Sources */,
+				3E27F54518ADFF160010C77C /* SHUCommentCell.m in Sources */,
 				3ED2B01A18A78292001AE706 /* CXAlertButtonContainerView.m in Sources */,
 				3ED2AFD918A652B0001AE706 /* UIButton+WebCache.m in Sources */,
 				3E97675E18A1299800AE48D3 /* main.m in Sources */,
 				3ED2AFAE18A61679001AE706 /* Reachability.m in Sources */,
 				3ED2AFF818A77C84001AE706 /* LINRootViewController.m in Sources */,
+				3E27F54B18ADFF7E0010C77C /* SHULoginViewController.m in Sources */,
 				3ECED71218A14CB6007B3FC8 /* LINPickFoodViewController.m in Sources */,
 				3ECAF93418A25EBF007D3ECE /* LINOrderViewController.m in Sources */,
 				3ED2B01B18A78292001AE706 /* CXAlertButtonItem.m in Sources */,
