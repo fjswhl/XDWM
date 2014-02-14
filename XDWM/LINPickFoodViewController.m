@@ -262,7 +262,6 @@
         NSString *userSushehao = user.userSushehao;
         NSString *userZuoyou = user.userZuoyou;
         cell.textLabel.text = [NSString stringWithFormat: @"收货人：%@      %@", username, userTel];
-        
         cell.detailTextLabel.text = [NSString stringWithFormat: @"地址：%@%@号楼%@%@%@室",userAddr, userLouhao,userQuhao,userSushehao,userZuoyou];
         cell.contentView.backgroundColor = [UIColor colorWithRed:135/255.0 green:206/255.0 blue:250/255.0 alpha:1.0];
         
@@ -280,6 +279,7 @@
                     gecell.textLabel.text = [gecell.textLabel.text stringByAppendingFormat:@",%@", aGoodName];
                 }
             }
+            self.pickedGoodName = [gecell.textLabel.text stringByReplacingOccurrencesOfString:@"菜名：" withString:@""];
         }else if (indexPath.row == 1){
             gecell.textLabel.text = [NSString stringWithFormat: @"单价：%.2f元", self.pickedGoodPrice];
             
@@ -326,20 +326,29 @@
 
 - (void)confirmOrder{
     LINGoodModel *aGood = self.foodList[[self.pickedGoodNumber[0] integerValue]];
-    NSString *goodName = aGood.goodName;
+    LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
+    LINUserModel *user = rootVC.user;
+    
+    NSDate *today = [NSDate date];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+
+    NSString *goodName = [self.pickedGoodName stringByAppendingString:@"(来自iOS客户端)"];
     NSString *goodsHotel = aGood.goodHotel;
     NSString *goodsPrice = aGood.goodPrice;
     NSString *number = [NSString stringWithFormat:@"%i", self.count];
     NSString *totalPrice = [NSString stringWithFormat:@"%.2lf", self.pickedGoodTotalPrice];
-    NSString *username = @"t";
-    NSString *userTel = @"t";
-    NSString *userAddr = @"t";
-    NSString *userLouhao = @"t";
-    NSString *userQuhao = @"t";
-    NSString *userSushehao = @"t";
-    NSString *userZuoyou = @"t";
-    NSString *createTime = @"t";
-    NSString *createDay = @"t";
+    NSString *username = user.userName;
+    NSString *userTel = user.userTel;
+    NSString *userAddr = user.userAddr;
+    NSString *userLouhao = user.userLouhao;
+    NSString *userQuhao = user.userQuhao;
+    NSString *userSushehao = user.userSushehao;
+    NSString *userZuoyou = user.userZuoyou;
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *createTime = [dateFormatter stringFromDate:today];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *createDay = [dateFormatter stringFromDate:today];
     
     NSDictionary *forPostDic = @{__GOODNAME__:goodName,
                                  __GOODHOTEL__:goodsHotel,
@@ -361,6 +370,8 @@
     MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"submit_order.php"] params:forPostDic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         NSLog(@"%@", [completedOperation responseString]);
+        CXAlertView *alertView = [[CXAlertView alloc] initWithTitle:nil message:@"订单成功提交！" cancelButtonTitle:@"确定"];
+        [alertView show];
     } errorHandler:nil];
     [engine enqueueOperation:op];
     
@@ -379,6 +390,7 @@
         
         [confirmOrderView addButtonWithTitle:@"取消" type:CXAlertViewButtonTypeDefault handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
             self.count = 0;
+            self.flag = 0;
             self.pickedGoodNumber = [NSMutableArray new];
             [self updateNavBar];
             [alertView dismiss];
