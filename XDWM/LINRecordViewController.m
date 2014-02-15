@@ -11,8 +11,9 @@
 #import "MKNetworkOperation.h"
 #import "ADDRMACRO.h"
 #import "LINRootViewController.h"
-
-@interface LINRecordViewController ()<UITableViewDataSource, UITableViewDelegate>
+#import "LINOrderList.h"
+#import "MJRefresh.h"
+@interface LINRecordViewController ()<UITableViewDataSource, UITableViewDelegate, MJRefreshBaseViewDelegate>
 @property (nonatomic) NSInteger count;  //表示下拉刷新时当前表已存在多少条记录
 
 @property (strong, nonatomic) IBOutlet UITableView *tableview;
@@ -36,7 +37,15 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [self fetchOrderList];
+    MJRefreshHeaderView *header = [MJRefreshHeaderView header];
+    header.scrollView = self.tableview;
+    header.delegate = self;
+    
+    MJRefreshFooterView *footer = [MJRefreshFooterView footer];
+    footer.scrollView = self.tableview;
+    footer.delegate = self;
+    
+    [header beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,6 +60,12 @@
     }
     return _orderList;
 }
+
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView{
+    [self fetchOrderListWithRefreshView:refreshView];
+}
+
+
 #pragma mark - tableview datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [self.orderList count];
@@ -61,12 +76,32 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return nil;
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    
+    UILabel *hotelLabel = (UILabel *)[cell.contentView viewWithTag:1];
+    UILabel *goodNameLabel = (UILabel *)[cell.contentView viewWithTag:2];
+    UILabel *totalPriceLabel = (UILabel *)[cell.contentView viewWithTag:3];
+    UILabel *numberLabel = (UILabel *)[cell.contentView viewWithTag:4];
+    UILabel *createtimeLabel = (UILabel *)[cell.contentView viewWithTag:5];
+    
+    NSDictionary *aRecord = self.orderList[indexPath.row];
+    hotelLabel.text = aRecord[__GOODSHOTEL__];
+    goodNameLabel.text = aRecord[__GOODSNAME__];
+    totalPriceLabel.text = aRecord[__TOTALPRICE__];
+    numberLabel.text = aRecord[__NUMBER__];
+    createtimeLabel.text = aRecord[__CREATETIME__];
+    return cell;
 }
-
 #pragma mark - interact with server method
 
-- (void)fetchOrderList{
+- (void)fetchOrderListWithRefreshView:(MJRefreshBaseView *)refreshView{
+
+    //  如果是下拉刷新，则重置一些数据
+    if ([refreshView isKindOfClass:[MJRefreshHeaderView class]]) {
+        self.count = 0;
+        self.orderList = [NSMutableArray new];
+    }
+    
     LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
     NSDictionary *dicForPost = @{__USERNAME__:rootVC.user.userName,
                                  @"key":[NSString stringWithFormat:@"%i", self.count]};
@@ -86,12 +121,16 @@
             }
             return false;
         }];
-        
+
         for (NSString *key in keys) {
             NSDictionary *aRecord = recordsInfo[key];
             [self.orderList addObject:aRecord];
         }
+        self.count += [self.orderList count];
         [self.tableview reloadData];
+        if (refreshView) {
+            [refreshView endRefreshing];
+        }
     } errorHandler:nil];
     [engine enqueueOperation:op];
     

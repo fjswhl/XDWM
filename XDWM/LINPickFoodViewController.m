@@ -332,8 +332,8 @@
     NSDate *today = [NSDate date];
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
 
-    NSString *goodName = [self.pickedGoodName stringByAppendingString:@"(来自iOS客户端)"];
-    NSString *goodsHotel = aGood.goodHotel;
+    NSString *goodName = self.pickedGoodName;
+    NSString *goodsHotel = [aGood.goodHotel  stringByAppendingString:@"(来自iOS客户端)"];
     NSString *goodsPrice = aGood.goodPrice;
     NSString *number = [NSString stringWithFormat:@"%i", self.count];
     NSString *totalPrice = [NSString stringWithFormat:@"%.2lf", self.pickedGoodTotalPrice];

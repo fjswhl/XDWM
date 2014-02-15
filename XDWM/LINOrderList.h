@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "LINUserModel.h"
 
+#define __GOODSNAME__       @"goods_name"
+#define __GOODSHOTEL__      @"goods_hotel"
+#define __GOODSPRICE__      @"goods_price"
 #define __NUMBER__          @"number"
 #define __TOTALPRICE__      @"total_price"
 #define __CREATETIME__      @"create_time"
