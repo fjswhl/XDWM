@@ -88,7 +88,7 @@
                 
              //   [self performSegueWithIdentifier:@"segueToMain" sender:self];
                 LINOrderViewController *orderVC = (LINOrderViewController *)self.presentingViewController;
-                [orderVC fetchGoodInfoToRootVC];
+                [orderVC fetchGoodInfoToRootVC]; //调父视图的方法或者给父视图传消息
                 
                 [self dismissViewControllerAnimated:YES completion:nil];
                 

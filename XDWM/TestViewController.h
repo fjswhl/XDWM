@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TestViewController : UIViewController
+@interface TestViewController : UIViewController{
+    NSInteger a;
+    
+}
 
 @end

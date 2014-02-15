@@ -8,7 +8,9 @@
 
 #import "TestViewController.h"
 
-@interface TestViewController ()
+@interface TestViewController (){
+    NSInteger b;
+}
 @property (strong, nonatomic) IBOutlet UIView *testView;
 
 

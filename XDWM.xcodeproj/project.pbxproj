@@ -22,6 +22,7 @@
 		3E27F54F18ADFF930010C77C /* SHUSignViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F54E18ADFF930010C77C /* SHUSignViewController.m */; };
 		3E27F55318ADFFCC0010C77C /* SHUCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F55218ADFFCC0010C77C /* SHUCommentModel.m */; };
 		3E27F55518AE00160010C77C /* Main2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E27F55418AE00160010C77C /* Main2.storyboard */; };
+		3E27F55818AF67E50010C77C /* LINRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F55718AF67E50010C77C /* LINRecordViewController.m */; };
 		3E97675218A1299800AE48D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E97675118A1299800AE48D3 /* Foundation.framework */; };
 		3E97675418A1299800AE48D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E97675318A1299800AE48D3 /* CoreGraphics.framework */; };
 		3E97675618A1299800AE48D3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E97675518A1299800AE48D3 /* UIKit.framework */; };
@@ -109,6 +110,8 @@
 		3E27F55118ADFFCC0010C77C /* SHUCommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHUCommentModel.h; sourceTree = "<group>"; };
 		3E27F55218ADFFCC0010C77C /* SHUCommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHUCommentModel.m; sourceTree = "<group>"; };
 		3E27F55418AE00160010C77C /* Main2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main2.storyboard; sourceTree = "<group>"; };
+		3E27F55618AF67E50010C77C /* LINRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINRecordViewController.h; sourceTree = "<group>"; };
+		3E27F55718AF67E50010C77C /* LINRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINRecordViewController.m; sourceTree = "<group>"; };
 		3E97674E18A1299800AE48D3 /* XDWM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XDWM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E97675118A1299800AE48D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3E97675318A1299800AE48D3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -473,6 +476,8 @@
 				3ECAF93318A25EBF007D3ECE /* LINOrderViewController.m */,
 				3ECED71018A14CB6007B3FC8 /* LINPickFoodViewController.h */,
 				3ECED71118A14CB6007B3FC8 /* LINPickFoodViewController.m */,
+				3E27F55618AF67E50010C77C /* LINRecordViewController.h */,
+				3E27F55718AF67E50010C77C /* LINRecordViewController.m */,
 			);
 			name = "Lin's Module";
 			sourceTree = "<group>";
@@ -608,6 +613,7 @@
 				3ED2AFDA18A652B0001AE706 /* UIImage+GIF.m in Sources */,
 				3E27F54F18ADFF930010C77C /* SHUSignViewController.m in Sources */,
 				3E27F53B18ADFEF70010C77C /* SHUUserInfoViewController.m in Sources */,
+				3E27F55818AF67E50010C77C /* LINRecordViewController.m in Sources */,
 				3ED2AFD718A652B0001AE706 /* SDWebImageManager.m in Sources */,
 				3ED2B01C18A78292001AE706 /* CXAlertView.m in Sources */,
 				3ED2AFD618A652B0001AE706 /* SDWebImageDownloaderOperation.m in Sources */,
