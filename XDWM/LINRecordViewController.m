@@ -36,6 +36,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setBarTitle];
 	// Do any additional setup after loading the view.
     MJRefreshHeaderView *header = [MJRefreshHeaderView header];
     header.scrollView = self.tableview;
@@ -61,6 +62,8 @@
     return _orderList;
 }
 
+
+#pragma mark - refresh control datasource
 - (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView{
     [self fetchOrderListWithRefreshView:refreshView];
 }
@@ -77,6 +80,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    cell.contentView.layer.borderColor = [UIColor blueColor].CGColor;
+    cell.contentView.layer.borderWidth = 1.0;
     
     UILabel *hotelLabel = (UILabel *)[cell.contentView viewWithTag:1];
     UILabel *goodNameLabel = (UILabel *)[cell.contentView viewWithTag:2];
@@ -91,6 +96,19 @@
     numberLabel.text = aRecord[__NUMBER__];
     createtimeLabel.text = aRecord[__CREATETIME__];
     return cell;
+}
+
+#pragma mark - tableview delegate
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.orderList removeObjectAtIndex:indexPath.row];
+        self.count = [self.orderList count];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
 #pragma mark - interact with server method
 
@@ -134,6 +152,11 @@
     } errorHandler:nil];
     [engine enqueueOperation:op];
     
+}
+
+- (void)setBarTitle{
+    LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
+    self.navigationItem.title = [NSString stringWithFormat:@"%@的订单", rootVC.user.userName];
 }
 @end
 

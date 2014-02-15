@@ -232,12 +232,36 @@
     }else if (self.foodKindIndex == 2){
         if (self.count < 3) {
             self.count += 1;
+            
+            UIGraphicsBeginImageContext(CGSizeMake(139, 97));
+            UIImageView *img = (UIImageView *)[correspondCell viewWithTag:1];
+            [img.layer renderInContext:UIGraphicsGetCurrentContext()];
+            UIImage *im = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
+            CGRect rect = [correspondCell.contentView convertRect:img.frame toView:self.tabBarController.view];
+            UIImageView *testView = [[UIImageView alloc] initWithImage:im];
+            testView.frame = rect;
+            [self.tabBarController.view addSubview:testView];
+            
+            [UIView animateWithDuration:1.0 animations:^{
+                CGRect toRect = CGRectMake(250, 40, 0, 0);
+                testView.transform = CGAffineTransformMakeRotation(M_PI);
+                testView.frame = toRect;
+            }];
             [self updateNavBar];
             [self.pickedGoodNumber addObject:[NSNumber numberWithInteger:cellIndexPath.row]];
+        }else{
+            CXAlertView *alertView = [[CXAlertView alloc] initWithTitle:@"最多只能选3种菜" message:@"需要重置菜单的话请点击重置" cancelButtonTitle:@"取消"];
+            [alertView addButtonWithTitle:@"重置" type:CXAlertViewButtonTypeDefault handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
+                [self resetOrderInfo];
+                [alertView dismiss];
+            }];
+            [alertView show];
         }
     }
-
 }
+
 - (void)updateNavBar{
     UILabel *label = (UILabel *)[self.navigationItem.titleView viewWithTag:1];
     label.text = [NSString  stringWithFormat:@"已选:%i/3", self.count];
@@ -389,10 +413,7 @@
         infoView.tag = 1;
         
         [confirmOrderView addButtonWithTitle:@"取消" type:CXAlertViewButtonTypeDefault handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
-            self.count = 0;
-            self.flag = 0;
-            self.pickedGoodNumber = [NSMutableArray new];
-            [self updateNavBar];
+            [self resetOrderInfo];
             [alertView dismiss];
         }];
         [confirmOrderView addButtonWithTitle:@"确定" type:CXAlertViewButtonTypeDefault handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
@@ -404,7 +425,12 @@
 
 }
 
-
+- (void)resetOrderInfo{
+    self.count = 0;
+    self.flag = 0;
+    self.pickedGoodNumber = [NSMutableArray new];
+    [self updateNavBar];
+}
 @end
 
 
