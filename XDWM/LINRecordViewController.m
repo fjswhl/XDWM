@@ -63,7 +63,7 @@
 }
 
 
-#pragma mark - refresh control datasource
+#pragma mark - refresh control delegate
 - (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView{
     [self fetchOrderListWithRefreshView:refreshView];
 }

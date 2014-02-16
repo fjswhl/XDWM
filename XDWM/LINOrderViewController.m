@@ -39,9 +39,6 @@
 	// Do any additional setup after loading the view.
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
-    
-
-
 }
 - (void)viewWillAppear:(BOOL)animated{
     [self fetchUserInfoToRootVC];

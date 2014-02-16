@@ -11,9 +11,9 @@
 #import "ADDRMACRO.h"
 #import "CXAlertView.h"
 #import "LINRecordViewController.h"
+#import "MJRefresh.h"
 
-
-@interface LINPickFoodViewController ()
+@interface LINPickFoodViewController ()<MJRefreshBaseViewDelegate>
 
 @property (nonatomic)       NSInteger count;
 @property (nonatomic)       CGFloat pickedGoodPrice;
@@ -25,6 +25,7 @@
 
 //@property (nonatomic)       NSInteger badgeNumber; //   for record vc's tab bar item's badge
 @property (nonatomic) NSInteger flag;////
+@property (nonatomic, strong) MJRefreshHeaderView *header;
 @end
 
 @implementation LINPickFoodViewController
@@ -44,8 +45,12 @@
     [super viewDidLoad];
     
     self.foodList = [NSMutableArray new];
-    [self fetchGoodsInfo];
 
+
+    self.header = [MJRefreshHeaderView header];
+    self.header.delegate = self;
+    self.header.scrollView = self.tableView;
+    [self.header beginRefreshing];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -79,6 +84,10 @@
     }
 }
 
+- (void)dealloc{
+    [self.header free];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -93,6 +102,10 @@
     return _pickedGoodNumber;
 }
 
+#pragma mark - refresh control delegate
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView{
+    [self fetchGoodsInfoWithRefreshView:refreshView];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -180,7 +193,7 @@
 
 #pragma mark - interaction method
 
-- (void)fetchGoodsInfo{
+- (void)fetchGoodsInfoWithRefreshView:(MJRefreshBaseView *)refreshView{
     MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
     NSString *index = [NSString stringWithFormat:@"%i", self.foodKindIndex];
     NSDictionary *infoDic = @{@"key": index};
@@ -209,6 +222,7 @@
             LINGoodModel *aGoodModel = [[LINGoodModel alloc] initWithDictionary:aGood];
             [self.foodList addObject:aGoodModel];
         }
+        [refreshView endRefreshing];
         [self.tableView reloadData];
     } errorHandler:nil];
     
