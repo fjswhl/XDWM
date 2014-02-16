@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LINOrderViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
-- (void)fetchGoodInfoToRootVC;
+- (void)fetchUserInfoToRootVC;
 @end

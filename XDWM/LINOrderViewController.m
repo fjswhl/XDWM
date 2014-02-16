@@ -41,7 +41,7 @@
     self.tableview.dataSource = self;
     
 
-    [self fetchGoodInfoToRootVC];
+    [self fetchUserInfoToRootVC];
 }
 
 
@@ -105,13 +105,14 @@
     }
 }
 
-- (void)fetchGoodInfoToRootVC{
+- (void)fetchUserInfoToRootVC{
     NSFileManager *fm = [NSFileManager new];
     NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
     if (![fm fileExistsAtPath:[NSString stringWithFormat:@"%@/infoDic.plist", docPath]]) {
         UINavigationController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"login"];
         [self presentViewController:loginVC animated:NO completion:nil];
+        NSLog(@"%@", self.presentingViewController);
     }else{
         NSDictionary *userInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/infoDic.plist", docPath]];
         

@@ -67,7 +67,13 @@
 - (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView{
     [self fetchOrderListWithRefreshView:refreshView];
 }
+- (void)refreshViewEndRefreshing:(MJRefreshBaseView *)refreshView{
+    LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
+    LINRecordViewController *recordVC = rootVC.viewControllers[1];
+    
+    recordVC.tabBarItem.badgeValue = nil;
 
+}
 
 #pragma mark - tableview datasource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -80,7 +86,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.contentView.layer.borderColor = [UIColor blueColor].CGColor;
+    cell.contentView.layer.borderColor = [UIColor colorWithRed:134/255.0 green:34/255.0 blue:34/255.0 alpha:1.0].CGColor;
     cell.contentView.layer.borderWidth = 1.0;
     
     UILabel *hotelLabel = (UILabel *)[cell.contentView viewWithTag:1];
@@ -88,25 +94,41 @@
     UILabel *totalPriceLabel = (UILabel *)[cell.contentView viewWithTag:3];
     UILabel *numberLabel = (UILabel *)[cell.contentView viewWithTag:4];
     UILabel *createtimeLabel = (UILabel *)[cell.contentView viewWithTag:5];
+    UILabel *orderlistIDLabel = (UILabel *)[cell.contentView viewWithTag:6];
     
     NSDictionary *aRecord = self.orderList[indexPath.row];
     hotelLabel.text = aRecord[__GOODSHOTEL__];
     goodNameLabel.text = aRecord[__GOODSNAME__];
-    totalPriceLabel.text = aRecord[__TOTALPRICE__];
-    numberLabel.text = aRecord[__NUMBER__];
+    totalPriceLabel.text = [aRecord[__TOTALPRICE__] stringByAppendingString:@"元"];
+    numberLabel.text = [NSString stringWithFormat:@"数量：%@", aRecord[__NUMBER__]] ;
     createtimeLabel.text = aRecord[__CREATETIME__];
+    orderlistIDLabel.text = [NSString stringWithFormat:@"No.%@", aRecord[__ORDERLISTID__]];
     return cell;
 }
 
 #pragma mark - tableview delegate
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewCellEditingStyleDelete;
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    UILabel *timeLabel = (UILabel *)[cell.contentView viewWithTag:5];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *today = [dateFormatter stringFromDate:[NSDate date]];
+    
+    if ([today isEqualToString:[timeLabel.text substringToIndex:10]]) {
+        return UITableViewCellEditingStyleDelete;
+    }
+    return UITableViewCellEditingStyleNone;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.orderList removeObjectAtIndex:indexPath.row];
         self.count = [self.orderList count];
+        
+        //  更新数据库
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        UILabel *idLabel = (UILabel *)[cell.contentView viewWithTag:6];
+        [self updateRemoteDatabaseWithOrderID: [idLabel.text substringFromIndex:3]];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
@@ -144,7 +166,7 @@
             NSDictionary *aRecord = recordsInfo[key];
             [self.orderList addObject:aRecord];
         }
-        self.count += [self.orderList count];
+        self.count += [keys count];
         [self.tableview reloadData];
         if (refreshView) {
             [refreshView endRefreshing];
@@ -154,6 +176,12 @@
     
 }
 
+- (void)updateRemoteDatabaseWithOrderID:(NSString *)orderID{
+    NSDictionary *dicForPost = @{__ORDERLISTID__: orderID};
+    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"delete_order.php"] params:dicForPost httpMethod:@"POST"];
+    [engine enqueueOperation:op];
+}
 - (void)setBarTitle{
     LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
     self.navigationItem.title = [NSString stringWithFormat:@"%@的订单", rootVC.user.userName];

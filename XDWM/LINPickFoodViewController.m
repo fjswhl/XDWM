@@ -10,7 +10,7 @@
 #import "UIImageView+WebCache.h"
 #import "ADDRMACRO.h"
 #import "CXAlertView.h"
-
+#import "LINRecordViewController.h"
 
 
 @interface LINPickFoodViewController ()
@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSString *createTime;
 @property (nonatomic, strong) NSString *createDay;
 
+//@property (nonatomic)       NSInteger badgeNumber; //   for record vc's tab bar item's badge
 @property (nonatomic) NSInteger flag;////
 @end
 
@@ -56,20 +57,22 @@
         self.navigationItem.titleView = contentView;
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.textColor = [UIColor whiteColor];
         label.tag = 1;
         label.text = @"已选:0/3";
         label.font = [UIFont fontWithName:@"Helvetica Neue" size:13.0];
         [label sizeToFit];
-        label.center = CGPointMake(200, 22);
+        label.center = CGPointMake(200, 23);
         [contentView addSubview:label];
         
         UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
+        title.textColor = [UIColor whiteColor];
         title.text = @"绿茉莉套餐";
         [title sizeToFit];
-        title.center = CGPointMake(110, 22);
+        title.center = CGPointMake(110, 23);
         [contentView addSubview:title];
         
-        UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(popUpConfirmView)];
+        UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStyleBordered target:self action:@selector(popUpConfirmView)];
         self.navigationItem.rightBarButtonItem = rightBarButton;
     }else if (self.foodKindIndex == 1){
         self.navigationItem.title = @"锅巴米饭";
@@ -233,6 +236,7 @@
         if (self.count < 3) {
             self.count += 1;
             
+            //              做一些动画
             UIGraphicsBeginImageContext(CGSizeMake(139, 97));
             UIImageView *img = (UIImageView *)[correspondCell viewWithTag:1];
             [img.layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -395,6 +399,10 @@
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         NSLog(@"%@", [completedOperation responseString]);
         CXAlertView *alertView = [[CXAlertView alloc] initWithTitle:nil message:@"订单成功提交！" cancelButtonTitle:@"确定"];
+        LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
+        LINRecordViewController *recordVC = rootVC.viewControllers[1];
+        
+        recordVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",[recordVC.tabBarItem.badgeValue integerValue] + 1];
         [alertView show];
     } errorHandler:nil];
     [engine enqueueOperation:op];
@@ -418,6 +426,7 @@
         }];
         [confirmOrderView addButtonWithTitle:@"确定" type:CXAlertViewButtonTypeDefault handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
             [self confirmOrder];
+            [self resetOrderInfo];
             [alertView dismiss];
         }];
         [confirmOrderView show];

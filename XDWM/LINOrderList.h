@@ -16,6 +16,7 @@
 #define __TOTALPRICE__      @"total_price"
 #define __CREATETIME__      @"create_time"
 #define __CREATEDAY__       @"create_time_day"
+#define __ORDERLISTID__     @"orderlist_id"
 @interface LINOrderList : NSObject
 
 @property (nonatomic) NSInteger orderID;

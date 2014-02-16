@@ -11,7 +11,7 @@
 #import "LINUserModel.h"
 #import "ADDRMACRO.h"
 #import "LINOrderViewController.h"
-
+#import "LINRootViewController.h"
 @interface SHULoginViewController ()
 
 @property (strong, nonatomic) MKNetworkEngine *engine;
@@ -87,8 +87,9 @@
                 self.navigationController.navigationBarHidden = YES;
                 
              //   [self performSegueWithIdentifier:@"segueToMain" sender:self];
-                LINOrderViewController *orderVC = (LINOrderViewController *)self.presentingViewController;
-                [orderVC fetchGoodInfoToRootVC]; //调父视图的方法或者给父视图传消息
+                LINRootViewController *rootVC = (LINRootViewController *)self.presentingViewController;
+                LINOrderViewController *mainVC = (LINOrderViewController *)[rootVC.viewControllers[0] topViewController];
+                [mainVC fetchUserInfoToRootVC]; //调父视图的方法或者给父视图传消息
                 
                 [self dismissViewControllerAnimated:YES completion:nil];
                 

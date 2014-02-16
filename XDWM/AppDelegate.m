@@ -17,7 +17,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-
+    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_ancmt.php"] params:@{@"key1":@"10", @"key2":@"0"} httpMethod:@"POST"];
+    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        NSLog(@"%@", [completedOperation responseString]);
+    } errorHandler:nil];
+    [engine enqueueOperation:op];
     return YES;
 }
 							
