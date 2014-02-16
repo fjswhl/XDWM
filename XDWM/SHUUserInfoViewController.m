@@ -28,6 +28,14 @@
     }
     return self;
 }
+- (IBAction)logout:(id)sender {
+    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    docPath = [docPath stringByAppendingString:@"/infoDic.plist"];
+    NSFileManager *fm = [NSFileManager new];
+    [fm removeItemAtPath:docPath error:nil];
+    [self.tabBarController setSelectedIndex:0];
+}
+
 
 - (void)viewDidLoad
 {

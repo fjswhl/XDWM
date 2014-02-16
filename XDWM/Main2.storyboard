@@ -1090,6 +1090,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="个人信息" id="oiH-a4-CTb">
+                        <barButtonItem key="leftBarButtonItem" title="注销" id="XGp-Od-JTD">
+                            <connections>
+                                <action selector="logout:" destination="raB-Rg-tof" id="K9h-TV-FDL"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="修改信息" id="4nM-k5-vBF">
                             <connections>
                                 <segue destination="rMH-OL-glC" kind="modal" identifier="segueToModify" id="qWA-cR-Xlo"/>

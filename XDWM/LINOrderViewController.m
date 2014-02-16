@@ -41,9 +41,11 @@
     self.tableview.dataSource = self;
     
 
+
+}
+- (void)viewWillAppear:(BOOL)animated{
     [self fetchUserInfoToRootVC];
 }
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -78,9 +80,13 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section == 0) {
-        return @"请选择菜品种类";
+        return @"    请选择菜品种类";
     }
     return nil;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
+    return @"    已经有超过1000次\n    通过我们的网站解决他们的晚饭\n    我们期待为更多的同学服务......\n    预定晚餐,17:00前下单,18:30之前送到！";
 }
 
 #pragma mark - tableview delegate
@@ -111,8 +117,7 @@
     
     if (![fm fileExistsAtPath:[NSString stringWithFormat:@"%@/infoDic.plist", docPath]]) {
         UINavigationController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"login"];
-        [self presentViewController:loginVC animated:NO completion:nil];
-        NSLog(@"%@", self.presentingViewController);
+        [self presentViewController:loginVC animated:YES completion:nil];
     }else{
         NSDictionary *userInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/infoDic.plist", docPath]];
         
