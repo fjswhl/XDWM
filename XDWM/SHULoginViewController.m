@@ -87,10 +87,8 @@
                 self.navigationController.navigationBarHidden = YES;
                 
              //   [self performSegueWithIdentifier:@"segueToMain" sender:self];
-                LINRootViewController *rootVC = (LINRootViewController *)self.presentingViewController;
-                LINOrderViewController *mainVC = (LINOrderViewController *)[rootVC.viewControllers[0] topViewController];
-                [mainVC fetchUserInfoToRootVC]; //调父视图的方法或者给父视图传消息
-                
+
+                [self mainViewControllerGetUserInfo];
                 [self dismissViewControllerAnimated:YES completion:nil];
                 
                 
@@ -138,4 +136,10 @@
     [self resignFirstResponder];
 }
 
+- (void)mainViewControllerGetUserInfo{
+    //  登入后， 主视图获取用户信息
+    LINRootViewController *rootVC = (LINRootViewController *)self.presentingViewController;
+    LINOrderViewController *mainVC = (LINOrderViewController *)[rootVC.viewControllers[0] topViewController];
+    [mainVC fetchUserInfoToRootVC];
+}
 @end
