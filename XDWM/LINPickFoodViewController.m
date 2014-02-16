@@ -16,6 +16,7 @@
 @interface LINPickFoodViewController ()<MJRefreshBaseViewDelegate>
 
 @property (nonatomic)       NSInteger count;
+@property (nonatomic)       NSInteger addFoodCount;
 @property (nonatomic)       CGFloat pickedGoodPrice;
 @property (nonatomic)       CGFloat pickedGoodTotalPrice;
 @property (nonatomic, strong) NSMutableArray *pickedGoodNumber;
@@ -123,7 +124,7 @@
         if (section == 0) {
             return 1;
         }else if (section == 1){
-            return 3;
+            return 4;
         }
     }
     // Return the number of rows in the section.
@@ -351,6 +352,19 @@
             gecell.textLabel.text = [NSString stringWithFormat:@"购买数量： %i份", self.count];
             [gecell.contentView addSubview:stepper];
             
+        }else if (indexPath.row == 3){
+            UIStepper *stepper = [[UIStepper alloc] initWithFrame:CGRectMake(170, 0, 70, 29)];
+            stepper.value = self.addFoodCount;
+            stepper.center = CGPointMake(stepper.center.x, gecell.contentView.frame.size.height / 2);
+            stepper.minimumValue = 0;
+            stepper.maximumValue = 10;
+            stepper.stepValue = 1;
+            stepper.continuous = YES;
+            stepper.autorepeat = YES;
+            stepper.transform = CGAffineTransformMakeScale(0.8, 1);
+            [stepper addTarget:self action:@selector(addFoodCountChanged:) forControlEvents:UIControlEventValueChanged];
+            gecell.textLabel.text = [NSString stringWithFormat:@"加饭： %i份", self.addFoodCount];
+            [gecell.contentView addSubview:stepper];
         }
         return gecell;
     }
@@ -359,9 +373,14 @@
 
 
 - (void)orderAmountChanged:(UIStepper *)sender{
-    NSLog(@"%lf", sender.value);
     self.count = (int)sender.value;
     self.pickedGoodTotalPrice = self.count * self.pickedGoodPrice;
+    UITableView *infoTableview = (UITableView *)sender.superview.superview.superview.superview.superview;
+    [infoTableview reloadData];
+}
+
+- (void)addFoodCountChanged:(UIStepper *)sender{
+    self.addFoodCount = (int)sender.value;
     UITableView *infoTableview = (UITableView *)sender.superview.superview.superview.superview.superview;
     [infoTableview reloadData];
 }
@@ -387,6 +406,7 @@
     NSString *userSushehao = user.userSushehao;
     NSString *userZuoyou = user.userZuoyou;
     
+    NSString *addFoodNumber = [NSString stringWithFormat:@"%i", self.addFoodCount];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *createTime = [dateFormatter stringFromDate:today];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
@@ -406,7 +426,8 @@
                                  __USERSUSHEHAO__:userSushehao,
                                  __USERZUOYOU__:userZuoyou,
                                  __CREATETIME__:createTime,
-                                 __CREATEDAY__:createDay};
+                                 __CREATEDAY__:createDay,
+                                 __ADDFOODNUM__:addFoodNumber};
     
     MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
     MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"submit_order.php"] params:forPostDic httpMethod:@"POST"];
@@ -450,6 +471,7 @@
 
 - (void)resetOrderInfo{
     self.count = 0;
+    self.addFoodCount = 0;
     self.flag = 0;
     self.pickedGoodNumber = [NSMutableArray new];
     [self updateNavBar];
