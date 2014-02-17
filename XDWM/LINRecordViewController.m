@@ -13,13 +13,15 @@
 #import "LINRootViewController.h"
 #import "LINOrderList.h"
 #import "MJRefresh.h"
-@interface LINRecordViewController ()<UITableViewDataSource, UITableViewDelegate, MJRefreshBaseViewDelegate>
-@property (nonatomic) NSInteger count;  //表示下拉刷新时当前表已存在多少条记录
+
+@interface LINRecordViewController ()<UITableViewDataSource, UITableViewDelegate, MJRefreshBaseViewDelegate, UIActionSheetDelegate>
+@property (nonatomic) NSInteger count;  //表示下拉刷新时当前表已存在多少条记录，非常重要！ 用于正确获取服务器发来的数据
 
 @property (strong, nonatomic) IBOutlet UITableView *tableview;
 
 @property (strong, nonatomic) NSMutableArray *orderList;
-
+@property (strong, nonatomic) NSString *orderIDForDelete;
+@property (strong, nonatomic) NSIndexPath *indexPathForDelete;
 @end
 
 @implementation LINRecordViewController
@@ -67,6 +69,7 @@
 - (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView{
     [self fetchOrderListWithRefreshView:refreshView];
 }
+
 - (void)refreshViewEndRefreshing:(MJRefreshBaseView *)refreshView{
     LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
     LINRecordViewController *recordVC = rootVC.viewControllers[1];
@@ -122,14 +125,31 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.orderList removeObjectAtIndex:indexPath.row];
-        self.count = [self.orderList count];
+//        [self.orderList removeObjectAtIndex:indexPath.row];
+//        self.count = [self.orderList count];
         
-        //  更新数据库
+        //  弹出确认删除的ActionSheet
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"确认删除这条订单吗?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
+        
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         UILabel *idLabel = (UILabel *)[cell.contentView viewWithTag:6];
-        [self updateRemoteDatabaseWithOrderID: [idLabel.text substringFromIndex:3]];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        self.orderIDForDelete = [idLabel.text substringFromIndex:3];
+        [actionSheet showFromTabBar:self.tabBarController.tabBar];
+//        [self updateRemoteDatabaseWithOrderID: [idLabel.text substringFromIndex:3]];
+//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        self.indexPathForDelete = indexPath;
+    }
+}
+
+//      若用户确认删除，则更新数据库
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == actionSheet.destructiveButtonIndex) {
+        [self.orderList removeObjectAtIndex:self.indexPathForDelete.row];
+        self.count = [self.orderList count];
+        [self.tableview deleteRowsAtIndexPaths:@[self.indexPathForDelete] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        [self updateRemoteDatabaseWithOrderID:self.orderIDForDelete];
+        [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
     }
 }
 #pragma mark - interact with server method
