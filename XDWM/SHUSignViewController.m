@@ -147,6 +147,14 @@
                 NSLog(@"%@",st);
                 
                 if ([st isEqualToString:@"200"]) {
+                    
+                    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                    
+                    NSDictionary *infoDic = @{__USERNAME__ : userName,
+                                              __PASSWORD__ : userPassword};
+                    
+                    [infoDic writeToFile:[NSString stringWithFormat:@"%@/infoDic.plist",docPath] atomically:YES];
+                    
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"返回信息"
                                                                     message:@"注册成功"
                                                                    delegate:self

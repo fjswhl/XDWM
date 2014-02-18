@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "MKNetworkEngine.h"
 #import "MKNetworkOperation.h"
-
+#import "LINRootViewController.h"
 #import "ADDRMACRO.h"
 #include "LINUserModel.h"
 @implementation AppDelegate
@@ -17,12 +17,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_ancmt.php"] params:@{@"key1":@"10", @"key2":@"0"} httpMethod:@"POST"];
-    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
-        NSLog(@"%@", [completedOperation responseString]);
-    } errorHandler:nil];
-    [engine enqueueOperation:op];
+//    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+//    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_ancmt.php"] params:@{@"key1":@"10", @"key2":@"0"} httpMethod:@"POST"];
+//    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+//        NSLog(@"%@", [completedOperation responseString]);
+//    } errorHandler:nil];
+//    [engine enqueueOperation:op];
+
+    LINRootViewController *tbc = (LINRootViewController *)self.window.rootViewController;
+    tbc.delegate = self;
     return YES;
 }
 							
@@ -53,4 +56,83 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (id<UIViewControllerAnimatedTransitioning>)tabBarController:(UITabBarController *)tabBarController animationControllerForTransitionFromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
+    return self;
+}
+
+- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext{
+    return 0.4;
+}
+
+- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext{
+    UIViewController *vc1 = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *vc2 = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    
+    UIView *con = [transitionContext containerView];
+    CGRect r1start = [transitionContext initialFrameForViewController:vc1];
+    CGRect r2end = [transitionContext finalFrameForViewController:vc2];
+    UIView *v1 = vc1.view;
+    UIView *v2 = vc2.view;
+    
+    UITabBarController *tbc = (UITabBarController *)self.window.rootViewController;
+    int index1 = [tbc.viewControllers indexOfObject:vc1];
+    int index2 = [tbc.viewControllers indexOfObject:vc2];
+    int dir = index1 < index2 ? 1 : -1;
+    CGRect r = r1start;
+    r.origin.x -= r.size.width * (dir / 4.0);
+    CGRect r1end = r;
+    r = r2end;
+    r.origin.x += r.size.width *dir;
+    CGRect r2start = r;
+    
+    v2.frame = r2start;
+    
+    UIView *shalldow = [[UIView alloc] initWithFrame:r2end];
+    shalldow.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+    shalldow.alpha = 0;
+    [con addSubview:shalldow];
+    [con addSubview:v2];
+
+    [UIView animateWithDuration:0.4 animations:^{
+        shalldow.alpha = 1;
+        v1.frame = r1end;
+        v2.frame = r2end;
+    }completion:^(BOOL finished) {
+        [transitionContext completeTransition:YES];
+    }];
+}
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

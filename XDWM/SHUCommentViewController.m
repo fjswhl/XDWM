@@ -11,6 +11,8 @@
 #import "SHUCommentCell.h"
 #import "SHUCommentModel.h"
 #import "ADDRMACRO.h"
+#import "MJRefresh.h"
+
 #define kPullComment   @"10"
 #define kPullBegin     @"0"
 #define kDeltaPull     @"15"
@@ -25,6 +27,9 @@
 @property (strong, nonatomic) NSMutableArray *dates;
 
 @property (nonatomic) NSInteger refreshCount;
+
+@property (strong, nonatomic) MJRefreshHeaderView *header;
+@property (strong, nonatomic) MJRefreshFooterView *footer;
 
 @end
 
@@ -47,62 +52,63 @@
     _contents = [[NSMutableArray alloc] init];
     _dates = [[NSMutableArray alloc] init];
     
-    NSDictionary *postParams = @{@"key1" : kPullComment,
-                                 @"key2" : kPullBegin};
+    self.footer = [MJRefreshFooterView footer];
+    self.footer.scrollView  = self.tableView;
     
-    _engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+    self.header = [MJRefreshHeaderView header];
+    self.header.scrollView = self.tableView;
     
-    MKNetworkOperation *op = [_engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"messageboard.php"] params:postParams httpMethod:@"POST"];
+    __weak SHUCommentViewController *weak_self = self;
     
-    [op addCompletionHandler:^(MKNetworkOperation *compeletedOpearation){
+    weak_self.footer.beginRefreshingBlock = ^(MJRefreshBaseView *refreshView){
         
-        NSDictionary *returnDic = [compeletedOpearation responseJSON];
+        ++_refreshCount;
         
-//        NSLog(@"%@",compeletedOpearation.responseString);
+        NSInteger valueForKey2 = _refreshCount * [kDeltaPull integerValue];
+        NSNumber *valeForKey2_Object = [NSNumber numberWithInteger:valueForKey2];
         
-        if (returnDic) {
-            _commentDic = [returnDic mutableCopy];
+        NSDictionary *postParams = @{@"key1" : kPullComment,
+                                     @"key2" : [valeForKey2_Object stringValue]};
+        
+        MKNetworkOperation *op = [_engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"messageboard.php"] params:postParams httpMethod:@"POST"];
+        
+        [op addCompletionHandler:^(MKNetworkOperation *compeletedOpearation){
             
-            for (int i = 0; i < [[_commentDic allKeys] count]; ++i) {
+            NSDictionary *returnDic = [compeletedOpearation responseJSON];
+            
+            //        NSLog(@"%@",compeletedOpearation.responseString);
+            
+            if (returnDic) {
+                _commentDic = [returnDic mutableCopy];
                 
-                NSDictionary *dic = [_commentDic objectForKey:[NSString stringWithFormat:@"%d",i]];
+                for (int i = 0; i < [[_commentDic allKeys] count]; ++i) {
+                    
+                    NSDictionary *dic = [_commentDic objectForKey:[NSString stringWithFormat:@"%d",i]];
+                    
+                    NSString *user = [dic objectForKey:__USER_NAME__];
+                    NSString *content = [dic objectForKey:__CONTENT__];
+                    NSString *date = [dic objectForKey:__CREATETIME__];
+                    
+                    [_users addObject:user];
+                    [_contents addObject:content];
+                    [_dates addObject:date];
+                }
                 
-                NSString *user = [dic objectForKey:__USER_NAME__];
-                NSString *content = [dic objectForKey:__CONTENT__];
-                NSString *date = [dic objectForKey:__CREATETIME__];
-                
-                [_users addObject:user];
-                [_contents addObject:content];
-                [_dates addObject:date];
+                [refreshView endRefreshing];
+                [self.tableView reloadData];
             }
             
-            [self.tableView reloadData];
-        }
+        }errorHandler:^(MKNetworkOperation *completedOpeation, NSError *error){
+            
+            NSLog(@"%@",error);
+            
+        }];
         
-    }errorHandler:^(MKNetworkOperation *completedOpeation, NSError *error){
+        [_engine enqueueOperation:op];
         
-        NSLog(@"%@",error);
-        
-    }];
+    };
     
-    [_engine enqueueOperation:op];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    
-    [self.refreshControl addTarget:self action:@selector(RefreshViewControlEventValueChanged) forControlEvents:UIControlEventValueChanged];
-}
-
-- (void)RefreshViewControlEventValueChanged
-{
-    // 第一次刷新取得最新信息，之后则取得以往留言
-    
-    if (_refreshCount == 0) {
+    weak_self.header.beginRefreshingBlock = ^(MJRefreshBaseView *refreshView){
         
         NSDictionary *postParams = @{@"key1" : kPullComment,
                                      @"key2" : kPullBegin};
@@ -124,10 +130,13 @@
                 NSString *content = [dic objectForKey:__CONTENT__];
                 NSString *date = [dic objectForKey:__CREATETIME__];
                 
-                [_users insertObject:user atIndex:0];
-                [_contents insertObject:content atIndex:0];
-                [_dates insertObject:date atIndex:0];
+                if (![_contents[0] isEqualToString:content] && ![_dates[0] isEqualToString:date]) {
+                    [_users insertObject:user atIndex:0];
+                    [_contents insertObject:content atIndex:0];
+                    [_dates insertObject:date atIndex:0];
+                }
                 
+                [refreshView endRefreshing];
                 [self.tableView reloadData];
             }
             
@@ -139,15 +148,15 @@
         
         [_engine enqueueOperation:op2];
         
-    }
+    };
     
-    ++_refreshCount;
     
-    NSInteger valueForKey2 = _refreshCount * [kDeltaPull integerValue];
-    NSNumber *valeForKey2_Object = [NSNumber numberWithInteger:valueForKey2];
+    
     
     NSDictionary *postParams = @{@"key1" : kPullComment,
-                                 @"key2" : [valeForKey2_Object stringValue]};
+                                 @"key2" : kPullBegin};
+    
+    _engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
     
     MKNetworkOperation *op = [_engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"messageboard.php"] params:postParams httpMethod:@"POST"];
     
@@ -173,7 +182,6 @@
                 [_dates addObject:date];
             }
             
-            [self.refreshControl endRefreshing];
             [self.tableView reloadData];
         }
         
@@ -184,6 +192,12 @@
     }];
     
     [_engine enqueueOperation:op];
+    
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -191,6 +205,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - MJRefresh
 
 #pragma mark - Table view data source
 
@@ -209,72 +225,80 @@
     SHUCommentCell *cell = (SHUCommentCell *)[tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
     
     cell.commentContent.text = [_contents objectAtIndex:indexPath.row];
+    //    [cell.commentContent sizeToFit];
     
     cell.userName.text = [_users objectAtIndex:indexPath.row];
+    //    [cell.userName sizeToFit];
     
     cell.createTime.text = [_dates objectAtIndex:indexPath.row];
+    //    [cell.createTime sizeToFit];
     
-//    NSLog(@"%@",NSStringFromCGSize(cell.frame.size));
+    CGRect r = cell.frame;
+    r.size.height = 0 + cell.commentContent.frame.size.height + cell.userName.frame.size.height + cell.createTime.frame.size.height;
+    cell.frame = r;
+    
+    //    NSLog(@"%@",NSStringFromCGSize(cell.frame.size));
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 200;
+    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    return cell.frame.size.height;
 }
 
 
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ }
+ else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 /*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
+ #pragma mark - Navigation
+ 
+ // In a story board-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ 
  */
 
 @end

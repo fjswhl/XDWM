@@ -85,6 +85,15 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    NSFileManager *fm = [NSFileManager new];
+    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    
+    if (![fm fileExistsAtPath:[NSString stringWithFormat:@"%@/infoDic.plist", docPath]]){
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)dealloc{
     [self.header free];
 }
