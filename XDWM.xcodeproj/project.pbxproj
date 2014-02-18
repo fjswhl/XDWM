@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E044B6318B38E2600695D91 /* XinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E044B6218B38E2600695D91 /* XinViewController.m */; };
 		3E27F52C18AD26140010C77C /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F52B18AD26140010C77C /* TestViewController.m */; };
 		3E27F53118AD35CC0010C77C /* 个人.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E27F52D18AD35CC0010C77C /* 个人.png */; };
 		3E27F53218AD35CC0010C77C /* 公告.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E27F52E18AD35CC0010C77C /* 公告.png */; };
@@ -91,6 +92,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E044B6018B38E0500695D91 /* ANNOUNCEMEMNT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANNOUNCEMEMNT.h; sourceTree = "<group>"; };
+		3E044B6118B38E2600695D91 /* XinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XinViewController.h; sourceTree = "<group>"; };
+		3E044B6218B38E2600695D91 /* XinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XinViewController.m; sourceTree = "<group>"; };
 		3E27F52A18AD26140010C77C /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		3E27F52B18AD26140010C77C /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		3E27F52D18AD35CC0010C77C /* 个人.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "个人.png"; sourceTree = "<group>"; };
@@ -343,6 +347,8 @@
 				3ED2AFDE18A65F78001AE706 /* Model */,
 				3E97676018A1299800AE48D3 /* AppDelegate.h */,
 				3E97676118A1299800AE48D3 /* AppDelegate.m */,
+				3E044B6118B38E2600695D91 /* XinViewController.h */,
+				3E044B6218B38E2600695D91 /* XinViewController.m */,
 				3ECAF93818A26304007D3ECE /* Main.storyboard */,
 				3E27F55418AE00160010C77C /* Main2.storyboard */,
 				3E27F52A18AD26140010C77C /* TestViewController.h */,
@@ -470,6 +476,7 @@
 		3ED2AFDE18A65F78001AE706 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3E044B6018B38E0500695D91 /* ANNOUNCEMEMNT.h */,
 				3E27F55118ADFFCC0010C77C /* SHUCommentModel.h */,
 				3E27F55218ADFFCC0010C77C /* SHUCommentModel.m */,
 				3ED2AFF218A76B8D001AE706 /* ADDRMACRO.h */,
@@ -660,6 +667,7 @@
 				3ED2AFDB18A652B0001AE706 /* UIImage+MultiFormat.m in Sources */,
 				3E97676218A1299800AE48D3 /* AppDelegate.m in Sources */,
 				3EF0F01618B11F61007563DF /* MJRefreshHeaderView.m in Sources */,
+				3E044B6318B38E2600695D91 /* XinViewController.m in Sources */,
 				3ED2AFAD18A61679001AE706 /* MKNetworkOperation.m in Sources */,
 				3EF0F01518B11F61007563DF /* MJRefreshFooterView.m in Sources */,
 				3ED2AFAA18A61679001AE706 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,

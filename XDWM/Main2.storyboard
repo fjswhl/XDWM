@@ -21,7 +21,7 @@
                     <connections>
                         <segue destination="rcg-S4-cwj" kind="relationship" relationship="viewControllers" id="jTS-DQ-Tul"/>
                         <segue destination="k53-IG-SKh" kind="relationship" relationship="viewControllers" id="I7k-xz-pNj"/>
-                        <segue destination="bQy-fI-M8o" kind="relationship" relationship="viewControllers" id="kGY-fk-yW2"/>
+                        <segue destination="Vkf-JV-Ocd" kind="relationship" relationship="viewControllers" id="z8r-wW-AdT"/>
                         <segue destination="rc1-7X-4CF" kind="relationship" relationship="viewControllers" id="9fy-0q-Y1p"/>
                         <segue destination="AID-NX-PEf" kind="relationship" relationship="viewControllers" id="0EI-ht-rSu"/>
                     </connections>
@@ -381,25 +381,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fbk-u2-0oo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="333" y="1272"/>
-        </scene>
-        <!--View Controller - 公告-->
-        <scene sceneID="7VW-ID-pg5">
-            <objects>
-                <viewController id="bQy-fI-M8o" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="hUM-j8-1Eg"/>
-                        <viewControllerLayoutGuide type="bottom" id="W06-Jg-iqB"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="AQG-Va-IYX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="公告" image="公告.png" id="faP-IE-5Qx"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MSR-XO-Rbi" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="885" y="1558"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="Phg-HF-DS3">
@@ -796,6 +777,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" red="0.69803921570000005" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -815,6 +799,11 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="4Rw-Fi-hUO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.69803921570000005" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1467,6 +1456,60 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TgS-Kx-zEd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1828" y="-105"/>
+        </scene>
+        <!--Xin View Controller - 公告-->
+        <scene sceneID="5po-40-sh2">
+            <objects>
+                <viewController id="1zA-2o-XFc" customClass="XinViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3WG-CI-HeC"/>
+                        <viewControllerLayoutGuide type="bottom" id="DVj-Q7-kNe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3dL-ye-tYL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3lz-DH-DNy">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="632"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="1zA-2o-XFc" id="q6Q-O1-xS0"/>
+                                    <outlet property="delegate" destination="1zA-2o-XFc" id="ld7-A7-kaW"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="公告" id="qNF-7I-ahT"/>
+                    <connections>
+                        <outlet property="tableView1" destination="3lz-DH-DNy" id="Yg5-E5-XPS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6gE-Cy-4sa" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1590" y="1499"/>
+        </scene>
+        <!--Navigation Controller - 公告-->
+        <scene sceneID="5Va-aI-bqj">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="Vkf-JV-Ocd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="公告" image="公告.png" id="g07-k9-IsZ"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ExO-7L-npI">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.69803921570000005" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="1zA-2o-XFc" kind="relationship" relationship="rootViewController" id="Nxb-IV-Ism"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SoF-lg-UKl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1104" y="1499"/>
         </scene>
     </scenes>
     <resources>
