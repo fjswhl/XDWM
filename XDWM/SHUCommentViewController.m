@@ -225,13 +225,13 @@
     SHUCommentCell *cell = (SHUCommentCell *)[tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
     
     cell.commentContent.text = [_contents objectAtIndex:indexPath.row];
-    //    [cell.commentContent sizeToFit];
+//        [cell.commentContent sizeToFit];
     
     cell.userName.text = [_users objectAtIndex:indexPath.row];
-    //    [cell.userName sizeToFit];
+//        [cell.userName sizeToFit];
     
     cell.createTime.text = [_dates objectAtIndex:indexPath.row];
-    //    [cell.createTime sizeToFit];
+//        [cell.createTime sizeToFit];
     
     CGRect r = cell.frame;
     r.size.height = 0 + cell.commentContent.frame.size.height + cell.userName.frame.size.height + cell.createTime.frame.size.height;

@@ -163,11 +163,16 @@
                     [alert show];
                 }else{
                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"返回信息"
-                                                                    message:@"注册成功"
+                                                                    message:@"用户名已存在"
                                                                    delegate:self
                                                           cancelButtonTitle:@"知道了"
                                                           otherButtonTitles:nil];
                     [alert show];
+                    _userName.text = @"";
+                    _userPassword.text = @"";
+                    _passwordConfirm.text = @"";
+                    [_userName becomeFirstResponder];
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 }
                 
                 
