@@ -10,7 +10,6 @@
 
 @interface SHUCommentCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *commentContent;
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UILabel *createTime;
 

@@ -31,6 +31,8 @@
 @property (strong, nonatomic) MJRefreshHeaderView *header;
 @property (strong, nonatomic) MJRefreshFooterView *footer;
 
+
+@property (strong, nonatomic) UITapGestureRecognizer *tap;
 @end
 
 @implementation SHUCommentViewController
@@ -198,6 +200,8 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.separatorColor = [UIColor colorWithRed:134/255.0 green:34/255.0 blue:34/255.0 alpha:1.0];
+    [self addGestureReconizer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -206,6 +210,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidDisappear:(BOOL)animated{
+    [self removeGestureReconizer];
+}
 #pragma mark - MJRefresh
 
 #pragma mark - Table view data source
@@ -224,8 +231,8 @@
 {
     SHUCommentCell *cell = (SHUCommentCell *)[tableView dequeueReusableCellWithIdentifier:@"CommentCell"];
     
-    cell.commentContent.text = [_contents objectAtIndex:indexPath.row];
-//        [cell.commentContent sizeToFit];
+//    cell.commentContent.text = [_contents objectAtIndex:indexPath.row];
+    
     
     cell.userName.text = [_users objectAtIndex:indexPath.row];
 //        [cell.userName sizeToFit];
@@ -233,19 +240,34 @@
     cell.createTime.text = [_dates objectAtIndex:indexPath.row];
 //        [cell.createTime sizeToFit];
     
-    CGRect r = cell.frame;
-    r.size.height = 0 + cell.commentContent.frame.size.height + cell.userName.frame.size.height + cell.createTime.frame.size.height;
-    cell.frame = r;
+    if (![cell viewWithTag:100]) {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.tag = 100;
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        label.numberOfLines = 0;
+        [cell.contentView addSubview:label];
+    }
     
-    //    NSLog(@"%@",NSStringFromCGSize(cell.frame.size));
+    UILabel *label = (UILabel *)[cell.contentView viewWithTag:100];
+    label.text =[@"       " stringByAppendingString: [self.contents objectAtIndex:indexPath.row]];
+    
+    CGSize constraint = CGSizeMake(290, 20000);
+    CGSize size = [label.text sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    label.frame = CGRectMake(15, 40, 290, size.height);
+
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-    return cell.frame.size.height;
+//    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+//    return cell.frame.size.height;
+    NSString *text = self.contents[indexPath.row];
+    
+    CGSize constraint = CGSizeMake(290, 20000);
+    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    return size.height + 70;
 }
 
 
@@ -300,5 +322,38 @@
  }
  
  */
+- (void)addGestureReconizer{
+    self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapNavBar)];
+    self.tap.numberOfTapsRequired = 1;
+    [self.navigationController.navigationBar addGestureRecognizer:self.tap];
+}
 
+- (void)removeGestureReconizer{
+    [self.navigationController.navigationBar removeGestureRecognizer:self.tap];
+}
+
+- (void)tapNavBar{
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+}
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
