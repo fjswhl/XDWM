@@ -169,6 +169,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellTableIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellTableIdentifier];
+        cell.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
     }
     //label
     NSDictionary *dicForPost = @{@"key1":@"10",@"key2":@"0"};
