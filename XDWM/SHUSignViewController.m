@@ -144,7 +144,7 @@
                 NSData *reData = [compeletedOperation responseData];
                 NSString *st = [[NSString alloc] initWithData:reData encoding:NSUTF8StringEncoding];
                 
-                NSLog(@"%@",st);
+//                NSLog(@"%@",st);
                 
                 if ([st isEqualToString:@"200"]) {
                     

@@ -64,42 +64,73 @@
     return 0.4;
 }
 
+//- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext{
+//    UIViewController *vc1 = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+//    UIViewController *vc2 = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+//    
+//    UIView *con = [transitionContext containerView];
+//    CGRect r1start = [transitionContext initialFrameForViewController:vc1];
+//    CGRect r2end = [transitionContext finalFrameForViewController:vc2];
+//    UIView *v1 = vc1.view;
+//    UIView *v2 = vc2.view;
+//    
+//    UITabBarController *tbc = (UITabBarController *)self.window.rootViewController;
+//    int index1 = [tbc.viewControllers indexOfObject:vc1];
+//    int index2 = [tbc.viewControllers indexOfObject:vc2];
+//    int dir = index1 < index2 ? 1 : -1;
+//    CGRect r = r1start;
+//    r.origin.x -= r.size.width * (dir / 4.0);
+//    CGRect r1end = r;
+//    r = r2end;
+//    r.origin.x += r.size.width *dir;
+//    CGRect r2start = r;
+//    
+//    v2.frame = r2start;
+//    
+//    UIView *shalldow = [[UIView alloc] initWithFrame:r2end];
+//    shalldow.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+//    shalldow.alpha = 0;
+//    [con addSubview:shalldow];
+//    [con addSubview:v2];
+//
+//    [UIView animateWithDuration:0.4 animations:^{
+//        shalldow.alpha = 1;
+//        v1.frame = r1end;
+//        v2.frame = r2end;
+//    }completion:^(BOOL finished) {
+//        [transitionContext completeTransition:YES];
+//    }];
+//}
+
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext{
-    UIViewController *vc1 = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIViewController *vc2 = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+
+    UINavigationController *vc2 = (UINavigationController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     
     UIView *con = [transitionContext containerView];
-    CGRect r1start = [transitionContext initialFrameForViewController:vc1];
     CGRect r2end = [transitionContext finalFrameForViewController:vc2];
-    UIView *v1 = vc1.view;
+
     UIView *v2 = vc2.view;
     
-    UITabBarController *tbc = (UITabBarController *)self.window.rootViewController;
-    int index1 = [tbc.viewControllers indexOfObject:vc1];
-    int index2 = [tbc.viewControllers indexOfObject:vc2];
-    int dir = index1 < index2 ? 1 : -1;
-    CGRect r = r1start;
-    r.origin.x -= r.size.width * (dir / 4.0);
-    CGRect r1end = r;
-    r = r2end;
-    r.origin.x += r.size.width *dir;
-    CGRect r2start = r;
+
     
-    v2.frame = r2start;
-    
+    v2.frame = r2end;
+
     UIView *shalldow = [[UIView alloc] initWithFrame:r2end];
     shalldow.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
     shalldow.alpha = 0;
     [con addSubview:shalldow];
     [con addSubview:v2];
-
+    
+        v2.transform = CGAffineTransformMakeScale(0.7, 0.7);
     [UIView animateWithDuration:0.4 animations:^{
         shalldow.alpha = 1;
-        v1.frame = r1end;
-        v2.frame = r2end;
+        //        v1.frame = r1end;
+        //        v2.frame = r2end;
+        v2.transform = CGAffineTransformMakeScale(1, 1);
     }completion:^(BOOL finished) {
         [transitionContext completeTransition:YES];
     }];
+    //    [tbc setNeedsStatusBarAppearanceUpdate];
 }
 @end
 
