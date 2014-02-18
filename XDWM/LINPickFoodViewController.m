@@ -442,12 +442,17 @@
     MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"submit_order.php"] params:forPostDic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         NSLog(@"%@", [completedOperation responseString]);
-        CXAlertView *alertView = [[CXAlertView alloc] initWithTitle:nil message:@"订单成功提交！" cancelButtonTitle:@"确定"];
+ //       CXAlertView *alertView = [[CXAlertView alloc] initWithTitle:nil message:@"订单成功提交！" cancelButtonTitle:@"确定"];
         LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
         LINRecordViewController *recordVC = rootVC.viewControllers[1];
         
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeCustomView;
+        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+        hud.labelText = @"订单提交成功！";
+        [hud hide:YES afterDelay:1.5];
         recordVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",[recordVC.tabBarItem.badgeValue integerValue] + 1];
-        [alertView show];
+ //       [alertView show];
     } errorHandler:nil];
     [engine enqueueOperation:op];
     

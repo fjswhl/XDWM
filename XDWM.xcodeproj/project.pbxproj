@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3E044B6318B38E2600695D91 /* XinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E044B6218B38E2600695D91 /* XinViewController.m */; };
+		3E044B6618B3B19D00695D91 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E044B6518B3B19D00695D91 /* MBProgressHUD.m */; };
+		3E044B6818B3B4D900695D91 /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E044B6718B3B4D900695D91 /* 37x-Checkmark.png */; };
 		3E27F52C18AD26140010C77C /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F52B18AD26140010C77C /* TestViewController.m */; };
 		3E27F53118AD35CC0010C77C /* 个人.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E27F52D18AD35CC0010C77C /* 个人.png */; };
 		3E27F53218AD35CC0010C77C /* 公告.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E27F52E18AD35CC0010C77C /* 公告.png */; };
@@ -95,6 +97,9 @@
 		3E044B6018B38E0500695D91 /* ANNOUNCEMEMNT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANNOUNCEMEMNT.h; sourceTree = "<group>"; };
 		3E044B6118B38E2600695D91 /* XinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XinViewController.h; sourceTree = "<group>"; };
 		3E044B6218B38E2600695D91 /* XinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XinViewController.m; sourceTree = "<group>"; };
+		3E044B6418B3B19D00695D91 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		3E044B6518B3B19D00695D91 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		3E044B6718B3B4D900695D91 /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
 		3E27F52A18AD26140010C77C /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		3E27F52B18AD26140010C77C /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		3E27F52D18AD35CC0010C77C /* 个人.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "个人.png"; sourceTree = "<group>"; };
@@ -327,6 +332,8 @@
 		3E97675018A1299800AE48D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E044B6418B3B19D00695D91 /* MBProgressHUD.h */,
+				3E044B6518B3B19D00695D91 /* MBProgressHUD.m */,
 				3EF0F00718B11F61007563DF /* MJRefresh */,
 				3ED2B00918A78292001AE706 /* CXAlertView */,
 				3ED2AFB218A652B0001AE706 /* SDWebImage */,
@@ -353,6 +360,7 @@
 				3E27F55418AE00160010C77C /* Main2.storyboard */,
 				3E27F52A18AD26140010C77C /* TestViewController.h */,
 				3E27F52B18AD26140010C77C /* TestViewController.m */,
+				3E044B6718B3B4D900695D91 /* 37x-Checkmark.png */,
 				3E27F52D18AD35CC0010C77C /* 个人.png */,
 				3E27F52E18AD35CC0010C77C /* 公告.png */,
 				3E27F53518AD35D90010C77C /* 订餐.png */,
@@ -624,6 +632,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E27F53218AD35CC0010C77C /* 公告.png in Resources */,
+				3E044B6818B3B4D900695D91 /* 37x-Checkmark.png in Resources */,
 				3E27F53618AD35D90010C77C /* 订餐.png in Resources */,
 				3E27F53418AD35CC0010C77C /* 留言.png in Resources */,
 				3E97676A18A1299800AE48D3 /* Images.xcassets in Resources */,
@@ -688,6 +697,7 @@
 				3ED2AFD418A652B0001AE706 /* SDWebImageDecoder.m in Sources */,
 				3ED2AFAB18A61679001AE706 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
 				3E27F55318ADFFCC0010C77C /* SHUCommentModel.m in Sources */,
+				3E044B6618B3B19D00695D91 /* MBProgressHUD.m in Sources */,
 				3E27F54518ADFF160010C77C /* SHUCommentCell.m in Sources */,
 				3ED2B01A18A78292001AE706 /* CXAlertButtonContainerView.m in Sources */,
 				3ED2AFD918A652B0001AE706 /* UIButton+WebCache.m in Sources */,

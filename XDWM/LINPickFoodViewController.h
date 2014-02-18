@@ -12,6 +12,7 @@
 #import "LINRootViewController.h"
 #import "MKNetworkEngine.h"
 #import "MKNetworkOperation.h"
+#import "MBProgressHUD.h"
 @interface LINPickFoodViewController : UITableViewController
 
 @property (strong, nonatomic) NSMutableArray *foodList;
