@@ -88,7 +88,6 @@ typedef enum {
 typedef void (^MBProgressHUDCompletionBlock)();
 #endif
 
-
 /** 
  * Displays a simple HUD window containing a progress indicator and two optional labels for short messages.
  *

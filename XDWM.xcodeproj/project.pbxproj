@@ -257,6 +257,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E044B6918B3B78E00695D91 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				3E044B6418B3B19D00695D91 /* MBProgressHUD.h */,
+				3E044B6518B3B19D00695D91 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		3E27F53D18ADFF000010C77C /* UserInfoModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,8 +341,7 @@
 		3E97675018A1299800AE48D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3E044B6418B3B19D00695D91 /* MBProgressHUD.h */,
-				3E044B6518B3B19D00695D91 /* MBProgressHUD.m */,
+				3E044B6918B3B78E00695D91 /* MBProgressHUD */,
 				3EF0F00718B11F61007563DF /* MJRefresh */,
 				3ED2B00918A78292001AE706 /* CXAlertView */,
 				3ED2AFB218A652B0001AE706 /* SDWebImage */,

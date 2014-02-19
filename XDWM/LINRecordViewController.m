@@ -22,6 +22,9 @@
 @property (strong, nonatomic) NSMutableArray *orderList;
 @property (strong, nonatomic) NSString *orderIDForDelete;
 @property (strong, nonatomic) NSIndexPath *indexPathForDelete;
+
+@property (strong, nonatomic) MJRefreshHeaderView *header;
+@property (strong, nonatomic) MJRefreshFooterView *footer;
 @end
 
 @implementation LINRecordViewController
@@ -40,15 +43,15 @@
     [super viewDidLoad];
     [self setBarTitle];
 	// Do any additional setup after loading the view.
-    MJRefreshHeaderView *header = [MJRefreshHeaderView header];
-    header.scrollView = self.tableview;
-    header.delegate = self;
+    self.header = [MJRefreshHeaderView header];
+    self.header.scrollView = self.tableview;
+    self.header.delegate = self;
     
-    MJRefreshFooterView *footer = [MJRefreshFooterView footer];
-    footer.scrollView = self.tableview;
-    footer.delegate = self;
+    self.footer = [MJRefreshFooterView footer];
+    self.footer.scrollView = self.tableview;
+    self.footer.delegate = self;
     
-    [header beginRefreshing];
+    [self.header beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,6 +60,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc{
+    [self.header free];
+    [self.footer free];
+}
 - (NSMutableArray *)orderList{
     if (!_orderList) {
         _orderList = [NSMutableArray new];
