@@ -18,6 +18,8 @@
 @interface LINOrderViewController ()
 @property (strong, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic) NSInteger kFoodKindIndex;
+
+@property (strong, nonatomic) MKNetworkEngine *engine;
 @end
 
 @implementation LINOrderViewController
@@ -39,6 +41,7 @@
 	// Do any additional setup after loading the view.
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
+    self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [self fetchUserInfoToRootVC];
@@ -122,8 +125,7 @@
         rootVC.user.userName = userInfo[__USERNAME__];
         rootVC.user.userPassword = userInfo[__PASSWORD__];
         
-        MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-        MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_user_info.php"] params:@{__USERNAME__:rootVC.user.userName} httpMethod:@"POST"];
+        MKNetworkOperation *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_user_info.php"] params:@{__USERNAME__:rootVC.user.userName} httpMethod:@"POST"];
         [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
             NSString *st = [completedOperation responseString];
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
@@ -138,7 +140,7 @@
             rootVC.user.userZuoyou = dic[__USERZUOYOU__];
             
         } errorHandler:nil];
-        [engine enqueueOperation:op];
+        [self.engine enqueueOperation:op];
         
     }
 }

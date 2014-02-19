@@ -49,7 +49,8 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+    id appDelegate = [[UIApplication sharedApplication] delegate];
+    self.engine = [appDelegate engine];
     NSString *signInfoPath = [[NSBundle mainBundle] pathForResource:@"SignUp Info" ofType:@"plist"];
     _signInfoDic = [NSDictionary dictionaryWithContentsOfFile:signInfoPath];
     
@@ -135,7 +136,7 @@
                                        __USERZUOYOU__   : userZuoyou,
                                        __USERQUHAO__    : userQuhao};
             
-            _engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+
             
             MKNetworkOperation *op = [_engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"user_register.php"] params:userInfo httpMethod:@"POST"];
             

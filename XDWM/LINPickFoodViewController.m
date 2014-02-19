@@ -27,6 +27,7 @@
 //@property (nonatomic)       NSInteger badgeNumber; //   for record vc's tab bar item's badge
 @property (nonatomic) NSInteger flag;////
 @property (nonatomic, strong) MJRefreshHeaderView *header;
+@property (nonatomic, strong) MKNetworkEngine *engine;
 @end
 
 @implementation LINPickFoodViewController
@@ -46,7 +47,7 @@
     [super viewDidLoad];
     
     self.foodList = [NSMutableArray new];
-
+    self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
 
     self.header = [MJRefreshHeaderView header];
     self.header.delegate = self;
@@ -204,11 +205,10 @@
 #pragma mark - interaction method
 
 - (void)fetchGoodsInfoWithRefreshView:(MJRefreshBaseView *)refreshView{
-    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-    NSString *index = [NSString stringWithFormat:@"%i", self.foodKindIndex];
+    NSString *index = [NSString stringWithFormat:@"%li", (long)self.foodKindIndex];
     NSDictionary *infoDic = @{@"key": index};
     
-    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"fetchgood.php"] params:infoDic httpMethod:@"POST"];
+    MKNetworkOperation *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"fetchgood.php"] params:infoDic httpMethod:@"POST"];
     
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
 //        NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
@@ -236,7 +236,7 @@
         [self.tableView reloadData];
     } errorHandler:nil];
     
-    [engine enqueueOperation:op];
+    [self.engine enqueueOperation:op];
     
 
 }
@@ -292,7 +292,7 @@
 
 - (void)updateNavBar{
     UILabel *label = (UILabel *)[self.navigationItem.titleView viewWithTag:1];
-    label.text = [NSString  stringWithFormat:@"已选:%i/3", self.count];
+    label.text = [NSString  stringWithFormat:@"已选:%li/3", (long)self.count];
 }
 - (BOOL)isInfoTableView:(UITableView *)tableview{
     if (tableview.tag == 1) {
@@ -313,7 +313,8 @@
         NSString *userQuhao = user.userQuhao;
         NSString *userSushehao = user.userSushehao;
         NSString *userZuoyou = user.userZuoyou;
-        cell.textLabel.text = [NSString stringWithFormat: @"收货人：%@      %@", username, userTel];
+        cell.textLabel.text = [NSString stringWithFormat: @"收货人:%@   %@", username, userTel];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:16];
         cell.detailTextLabel.text = [NSString stringWithFormat: @"地址：%@%@号楼%@%@%@室",userAddr, userLouhao,userQuhao,userSushehao,userZuoyou];
         cell.contentView.backgroundColor = [UIColor colorWithRed:135/255.0 green:206/255.0 blue:250/255.0 alpha:1.0];
         
@@ -358,7 +359,7 @@
             stepper.transform = CGAffineTransformMakeScale(0.8, 1);
             
             [stepper addTarget:self action:@selector(orderAmountChanged:) forControlEvents:UIControlEventValueChanged];
-            gecell.textLabel.text = [NSString stringWithFormat:@"购买数量： %i份", self.count];
+            gecell.textLabel.text = [NSString stringWithFormat:@"购买数量： %li份", (long)self.count];
             [gecell.contentView addSubview:stepper];
             
         }else if (indexPath.row == 3){
@@ -372,7 +373,7 @@
             stepper.autorepeat = YES;
             stepper.transform = CGAffineTransformMakeScale(0.8, 1);
             [stepper addTarget:self action:@selector(addFoodCountChanged:) forControlEvents:UIControlEventValueChanged];
-            gecell.textLabel.text = [NSString stringWithFormat:@"加饭： %i份", self.addFoodCount];
+            gecell.textLabel.text = [NSString stringWithFormat:@"加饭： %li份", (long)self.addFoodCount];
             [gecell.contentView addSubview:stepper];
         }
         return gecell;
@@ -405,7 +406,7 @@
     NSString *goodName = self.pickedGoodName;
     NSString *goodsHotel = [aGood.goodHotel  stringByAppendingString:@"(来自iOS客户端)"];
     NSString *goodsPrice = aGood.goodPrice;
-    NSString *number = [NSString stringWithFormat:@"%i", self.count];
+    NSString *number = [NSString stringWithFormat:@"%li", (long)self.count];
     NSString *totalPrice = [NSString stringWithFormat:@"%.2lf", self.pickedGoodTotalPrice];
     NSString *username = user.userName;
     NSString *userTel = user.userTel;
@@ -415,7 +416,7 @@
     NSString *userSushehao = user.userSushehao;
     NSString *userZuoyou = user.userZuoyou;
     
-    NSString *addFoodNumber = [NSString stringWithFormat:@"%i", self.addFoodCount];
+    NSString *addFoodNumber = [NSString stringWithFormat:@"%li", (long)self.addFoodCount];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *createTime = [dateFormatter stringFromDate:today];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
@@ -437,9 +438,8 @@
                                  __CREATETIME__:createTime,
                                  __CREATEDAY__:createDay,
                                  __ADDFOODNUM__:addFoodNumber};
-    
-    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"submit_order.php"] params:forPostDic httpMethod:@"POST"];
+
+    MKNetworkOperation *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"submit_order.php"] params:forPostDic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         NSLog(@"%@", [completedOperation responseString]);
  //       CXAlertView *alertView = [[CXAlertView alloc] initWithTitle:nil message:@"订单成功提交！" cancelButtonTitle:@"确定"];
@@ -451,10 +451,10 @@
         hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
         hud.labelText = @"订单提交成功！";
         [hud hide:YES afterDelay:1.5];
-        recordVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%i",[recordVC.tabBarItem.badgeValue integerValue] + 1];
+        recordVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%li",(long)[recordVC.tabBarItem.badgeValue integerValue] + 1];
  //       [alertView show];
     } errorHandler:nil];
-    [engine enqueueOperation:op];
+    [self.engine enqueueOperation:op];
     
 }
 

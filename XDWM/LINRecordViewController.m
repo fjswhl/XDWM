@@ -25,6 +25,8 @@
 
 @property (strong, nonatomic) MJRefreshHeaderView *header;
 @property (strong, nonatomic) MJRefreshFooterView *footer;
+
+@property (strong, nonatomic) MKNetworkEngine *engine;
 @end
 
 @implementation LINRecordViewController
@@ -42,6 +44,7 @@
 {
     [super viewDidLoad];
     [self setBarTitle];
+    self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
 	// Do any additional setup after loading the view.
     self.header = [MJRefreshHeaderView header];
     self.header.scrollView = self.tableview;
@@ -171,12 +174,12 @@
     
     LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
     NSDictionary *dicForPost = @{__USERNAME__:rootVC.user.userName,
-                                 @"key":[NSString stringWithFormat:@"%i", self.count]};
+                                 @"key":[NSString stringWithFormat:@"%li", (long)self.count]};
     
-    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-    MKNetworkOperation  *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_orderlist.php"] params:dicForPost httpMethod:@"POST"];
+//    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+    MKNetworkOperation  *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_orderlist.php"] params:dicForPost httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
-        NSLog(@"%@", [completedOperation responseString]);
+//        NSLog(@"%@", [completedOperation responseString]);
         NSString *st = [completedOperation responseString];
         NSDictionary *recordsInfo = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
         
@@ -199,7 +202,7 @@
             [refreshView endRefreshing];
         }
     } errorHandler:nil];
-    [engine enqueueOperation:op];
+    [self.engine enqueueOperation:op];
     
 }
 

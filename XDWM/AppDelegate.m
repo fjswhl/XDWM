@@ -132,6 +132,14 @@
     }];
     //    [tbc setNeedsStatusBarAppearanceUpdate];
 }
+
+#pragma mark - getter
+- (MKNetworkEngine *)engine{
+    if (!_engine) {
+        _engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+    }
+    return _engine;
+}
 @end
 
 

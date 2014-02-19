@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MKNetworkEngine.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIViewControllerAnimatedTransitioning>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (strong, nonatomic) MKNetworkEngine *engine;
 @end

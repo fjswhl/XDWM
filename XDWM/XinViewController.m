@@ -24,7 +24,7 @@
 @property (strong, nonatomic) NSArray *objects;
 @property (strong, nonatomic) NSArray *objects2;
 @property (nonatomic, strong) MJRefreshHeaderView *header;
-
+@property (nonatomic, strong) MKNetworkEngine *engine;
 
 @end
 
@@ -42,13 +42,16 @@
 
 - (void)viewDidLoad
 {
+    //lin
+    self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+    
     view2 = [[UIView alloc] init];
     header = [MJRefreshHeaderView header];
     header.scrollView = self.tableView1;
     header.beginRefreshingBlock = ^(MJRefreshBaseView *refreshView) {
         NSDictionary *dicForPost = @{@"key1":@"10",@"key2":@"0"};
-        MKNetworkEngine* engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-        MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"fetch_ancmt.php"] params:dicForPost httpMethod:@"POST"];
+        //MKNetworkEngine* engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+        MKNetworkOperation *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"fetch_ancmt.php"] params:dicForPost httpMethod:@"POST"];
         [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
             NSString *st = [completedOperation responseString];
             st =[st stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@"  "];
@@ -67,12 +70,11 @@
             other.frame = CGRectMake(20, 10 + date.frame.size.height + date.frame.origin.y, 300, 30);
             view2.frame = CGRectMake(0, 10 + other.frame.size.height + other.frame.origin.y, 320, 150);
         }errorHandler:nil];
-        [engine enqueueOperation:op];
+        [self.engine enqueueOperation:op];
         
         
         NSDictionary *dicForPost1 = @{@"key1":@"20",@"key2":@"0"};
-        MKNetworkEngine* engine1 = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-        MKNetworkOperation *op1 = [engine1 operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"fetch_ancmt.php"] params:dicForPost1 httpMethod:@"POST"];
+        MKNetworkOperation *op1 = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"fetch_ancmt.php"] params:dicForPost1 httpMethod:@"POST"];
         [op1 addCompletionHandler:^(MKNetworkOperation *completedOperation) {
             for(UIView *View in [view2 subviews])
                 if([View isKindOfClass:[UIButton class]])
@@ -105,8 +107,8 @@
                 [view2 insertSubview:button atIndex:10];
             }
         }errorHandler:nil];
-        [engine1 enqueueOperation:op1];
-        [self performSelector:@selector(doneWithView:) withObject:refreshView afterDelay:2.0];
+        [self.engine enqueueOperation:op1];
+        [self performSelector:@selector(doneWithView:) withObject:refreshView afterDelay:0];
     };
     [header beginRefreshing];
     tableView1.allowsSelection = NO;
@@ -138,10 +140,10 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellTableIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellTableIdentifier];
+        cell.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
     }
     NSDictionary *dicForPost = @{@"key1":@"10",@"key2":@"0"};
-    MKNetworkEngine* engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"fetch_ancmt.php"] params:dicForPost httpMethod:@"POST"];
+    MKNetworkOperation *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"fetch_ancmt.php"] params:dicForPost httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         NSString *st = [completedOperation responseString];
         st =[st stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@"  "];
@@ -172,7 +174,7 @@
         [cell insertSubview:view2 atIndex:10];
         //NSLog(@"1");
     }errorHandler:nil];
-    [engine enqueueOperation:op];
+    [self.engine enqueueOperation:op];
     return cell;
 }
 
@@ -186,8 +188,8 @@
     title.text = button.currentTitle;
     NSString *identify = [objects2 objectAtIndex:button.tag];
     NSDictionary *dicForPost1 = @{@"key1":@"10",@"key2":identify};
-    MKNetworkEngine* engine1 = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-    MKNetworkOperation *op1 = [engine1 operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"fetch_ancmt.php"] params:dicForPost1 httpMethod:@"POST"];
+
+    MKNetworkOperation *op1 = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"fetch_ancmt.php"] params:dicForPost1 httpMethod:@"POST"];
     [op1 addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         NSString *st = [completedOperation responseString];
         st =[st stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@"  "];
@@ -203,7 +205,7 @@
         other.frame = CGRectMake(20, 10 + date.frame.size.height + date.frame.origin.y, 300, 30);
         view2.frame = CGRectMake(0, 10 + other.frame.size.height + other.frame.origin.y, 320, [objects count] * 30);
     }errorHandler:nil];
-    [engine1 enqueueOperation:op1];
+    [self.engine enqueueOperation:op1];
     [tableView1 scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
 @end
