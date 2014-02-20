@@ -12,6 +12,8 @@
 #import "ADDRMACRO.h"
 #import "LINOrderViewController.h"
 #import "LINRootViewController.h"
+
+#import "MBProgressHUD.h"
 @interface SHULoginViewController ()
 
 @property (strong, nonatomic) MKNetworkEngine *engine;
@@ -58,6 +60,9 @@
         _loginButton.enabled = YES;
         
     }else{
+        //  转动HUD
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
         
         NSString *userName = _userID.text;
         NSString *userPassword = _userPassword.text;

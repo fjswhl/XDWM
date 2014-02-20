@@ -13,7 +13,7 @@
 #include "ADDRMACRO.h"
 #define kSendMessage @"20"
 
-@interface SHUPushCommentViewController ()
+@interface SHUPushCommentViewController ()<UITextViewDelegate>
 
 @property (strong, nonatomic) MKNetworkEngine *engine;
 
@@ -38,6 +38,7 @@
 	// Do any additional setup after loading the view.
     
     _engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+    self.commentContent.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,6 +95,29 @@
 - (IBAction)textDidFinshEditing:(id)sender {
     [_commentContent resignFirstResponder];
 }
+#pragma mark - textview delegate
 
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if ([@"\n" isEqualToString:text]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

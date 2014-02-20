@@ -120,7 +120,7 @@
             NSString *userEmail = _mail.text;
             NSString *userTel = _phoneNumber.text;
             NSString *userAddr = _aprtmentName.text;
-            NSString *userLouhao = _numberOfApartment.text;
+            NSString *userLouhao = [_numberOfApartment.text stringByReplacingOccurrencesOfString:@"号楼" withString:@""];;
             NSString *userQuhao = [_area titleForSegmentAtIndex:[_sex selectedSegmentIndex]];
             NSString *userSushehao = _gateNumber.text;
             NSString *userZuoyou = [_direction titleForSegmentAtIndex:[_direction selectedSegmentIndex]];

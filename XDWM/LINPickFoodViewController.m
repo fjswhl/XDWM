@@ -205,6 +205,10 @@
 #pragma mark - interaction method
 
 - (void)fetchGoodsInfoWithRefreshView:(MJRefreshBaseView *)refreshView{
+    if ([self.foodList count]) {
+        [refreshView endRefreshing];
+        return;
+    }
     NSString *index = [NSString stringWithFormat:@"%li", (long)self.foodKindIndex];
     NSDictionary *infoDic = @{@"key": index};
     
