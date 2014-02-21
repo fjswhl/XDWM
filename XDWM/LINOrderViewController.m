@@ -35,7 +35,7 @@
 }
 
 //          启动时检查用户是否登入，如果没登入，则跳转到登入界面；如果登入了，则把用户信息写到RootViewController下的user属性中
-
+#pragma mark view life cycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];

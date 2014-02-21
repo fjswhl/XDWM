@@ -117,6 +117,7 @@
                 
                 _loginButton.enabled = YES;
             }
+            [hud hide:YES];
             
         }errorHandler:^(MKNetworkOperation *compeletedOperation, NSError *error){
             

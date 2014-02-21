@@ -84,7 +84,7 @@
 
 - (void)RefreshViewControlEventValueChanged
 {
-    LINOrderViewController *orderVC = (LINOrderViewController *)[(UINavigationController* )self.tabBarController.viewControllers[0] topViewController];
+    LINOrderViewController *orderVC = (LINOrderViewController *)[(UINavigationController* )self.tabBarController.viewControllers[0] viewControllers][0];
     [orderVC fetchUserInfoToRootVC];
     
     [self updateUserInfo];

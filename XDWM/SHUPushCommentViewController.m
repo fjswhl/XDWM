@@ -11,9 +11,10 @@
 #import "LINUserModel.h"
 #import "MKNetworkEngine.h"
 #include "ADDRMACRO.h"
+#import "MBProgressHUD.h"
 #define kSendMessage @"20"
 
-@interface SHUPushCommentViewController ()<UITextViewDelegate>
+@interface SHUPushCommentViewController ()<UITextViewDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) MKNetworkEngine *engine;
 
@@ -41,6 +42,10 @@
     self.commentContent.delegate = self;
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [self.commentContent becomeFirstResponder];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -55,17 +60,21 @@
     NSDictionary *infoDic = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/infoDic.plist",docPath]];
     
     NSDate *date = [NSDate date];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     NSString *username = [infoDic objectForKey:__USERNAME__];
     NSString *commentContent = _commentContent.text;
-    NSString *createTime = [[date description] substringToIndex:19];
-    
-    NSDictionary *commentDic = @{__USER_NAME__  : username,
-                                 __CONTENT__    : commentContent,
-                                 __CREATETIME__ : createTime};
+//    NSString *createTime = [[date description] substringToIndex:19];
+    NSString *createTime = [dateFormatter stringFromDate:date];
+//    NSDictionary *commentDic = @{__USER_NAME__  : username,
+//                                 __CONTENT__    : commentContent,
+//                                 __CREATETIME__ : createTime};
     
 //    NSLog(@"%@",infoDic); OK
-    
+    //          转动HUD
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
     NSDictionary *userInfo = @{@"key1" : kSendMessage,
                                __USER_NAME__ : username,
                                __CONTENT__:commentContent,
@@ -78,13 +87,16 @@
     [op addCompletionHandler:^(MKNetworkOperation *compeletedOpeartion){
         NSLog(@"%@", [compeletedOpeartion responseString]);
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"返回信息" message:@"留言成功" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-        
+        alert.delegate = self;
         [alert show];
+        [hud hide:YES];
         
     }errorHandler:^(MKNetworkOperation *compeletedOpeartion,NSError *error){
-        
-        NSLog(@"%@",error);
-        
+        [hud hide:YES];
+        MBProgressHUD *errorHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        errorHud.mode = MBProgressHUDModeText;
+        errorHud.labelText = @"网络错误，请稍后重试";
+        [errorHud hide:YES afterDelay:1.5f];
     }];
     
     [_engine enqueueOperation:op];
@@ -105,6 +117,10 @@
     return YES;
 }
 
+#pragma  mark - uialertView delegate
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end
 
 

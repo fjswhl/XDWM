@@ -179,7 +179,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CGFloat x = view2.frame.origin.y + view2.frame.size.height + 20;
+ //   CGFloat x = view2.frame.origin.y + view2.frame.size.height + 20;
     return 1000;
 }
 

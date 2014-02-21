@@ -11,7 +11,7 @@
 #import "CXAlertView.h"
 #import "LINUserModel.h"
 #import "ADDRMACRO.h"
-
+#import "MBProgressHUD.h"
 @interface SHUSignViewController ()
 
 @property (strong, nonatomic) MKNetworkEngine *engine;
@@ -136,9 +136,11 @@
                                        __USERZUOYOU__   : userZuoyou,
                                        __USERQUHAO__    : userQuhao};
             
-
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeIndeterminate;
             
             MKNetworkOperation *op = [_engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"user_register.php"] params:userInfo httpMethod:@"POST"];
+            
             
             [op addCompletionHandler:^(MKNetworkOperation *compeletedOperation){
                 
@@ -175,7 +177,7 @@
                     [_userName becomeFirstResponder];
                     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 }
-                
+                [hud hide:YES];
                 
             }errorHandler:^(MKNetworkOperation *compeletedOperation, NSError *error){
                 NSLog(@"%@",error);
