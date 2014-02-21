@@ -13,20 +13,22 @@
 #import "LINRootViewController.h"
 #import "LINOrderList.h"
 #import "MJRefresh.h"
-
+#import "AFHTTPRequestOperationManager.h"
+#import "MBProgressHUD.h"
 @interface LINRecordViewController ()<UITableViewDataSource, UITableViewDelegate, MJRefreshBaseViewDelegate, UIActionSheetDelegate>
 @property (nonatomic) NSInteger count;  //表示下拉刷新时当前表已存在多少条记录，非常重要！ 用于正确获取服务器发来的数据
 
 @property (strong, nonatomic) IBOutlet UITableView *tableview;
 
-@property (strong, nonatomic) NSMutableArray *orderList;
+
 @property (strong, nonatomic) NSString *orderIDForDelete;
 @property (strong, nonatomic) NSIndexPath *indexPathForDelete;
 
 @property (strong, nonatomic) MJRefreshHeaderView *header;
 @property (strong, nonatomic) MJRefreshFooterView *footer;
 
-@property (strong, nonatomic) MKNetworkEngine *engine;
+//@property (strong, nonatomic) MKNetworkEngine *engine;
+@property (strong, nonatomic) AFHTTPRequestOperationManager *manager;
 @end
 
 @implementation LINRecordViewController
@@ -43,8 +45,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setBarTitle];
-    self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+
+//    self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
 	// Do any additional setup after loading the view.
     self.header = [MJRefreshHeaderView header];
     self.header.scrollView = self.tableview;
@@ -55,6 +57,12 @@
     self.footer.delegate = self;
     
     [self.header beginRefreshing];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [self setBarTitle];
+    [self.tableview reloadData];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,6 +80,14 @@
         _orderList = [NSMutableArray new];
     }
     return _orderList;
+}
+
+- (AFHTTPRequestOperationManager *)manager{
+    if (!_manager) {
+        id appdelegate = [[UIApplication sharedApplication] delegate];
+        _manager = [appdelegate manager];
+    }
+    return _manager;
 }
 
 
@@ -177,11 +193,12 @@
                                  @"key":[NSString stringWithFormat:@"%li", (long)self.count]};
     
 //    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-    MKNetworkOperation  *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_orderlist.php"] params:dicForPost httpMethod:@"POST"];
-    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
-//        NSLog(@"%@", [completedOperation responseString]);
-        NSString *st = [completedOperation responseString];
-        NSDictionary *recordsInfo = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+//    MKNetworkOperation  *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_orderlist.php"] params:dicForPost httpMethod:@"POST"];
+    
+    [self.manager POST:[NSString stringWithFormat:@"%@%@", __DIR__,@"fetch_orderlist.php"]  parameters:dicForPost success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSString *st = responseObject;
+//        NSDictionary *recordsInfo = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+        NSDictionary *recordsInfo = responseObject;
         
         NSArray *keys = [[recordsInfo allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
             NSInteger in1 = [(NSString *)obj1 integerValue];
@@ -191,26 +208,56 @@
             }
             return false;
         }];
-
+        
         for (NSString *key in keys) {
             NSDictionary *aRecord = recordsInfo[key];
             [self.orderList addObject:aRecord];
         }
         self.count += [keys count];
-        [self.tableview reloadData];
         if (refreshView) {
             [refreshView endRefreshing];
         }
-    } errorHandler:nil];
-    [self.engine enqueueOperation:op];
+        [self.tableview reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (refreshView) {
+            [refreshView endRefreshing];
+        }
+    }];
+//    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+////        NSLog(@"%@", [completedOperation responseString]);
+//        NSString *st = [completedOperation responseString];
+//        NSDictionary *recordsInfo = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+//        
+//        NSArray *keys = [[recordsInfo allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+//            NSInteger in1 = [(NSString *)obj1 integerValue];
+//            NSInteger in2 = [(NSString *)obj2 integerValue];
+//            if (in1 > in2) {
+//                return true;
+//            }
+//            return false;
+//        }];
+//
+//        for (NSString *key in keys) {
+//            NSDictionary *aRecord = recordsInfo[key];
+//            [self.orderList addObject:aRecord];
+//        }
+//        self.count += [keys count];
+//        if (refreshView) {
+//            [refreshView endRefreshing];
+//        }
+//        [self.tableview reloadData];
+//
+//    } errorHandler:nil];
+//    [self.engine enqueueOperation:op];
     
 }
 
 - (void)updateRemoteDatabaseWithOrderID:(NSString *)orderID{
     NSDictionary *dicForPost = @{__ORDERLISTID__: orderID};
-    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"delete_order.php"] params:dicForPost httpMethod:@"POST"];
-    [engine enqueueOperation:op];
+//    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+//    MKNetworkOperation *op = [engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"delete_order.php"] params:dicForPost httpMethod:@"POST"];
+//    [engine enqueueOperation:op];
+    [self.manager POST:[NSString stringWithFormat:@"%@%@", __DIR__,@"delete_order.php"] parameters:dicForPost success:nil failure:nil];
 }
 - (void)setBarTitle{
     LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;

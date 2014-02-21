@@ -11,10 +11,14 @@
 #import "LINUserModel.h"
 #import "MKNetworkEngine.h"
 #import "ADDRMACRO.h"
+#import "LINRootViewController.h"
+#import "LINOrderViewController.h"
+
 @interface SHUUserInfoViewController ()
 
 @property (strong, nonatomic) MKNetworkEngine *engine;
 @property (strong, nonatomic) NSMutableDictionary *userInfo;
+@property (strong, nonatomic) LINUserModel *user;
 
 @end
 
@@ -33,7 +37,22 @@
     docPath = [docPath stringByAppendingString:@"/infoDic.plist"];
     NSFileManager *fm = [NSFileManager new];
     [fm removeItemAtPath:docPath error:nil];
+    
+    //          清除一些控制器内以存的信息
+    id vc = self.tabBarController.viewControllers[1];
+    if (vc) {
+        
+        [[vc topViewController] setValue:[NSMutableArray new] forKey:@"OrderList"];
+    }
+    
     [self.tabBarController setSelectedIndex:0];
+    
+
+}
+
+- (LINUserModel *)user{
+    LINRootViewController* rootVC = (LINRootViewController *)self.tabBarController;
+    return rootVC.user;
 }
 
 
@@ -41,67 +60,85 @@
 {
     [super viewDidLoad];
     
-    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    _userInfo = [NSMutableDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/infoDic.plist",docPath]];
+//    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//    _userInfo = [NSMutableDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/infoDic.plist",docPath]];
+//    
+//    [_userInfo removeObjectForKey:__PASSWORD__];
     
-    [_userInfo removeObjectForKey:__PASSWORD__];
+//     _engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
     
-     _engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-    
-    [self getUserInfo];
+    [self updateUserInfo];
+
+
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(RefreshViewControlEventValueChanged) forControlEvents:UIControlEventValueChanged];
     
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [self updateUserInfo];
 }
 
 - (void)RefreshViewControlEventValueChanged
 {
-    [self getUserInfo];
+    LINOrderViewController *orderVC = (LINOrderViewController *)[(UINavigationController* )self.tabBarController.viewControllers[0] topViewController];
+    [orderVC fetchUserInfoToRootVC];
+    
+    [self updateUserInfo];
     
     [self.tableView reloadData];
     
     [self.refreshControl endRefreshing];
 }
 
-- (void)getUserInfo
-{
-    MKNetworkOperation *op = [_engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_user_info.php"] params:_userInfo httpMethod:@"POST"];
-    
-    [op addCompletionHandler:^(MKNetworkOperation *compeletedOperation){
-        
-        NSDictionary *returnInfo = [compeletedOperation responseJSON];
-        
-        if (returnInfo) {
-            _userName.text = [returnInfo objectForKey:__USERNAME__];
-            _point.text = [returnInfo objectForKey:__USERPOINT__];
-            _sex.text = [returnInfo objectForKey:__USERSEX__];
-            _tel.text = [returnInfo objectForKey:__USERTEL__];
-            _mail.text = [returnInfo objectForKey:__USEREMAIL__];
-            _adress.text = [returnInfo objectForKey:__USERADDR__];
-            _apartnumber.text = [returnInfo objectForKey:__USERSUSHEHAO__];
-            _gate.text = [returnInfo objectForKey:__USERSUSHEHAO__];
-            _direction.text = [returnInfo objectForKey:__USERZUOYOU__];
-            _area.text = [returnInfo objectForKey:__USERQUHAO__];
-            
-        }else{
-            
-            [self getUserInfo];
-            
-        }
-        
-    }errorHandler:^(MKNetworkOperation *compeletedOperation, NSError *error){
-        NSLog(@"%@",error);
-    }];
-    
-    [_engine enqueueOperation:op];
+- (void)updateUserInfo{
+    _userName.text = self.user.userName;
+    _point.text = self.user.userPoint;
+    _sex.text = self.user.userSex;
+    _tel.text = self.user.userTel;
+    _mail.text = self.user.userEmail;
+    _adress.text = self.user.userAddr;
+    _apartnumber.text = self.user.userLouhao;
+    _gate.text = self.user.userSushehao;
+    _direction.text = self.user.userZuoyou;
+    _area.text = self.user.userQuhao;
 }
+
+//- (void)getUserInfo
+//{
+//    MKNetworkOperation *op = [_engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_user_info.php"] params:_userInfo httpMethod:@"POST"];
+//    
+//    [op addCompletionHandler:^(MKNetworkOperation *compeletedOperation){
+//        
+//        NSDictionary *returnInfo = [compeletedOperation responseJSON];
+//        
+//        if (returnInfo) {
+//            _userName.text = [returnInfo objectForKey:__USERNAME__];
+//            _point.text = [returnInfo objectForKey:__USERPOINT__];
+//            _sex.text = [returnInfo objectForKey:__USERSEX__];
+//            _tel.text = [returnInfo objectForKey:__USERTEL__];
+//            _mail.text = [returnInfo objectForKey:__USEREMAIL__];
+//            _adress.text = [returnInfo objectForKey:__USERADDR__];
+//            _apartnumber.text = [returnInfo objectForKey:__USERSUSHEHAO__];
+//            _gate.text = [returnInfo objectForKey:__USERSUSHEHAO__];
+//            _direction.text = [returnInfo objectForKey:__USERZUOYOU__];
+//            _area.text = [returnInfo objectForKey:__USERQUHAO__];
+//            
+//        }else{
+//            
+//            [self getUserInfo];
+//            
+//        }
+//        
+//    }errorHandler:^(MKNetworkOperation *compeletedOperation, NSError *error){
+//        NSLog(@"%@",error);
+//    }];
+//    
+//    [_engine enqueueOperation:op];
+//}
 
 - (void)didReceiveMemoryWarning
 {

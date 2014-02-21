@@ -8,6 +8,7 @@
 
 #import "LINOrderViewController.h"
 #import "LINPickFoodViewController.h"
+#import "LINRecordViewController.h"
 #import "SHULoginViewController.h"
 #import "LINUserModel.h"
 #import "LINRootViewController.h"
@@ -144,6 +145,16 @@
         
     }
 }
+
+#pragma sign vc delegate method
+
+//- (void)userDidSignedUp{
+//    [self fetchUserInfoToRootVC];
+//    LINRecordViewController *recordVC = (LINRecordViewController *)self.tabBarController.viewControllers[1];
+//    if (recordVC) {
+//        recordVC.orderList = [NSMutableArray new];
+//    }
+//}
 @end
 
 

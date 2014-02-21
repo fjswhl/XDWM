@@ -232,6 +232,7 @@
 {
     if (buttonIndex == 0) {
         if ([alertView.message isEqualToString:@"注册成功"]) {
+//            [self.delegate userDidSignedUp];
             [self dismissViewControllerAnimated:YES completion:Nil];
         }
     }

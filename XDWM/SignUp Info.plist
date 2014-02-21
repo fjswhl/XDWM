@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Aeras</key>
+	<array>
+		<string>I区</string>
+		<string>II区</string>
+	</array>
+	<key>Directions</key>
+	<array>
+		<string>左</string>
+		<string>中</string>
+		<string>右</string>
+	</array>
+	<key>ApartmentNames</key>
+	<array>
+		<string>丁香</string>
+		<string>海棠</string>
+		<string>竹园</string>
+	</array>
+	<key>ApartmentNumbers</key>
+	<array>
+		<string>7号楼</string>
+		<string>8号楼</string>
+		<string>9号楼</string>
+		<string>10号楼</string>
+		<string>11号楼</string>
+		<string>12号楼</string>
+		<string>13号楼</string>
+		<string>14号楼</string>
+		<string>15号楼</string>
+	</array>
+</dict>
+</plist>

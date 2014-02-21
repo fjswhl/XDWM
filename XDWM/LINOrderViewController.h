@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "SHUSignViewController.h"
 @interface LINOrderViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 - (void)fetchUserInfoToRootVC;
 @end

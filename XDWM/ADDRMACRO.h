@@ -16,4 +16,7 @@
 //#define __IMGDIR__      @"http://1.wearound.sinaapp.com/ordermeal/shop/assets/default/img/"
 #define __IMGDIR__      @"http://forotaku.sinaapp.com/ordermeal/shop/assets/default/img/"
 
+#define __DIR__         @"http://1.wearound.sinaapp.com/ordermeal/ios_end/"
+
+
 #endif

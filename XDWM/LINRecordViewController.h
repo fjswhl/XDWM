@@ -10,4 +10,6 @@
 
 @interface LINRecordViewController : UIViewController
 
+@property (strong, nonatomic) NSMutableArray *orderList;
+
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface SHUSignViewController : UITableViewController<UIPickerViewDataSource,UIPickerViewDelegate,UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *userName;
@@ -23,5 +24,6 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *sex;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *area;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *direction;
+
 
 @end

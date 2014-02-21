@@ -140,6 +140,14 @@
     }
     return _engine;
 }
+
+- (AFHTTPRequestOperationManager *)manager{
+    if (!_manager) {
+        _manager = [AFHTTPRequestOperationManager manager];
+        _manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
+    }
+    return _manager;
+}
 @end
 
 
