@@ -276,7 +276,7 @@
             testView.frame = rect;
             [self.tabBarController.view addSubview:testView];
             
-            [UIView animateWithDuration:1.0 animations:^{
+            [UIView animateWithDuration:0.7 animations:^{
                 CGRect toRect = CGRectMake(250, 40, 0, 0);
                 testView.transform = CGAffineTransformMakeRotation(M_PI);
                 testView.frame = toRect;

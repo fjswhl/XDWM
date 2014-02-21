@@ -12,6 +12,7 @@
 #import "SHUCommentModel.h"
 #import "ADDRMACRO.h"
 #import "MJRefresh.h"
+#import "MBProgressHUD.h"
 
 #define kPullComment   @"10"
 #define kPullBegin     @"0"
@@ -153,8 +154,8 @@
     };
     
     
-    
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
     NSDictionary *postParams = @{@"key1" : kPullComment,
                                  @"key2" : kPullBegin};
     
@@ -186,9 +187,10 @@
             
             [self.tableView reloadData];
         }
+        [hud hide:YES];
         
     }errorHandler:^(MKNetworkOperation *completedOpeation, NSError *error){
-        
+        [hud hide:YES];
         NSLog(@"%@",error);
         
     }];
