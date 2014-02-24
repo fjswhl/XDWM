@@ -102,7 +102,7 @@
             }
             
         }errorHandler:^(MKNetworkOperation *completedOpeation, NSError *error){
-            
+            [refreshView endRefreshing];
             NSLog(@"%@",error);
             
         }];
@@ -144,7 +144,7 @@
             }
             
         }errorHandler:^(MKNetworkOperation *completedOpeation, NSError *error){
-            
+            [refreshView endRefreshing];
             NSLog(@"%@",error);
             
         }];

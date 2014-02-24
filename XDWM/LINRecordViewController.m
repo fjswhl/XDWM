@@ -182,11 +182,11 @@
 
 - (void)fetchOrderListWithRefreshView:(MJRefreshBaseView *)refreshView{
 
-    //  如果是下拉刷新，则重置一些数据
-    if ([refreshView isKindOfClass:[MJRefreshHeaderView class]]) {
-        self.count = 0;
-        self.orderList = [NSMutableArray new];
-    }
+//    //  如果是下拉刷新，则重置一些数据
+//    if ([refreshView isKindOfClass:[MJRefreshHeaderView class]]) {
+//        self.count = 0;
+//        self.orderList = [NSMutableArray new];
+//    }
     
     LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
     NSDictionary *dicForPost = @{__USERNAME__:rootVC.user.userName,
@@ -208,6 +208,12 @@
             }
             return false;
         }];
+        
+        //      如果是下拉刷新，则重置一些数据
+        if ([refreshView isKindOfClass:[MJRefreshHeaderView class]]) {
+            self.count = 0;
+            self.orderList = [NSMutableArray new];
+        }
         
         for (NSString *key in keys) {
             NSDictionary *aRecord = recordsInfo[key];
