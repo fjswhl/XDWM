@@ -50,7 +50,7 @@
         [self fetchOtherInformData];
         [self fetchDetail];
         //[self._tableView reloadData];
-        [self performSelector:@selector(doneWithView:) withObject:refreshView afterDelay:0.8];
+//        [self performSelector:@selector(doneWithView:) withObject:refreshView afterDelay:0];
     };
     [self._header beginRefreshing];
     [super viewDidLoad];
@@ -97,6 +97,7 @@
         self._objects2 = mutArray1;
         //        labelTitle.textColor = [UIColor blueColor];
         //        labelTitle.text = [self._objects objectAtIndex:row];
+        [self._header endRefreshing];
         [self._tableView reloadData];
     }errorHandler:nil];
     [self._engine enqueueOperation:op1];
@@ -120,6 +121,11 @@
         self._date.frame = CGRectMake(20, self._author.frame.size.height + self._author.frame.origin.y, 280, 30);
         self._date.text = ancmt[__CREATE_TIME__];
         self._frame = CGRectMake(0, 0, 0, self._date.frame.origin.y + self._date.frame.size.height + 10);
+        
+        if ([self._header isRefreshing]) {
+            [self._header endRefreshing];
+        }
+        [self._tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
         [self._tableView reloadData];
     }errorHandler:nil];
     [self._engine enqueueOperation:op1];
@@ -155,8 +161,10 @@
         [myView addSubview:titleLabel];
         return myView;
     }
-    else
-        return myView;
+    else{
+        myView.backgroundColor = [myView.backgroundColor colorWithAlphaComponent:0.0];
+       return myView;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -180,7 +188,7 @@
         [self fetchDetail];
         //[self._tableView reloadData];
       //  [self._tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
-        [self._tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+
     }
 }
 
