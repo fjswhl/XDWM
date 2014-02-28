@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MJRefresh.h"
 
-@interface XinViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MJRefreshBaseViewDelegate>
-@property (strong, nonatomic) IBOutlet UITableView *tableView1;
+@interface XinViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+
 
 @end
