@@ -254,7 +254,8 @@
     label.text =[@"       " stringByAppendingString: [self.contents objectAtIndex:indexPath.row]];
     
     CGSize constraint = CGSizeMake(290, 20000);
-    CGSize size = [label.text sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+//    CGSize size = [label.text sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [label.text boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17]} context:nil].size;
     label.frame = CGRectMake(15, 40, 290, size.height);
 
     
@@ -268,7 +269,7 @@
     NSString *text = self.contents[indexPath.row];
     
     CGSize constraint = CGSizeMake(290, 20000);
-    CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [text boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17]} context:nil].size;
     return size.height + 70;
 }
 

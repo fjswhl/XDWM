@@ -29,6 +29,8 @@
 
 //@property (strong, nonatomic) MKNetworkEngine *engine;
 @property (strong, nonatomic) AFHTTPRequestOperationManager *manager;
+
+@property (strong, nonatomic) UIView *buttonView;
 @end
 
 @implementation LINRecordViewController
@@ -62,7 +64,13 @@
 - (void)viewWillAppear:(BOOL)animated{
     [self setBarTitle];
     [self.tableview reloadData];
+    
+    [self addRefreshButton];
 
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [self removeRefreshButton];
 }
 
 - (void)didReceiveMemoryWarning
@@ -268,6 +276,25 @@
 - (void)setBarTitle{
     LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
     self.navigationItem.title = [NSString stringWithFormat:@"%@的订单", rootVC.user.userName];
+}
+
+#pragma mark - add buttonview
+
+- (void)addRefreshButton{
+    self.buttonView = [[UIView alloc] initWithFrame:CGRectMake(72, 518, 50, 50)];
+    self.buttonView.backgroundColor = [UIColor clearColor];
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(refresh)];
+    [self.buttonView addGestureRecognizer:tapGestureRecognizer];
+    
+    [self.tabBarController.view addSubview:self.buttonView];
+}
+
+- (void)removeRefreshButton{
+    [self.buttonView removeFromSuperview];
+}
+
+- (void)refresh{
+    [self.header beginRefreshing];
 }
 @end
 

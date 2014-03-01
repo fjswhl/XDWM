@@ -56,6 +56,7 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark - tabbar delegate
 - (id<UIViewControllerAnimatedTransitioning>)tabBarController:(UITabBarController *)tabBarController animationControllerForTransitionFromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC{
     return self;
 }
@@ -63,6 +64,7 @@
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext{
     return 0.4;
 }
+
 
 //- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext{
 //    UIViewController *vc1 = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
@@ -148,6 +150,7 @@
     }
     return _manager;
 }
+
 @end
 
 
