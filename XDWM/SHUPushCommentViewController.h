@@ -11,5 +11,6 @@
 @interface SHUPushCommentViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITextView *commentContent;
+@property (weak, nonatomic) IBOutlet UILabel *wordsLeft;
 
 @end

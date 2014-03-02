@@ -21,6 +21,12 @@
 	</array>
 	<key>ApartmentNumbers</key>
 	<array>
+		<string>1号楼</string>
+		<string>2号楼</string>
+		<string>3号楼</string>
+		<string>4号楼</string>
+		<string>5号楼</string>
+		<string>6号楼</string>
 		<string>7号楼</string>
 		<string>8号楼</string>
 		<string>9号楼</string>

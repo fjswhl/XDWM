@@ -40,6 +40,9 @@
     
     _engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
     self.commentContent.delegate = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(numberOfWordsLeft) name:@"CalculteWordsLeft" object:nil];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -52,6 +55,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)numberOfWordsLeft
+{
+    NSInteger commentLength = [_commentContent.text length];
+    
+    _wordsLeft.text = [NSString stringWithFormat:@"您还能输入%ld字", 64 - commentLength];
+}
+
 #pragma mark - push comment method
 
 - (IBAction)pushComment:(id)sender {
@@ -59,6 +69,10 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"内容不能为空的，亲" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
         return;
+    }else if([_commentContent.text length] > 64){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"留言超过字数限制" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+            return;
     }
     
     NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -107,11 +121,17 @@
     [_engine enqueueOperation:op];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - close keyboard
 
 - (IBAction)textDidFinshEditing:(id)sender {
     [_commentContent resignFirstResponder];
 }
+
 #pragma mark - textview delegate
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
@@ -120,6 +140,11 @@
         return NO;
     }
     return YES;
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"CalculteWordsLeft" object:nil];
 }
 
 #pragma  mark - uialertView delegate

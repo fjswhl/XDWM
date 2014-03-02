@@ -20,6 +20,12 @@
 @property (strong, nonatomic) NSArray *apartments;
 @property (strong, nonatomic) NSArray *numberOfapartments;
 
+@property (strong, nonatomic) NSArray *dingxiangApartments;
+@property (strong, nonatomic) NSArray *haitangApartments;
+@property (strong, nonatomic) NSArray *zhuyuanApartments;
+
+@property (strong, nonatomic) NSArray *apartmentNeedToBeload;
+
 @property (strong, nonatomic) UIPickerView *pcikerView;
 
 - (IBAction)pickAdress:(id)sender;
@@ -56,6 +62,26 @@
     
     _apartments = [_signInfoDic valueForKey:@"ApartmentNames"];
     _numberOfapartments = [_signInfoDic valueForKey:@"ApartmentNumbers"];
+    
+    _zhuyuanApartments = @[_numberOfapartments[0],
+                           _numberOfapartments[1],
+                           _numberOfapartments[2],
+                           _numberOfapartments[3]];
+    
+    _haitangApartments = @[_numberOfapartments[4],
+                           _numberOfapartments[5],
+                           _numberOfapartments[6],
+                           _numberOfapartments[7],
+                           _numberOfapartments[8],
+                           _numberOfapartments[9]];
+    
+    _dingxiangApartments = @[_numberOfapartments[10],
+                             _numberOfapartments[11],
+                             _numberOfapartments[12],
+                             _numberOfapartments[13],
+                             _numberOfapartments[14]];
+    
+    _apartmentNeedToBeload = _dingxiangApartments;
     
     _pcikerView = [[UIPickerView alloc] init];
     _pcikerView.delegate = self;
@@ -114,76 +140,90 @@
             
         }else{
             
-            NSString *userName = _userName.text;
-            NSString *userPassword = _userPassword.text;
-            NSString *userSex = [_sex titleForSegmentAtIndex:[_sex selectedSegmentIndex]];
-            NSString *userEmail = _mail.text;
-            NSString *userTel = _phoneNumber.text;
-            NSString *userAddr = _aprtmentName.text;
-            NSString *userLouhao = [_numberOfApartment.text stringByReplacingOccurrencesOfString:@"号楼" withString:@""];;
-            NSString *userQuhao = [_area titleForSegmentAtIndex:[_sex selectedSegmentIndex]];
-            NSString *userSushehao = _gateNumber.text;
-            NSString *userZuoyou = [_direction titleForSegmentAtIndex:[_direction selectedSegmentIndex]];
-            
-            NSDictionary *userInfo = @{__USERNAME__     : userName,
-                                       __PASSWORD__     : userPassword,
-                                       __USERSEX__      : userSex,
-                                       __USEREMAIL__    : userEmail,
-                                       __USERTEL__      : userTel,
-                                       __USERADDR__     : userAddr,
-                                       __USERLOUHAO__   : userLouhao,
-                                       __USERSUSHEHAO__ : userSushehao,
-                                       __USERZUOYOU__   : userZuoyou,
-                                       __USERQUHAO__    : userQuhao};
-            
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.mode = MBProgressHUDModeIndeterminate;
-            
-            MKNetworkOperation *op = [_engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"user_register.php"] params:userInfo httpMethod:@"POST"];
-            
-            
-            [op addCompletionHandler:^(MKNetworkOperation *compeletedOperation){
+            if (![self validateEmail:_mail.text]) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"警告"
+                                                                message:@"邮箱地址不合法" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                [alert show];
+            }else if (![self validateMobile:_phoneNumber.text]){
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"警告"
+                                                                message:@"手机号码不合法" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                [alert show];
+            }else if (![self validateApart:_gateNumber.text]){
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"警告"
+                                                                message:@"宿舍号不合法" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                [alert show];
+            }else{
+                NSString *userName = _userName.text;
+                NSString *userPassword = _userPassword.text;
+                NSString *userSex = [_sex titleForSegmentAtIndex:[_sex selectedSegmentIndex]];
+                NSString *userEmail = _mail.text;
+                NSString *userTel = _phoneNumber.text;
+                NSString *userAddr = _aprtmentName.text;
+                NSString *userLouhao = [_numberOfApartment.text stringByReplacingOccurrencesOfString:@"号楼" withString:@""];;
+                NSString *userQuhao = [_area titleForSegmentAtIndex:[_sex selectedSegmentIndex]];
+                NSString *userSushehao = _gateNumber.text;
+                NSString *userZuoyou = [_direction titleForSegmentAtIndex:[_direction selectedSegmentIndex]];
                 
-                NSData *reData = [compeletedOperation responseData];
-                NSString *st = [[NSString alloc] initWithData:reData encoding:NSUTF8StringEncoding];
+                NSDictionary *userInfo = @{__USERNAME__     : userName,
+                                           __PASSWORD__     : userPassword,
+                                           __USERSEX__      : userSex,
+                                           __USEREMAIL__    : userEmail,
+                                           __USERTEL__      : userTel,
+                                           __USERADDR__     : userAddr,
+                                           __USERLOUHAO__   : userLouhao,
+                                           __USERSUSHEHAO__ : userSushehao,
+                                           __USERZUOYOU__   : userZuoyou,
+                                           __USERQUHAO__    : userQuhao};
                 
-//                NSLog(@"%@",st);
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                hud.mode = MBProgressHUDModeIndeterminate;
                 
-                if ([st isEqualToString:@"200"]) {
-                    
-                    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                    
-                    NSDictionary *infoDic = @{__USERNAME__ : userName,
-                                              __PASSWORD__ : userPassword};
-                    
-                    [infoDic writeToFile:[NSString stringWithFormat:@"%@/infoDic.plist",docPath] atomically:YES];
-                    
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"返回信息"
-                                                                    message:@"注册成功"
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"知道了"
-                                                          otherButtonTitles:nil];
-                    [alert show];
-                }else{
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"返回信息"
-                                                                    message:@"用户名已存在"
-                                                                   delegate:self
-                                                          cancelButtonTitle:@"知道了"
-                                                          otherButtonTitles:nil];
-                    [alert show];
-                    _userName.text = @"";
-                    _userPassword.text = @"";
-                    _passwordConfirm.text = @"";
-                    [_userName becomeFirstResponder];
-                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-                }
-                [hud hide:YES];
+                MKNetworkOperation *op = [_engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"user_register.php"] params:userInfo httpMethod:@"POST"];
                 
-            }errorHandler:^(MKNetworkOperation *compeletedOperation, NSError *error){
-                NSLog(@"%@",error);
-            }];
-            
-            [_engine enqueueOperation:op];
+                
+                [op addCompletionHandler:^(MKNetworkOperation *compeletedOperation){
+                    
+                    NSData *reData = [compeletedOperation responseData];
+                    NSString *st = [[NSString alloc] initWithData:reData encoding:NSUTF8StringEncoding];
+                    
+                    //                NSLog(@"%@",st);
+                    
+                    if ([st isEqualToString:@"200"]) {
+                        
+                        NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                        
+                        NSDictionary *infoDic = @{__USERNAME__ : userName,
+                                                  __PASSWORD__ : userPassword};
+                        
+                        [infoDic writeToFile:[NSString stringWithFormat:@"%@/infoDic.plist",docPath] atomically:YES];
+                        
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"返回信息"
+                                                                        message:@"注册成功"
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"知道了"
+                                                              otherButtonTitles:nil];
+                        [alert show];
+                    }else{
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"返回信息"
+                                                                        message:@"用户名已存在"
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"知道了"
+                                                              otherButtonTitles:nil];
+                        [alert show];
+                        _userName.text = @"";
+                        _userPassword.text = @"";
+                        _passwordConfirm.text = @"";
+                        [_userName becomeFirstResponder];
+                        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                    }
+                    [hud hide:YES];
+                    
+                }errorHandler:^(MKNetworkOperation *compeletedOperation, NSError *error){
+                    NSLog(@"%@",error);
+                }];
+                
+                [_engine enqueueOperation:op];
+            }
         }
     }
     
@@ -208,7 +248,7 @@
     if (component == 0) {
         return [_apartments count];
     }else{
-        return [_numberOfapartments count];
+        return [_apartmentNeedToBeload count];
     }
 }
 
@@ -217,7 +257,59 @@
     if (component == 0) {
         return [_apartments objectAtIndex:row];
     }else{
-        return [_numberOfapartments objectAtIndex:row];
+        return [_apartmentNeedToBeload objectAtIndex:row];
+    }
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (component == 0) {
+        
+        switch (row) {
+            case 0:
+                // 丁香
+                _apartmentNeedToBeload = _dingxiangApartments;
+                [pickerView reloadComponent:1];
+                break;
+            case 1:
+                // 海棠
+                _apartmentNeedToBeload = _haitangApartments;
+                [pickerView reloadComponent:1];
+                break;
+            case 2:
+                // 竹园
+                _apartmentNeedToBeload = _zhuyuanApartments;
+                [pickerView reloadComponent:1];
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+#pragma mark - Rex
+
+- (BOOL) validateEmail:(NSString *)email
+{
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:email];
+}
+
+- (BOOL) validateMobile:(NSString *)mobile
+{
+    //手机号以13， 15，18开头，八个 \d 数字字符
+    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
+    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
+    return [phoneTest evaluateWithObject:mobile];
+}
+
+- (BOOL) validateApart:(NSString *)apart
+{
+    if ([apart integerValue] < 620) {
+        return YES;
+    }else{
+        return NO;
     }
 }
 
