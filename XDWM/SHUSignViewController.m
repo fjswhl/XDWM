@@ -233,7 +233,7 @@
 
 - (IBAction)dismissModal:(id)sender {
     
-    [self dismissViewControllerAnimated:YES completion:Nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - PickerView Method
