@@ -31,6 +31,9 @@
 @property (strong, nonatomic) AFHTTPRequestOperationManager *manager;
 
 @property (strong, nonatomic) UIView *buttonView;
+
+// for animation when cell is inserted in table
+@property (strong, nonatomic) NSMutableSet *indexSet;
 @end
 
 @implementation LINRecordViewController
@@ -88,6 +91,13 @@
         _orderList = [NSMutableArray new];
     }
     return _orderList;
+}
+
+- (NSMutableSet *)indexSet{
+    if (!_indexSet) {
+        _indexSet = [NSMutableSet new];
+    }
+    return _indexSet;
 }
 
 - (AFHTTPRequestOperationManager *)manager{
@@ -184,6 +194,20 @@
         
         [self updateRemoteDatabaseWithOrderID:self.orderIDForDelete];
         [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (![self.indexSet containsObject:indexPath]) {
+        [self.indexSet addObject:indexPath];
+        UIView *mainView = cell.contentView;
+        mainView.transform = CGAffineTransformMakeRotation(-M_PI_2 / 3);
+        mainView.transform = CGAffineTransformTranslate(mainView.transform, -500, -100);
+        mainView.alpha = 0.5;
+        [UIView animateWithDuration:0.7 animations:^{
+            mainView.transform = CGAffineTransformIdentity;
+            mainView.alpha = 1;
+        }];
     }
 }
 #pragma mark - interact with server method
