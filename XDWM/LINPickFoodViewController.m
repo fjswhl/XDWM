@@ -32,6 +32,8 @@
 //      CoreData Stuff
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@property (nonatomic) BOOL needReflesh;
 @end
 
 @implementation LINPickFoodViewController
@@ -41,16 +43,20 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        id delegate = [[UIApplication sharedApplication] delegate];
-        self.managedObjectContext = [delegate managedObjectContext];
+
     }
     return self;
 }
 
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    id delegate = [[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [delegate managedObjectContext];
+
+
     
     self.foodList = [NSMutableArray new];
     self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
@@ -58,7 +64,8 @@
     self.header = [MJRefreshHeaderView header];
     self.header.delegate = self;
     self.header.scrollView = self.tableView;
-    [self.header beginRefreshing];
+//    [self.header beginRefreshing];
+    [self fetchGoodsInfoWithRefreshView:nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -90,6 +97,8 @@
     }else if (self.foodKindIndex == 1){
         self.navigationItem.title = @"锅巴米饭";
     }
+    
+
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -99,6 +108,14 @@
     if (![fm fileExistsAtPath:[NSString stringWithFormat:@"%@/infoDic.plist", docPath]]){
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+- (NSArray *)foodList{
+    if (_foodList) {
+        return _foodList;
+    }
+    _foodList = [NSArray new];
+    return _foodList;
 }
 
 - (void)dealloc{
@@ -121,6 +138,7 @@
 
 #pragma mark - refresh control delegate
 - (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView{
+    self.needReflesh = TRUE;
     [self fetchGoodsInfoWithRefreshView:refreshView];
 }
 #pragma mark - Table view data source
@@ -144,7 +162,8 @@
         }
     }
     // Return the number of rows in the section.
-    return [self.foodList count];
+  //  return [self.foodList count];
+    return [[self.fetchedResultsController fetchedObjects] count];
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -174,11 +193,16 @@
     UILabel *title = (UILabel *)[cell.contentView viewWithTag:2];
     UILabel *price = (UILabel *)[cell.contentView viewWithTag:3];
     
-    LINGoodModel *good = self.foodList[indexPath.row];
-    NSString *imgName = [good goodImg];
-    [img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, imgName]]];
-    title.text = good.goodName;
-    price.text = good.goodPrice;
+//    LINGoodModel *good = self.foodList[indexPath.row];
+//    NSString *imgName = [good goodImg];
+//    [img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, imgName]]];
+//    title.text = good.goodName;
+//    price.text = good.goodPrice;
+    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSString *image = [object valueForKey:@"goodImg"];
+    [img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, image]]];
+    title.text = [object valueForKey:@"goodName"];
+    price.text = [object valueForKey:@"goodPrice"];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buy:)];
     [label addGestureRecognizer:tapGestureRecognizer];
@@ -211,10 +235,14 @@
 #pragma mark - interaction method
 
 - (void)fetchGoodsInfoWithRefreshView:(MJRefreshBaseView *)refreshView{
-    if ([self.foodList count]) {
-        [refreshView endRefreshing];
-        return;
+    if (self.needReflesh == false) {
+        if ([self.fetchedResultsController.fetchedObjects count] > 0) {
+            [refreshView endRefreshing];
+            return;
+        }
     }
+
+    [self deleteGoodInDatabase];
     NSString *index = [NSString stringWithFormat:@"%li", (long)self.foodKindIndex];
     NSDictionary *infoDic = @{@"key": index};
     
@@ -240,9 +268,17 @@
         for (NSString *key in keys) {
             NSDictionary *aGood = [goodInfo objectForKey:key];
             LINGoodModel *aGoodModel = [[LINGoodModel alloc] initWithDictionary:aGood];
-            [self.foodList addObject:aGoodModel];
+ //           [self.foodList addObject:aGoodModel];
+            
+            [self insertNewGood:aGoodModel];
+            
         }
         [refreshView endRefreshing];
+        
+
+
+        [self.fetchedResultsController performFetch:nil];
+        
         [self.tableView reloadData];
     } errorHandler:nil];
     
@@ -258,9 +294,11 @@
     NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:correspondCell];
 
     
-    LINGoodModel *pickedGood = self.foodList[cellIndexPath.row];
-    self.pickedGoodName =   pickedGood.goodName;
-    self.pickedGoodPrice = [pickedGood.goodPrice floatValue];
+//    LINGoodModel *pickedGood = self.foodList[cellIndexPath.row];
+    NSManagedObject *pickedGood = self.fetchedResultsController.fetchedObjects[cellIndexPath.row];
+    
+    self.pickedGoodName =  [pickedGood valueForKey:@"goodName"];
+    self.pickedGoodPrice = [(NSString *)[pickedGood valueForKey:@"goodPrice"] floatValue];
     self.pickedGoodTotalPrice = self.pickedGoodPrice;
     
     if (self.foodKindIndex == 1) {
@@ -331,14 +369,14 @@
         return cell;
     }else if (indexPath.section == 1){
         if (indexPath.row == 0) {
-            NSString *firstGoodName = [self.foodList[[self.pickedGoodNumber[0] integerValue]] goodName];
+            NSString *firstGoodName = [self.fetchedResultsController.fetchedObjects[[self.pickedGoodNumber[0] integerValue]] goodName];
             gecell.textLabel.text = [NSString stringWithFormat:@"菜名：%@", firstGoodName];
             if ([self.pickedGoodNumber count] == 3) {
                 gecell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:14];
             }
             if ([self.pickedGoodNumber count] > 1) {
                 for (NSInteger i = 1; i < [self.pickedGoodNumber count]; i++) {
-                    NSString *aGoodName = [self.foodList[[self.pickedGoodNumber[i] integerValue]] goodName];
+                    NSString *aGoodName = [self.fetchedResultsController.fetchedObjects[[self.pickedGoodNumber[i] integerValue]] goodName];
                     gecell.textLabel.text = [gecell.textLabel.text stringByAppendingFormat:@",%@", aGoodName];
                 }
             }
@@ -506,13 +544,13 @@
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Good" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Good"];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"goodID" ascending:YES];
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    [self updateFetchRequest:fetchRequest];
+    
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -521,6 +559,42 @@
         NSLog(@"fetchrequest executed failed %@,%@", error, [error userInfo]);
     }
     return _fetchedResultsController;
+}
+
+- (void)insertNewGood:(LINGoodModel *)good{
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+    NSManagedObject *newGood = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    
+    [newGood setValue:good.goodID forKey:@"goodID"];
+    [newGood setValue:good.goodCreateTime forKey:@"goodCreateTime"];
+    [newGood setValue:good.goodHotel forKey:@"goodHotel"];
+    [newGood setValue:good.goodImg forKey:@"goodImg"];
+    [newGood setValue:good.goodIntroduce forKey:@"goodIntroduce"];
+    [newGood setValue:good.goodName forKey:@"goodName"];
+    [newGood setValue:good.goodPrice forKey:@"goodPrice"];
+    
+    if (![context save:nil]) {
+        NSLog(@"context save failed in LINPickFoodVC");
+    }
+}
+
+- (void)updateFetchRequest:(NSFetchRequest *)request{
+    if (self.foodKindIndex == FoodHotelGBMF) {
+//        [self.fetchedResultsController.fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(goodHotel = '锅巴米饭')"]];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"(goodHotel = '锅巴米饭')"]];
+    }else if (self.foodKindIndex == FoodHotelLML){
+//        [self.fetchedResultsController.fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(goodHotel = '绿茉莉套餐')"]];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"(goodHotel = '绿茉莉套餐')"]];
+    }
+}
+
+- (void)deleteGoodInDatabase{
+    NSArray *forDelete = [self.fetchedResultsController fetchedObjects];
+    for (NSManagedObject *aObject in forDelete) {
+        [self.fetchedResultsController.managedObjectContext deleteObject:aObject];
+    }
+    [self.fetchedResultsController.managedObjectContext save:nil];
 }
 @end
 

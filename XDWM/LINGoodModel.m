@@ -12,6 +12,7 @@
 
 - (LINGoodModel *)initWithDictionary:(NSDictionary *)dic{
     if (self = [super init]) {
+        self.goodID = dic[__GOODID__];
         self.goodName = dic[__GOODNAME__];
         self.goodCreateTime = dic[__GOODCTIME__];
         self.goodHotel = dic[__GOODHOTEL__];

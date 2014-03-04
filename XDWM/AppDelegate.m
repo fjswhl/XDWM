@@ -29,6 +29,8 @@
 
     LINRootViewController *tbc = (LINRootViewController *)self.window.rootViewController;
     tbc.delegate = self;
+    
+
     return YES;
 }
 							
@@ -192,7 +194,7 @@
 }
 
 - (NSURL *)applicationDocumentDirectory{
-    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 - (void)saveContext{

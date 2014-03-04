@@ -13,9 +13,12 @@
 #import "MKNetworkEngine.h"
 #import "MKNetworkOperation.h"
 #import "MBProgressHUD.h"
+
+#define FoodHotelGBMF 1
+#define FoodHotelLML 2
 @interface LINPickFoodViewController : UITableViewController
 
-@property (strong, nonatomic) NSMutableArray *foodList;
+@property (strong, nonatomic) NSArray *foodList;
 @property (nonatomic) NSInteger foodKindIndex;
 
 @end

@@ -3,12 +3,12 @@
     <entity name="Good" syncable="YES">
         <attribute name="goodCreateTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="goodHotel" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="goodID" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="goodID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="goodImg" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="goodIntroduce" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="goodName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="goodNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="goodPrice" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="goodPrice" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="Good" positionX="0" positionY="0" width="0" height="0"/>

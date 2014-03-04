@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+#define __GOODID__      @"goods_id"
 #define __GOODNAME__    @"goods_name"
 #define __GOODHOTEL__   @"goods_hotel"
 #define __GOODPRICE__   @"goods_price"
@@ -17,6 +18,7 @@
 #define __GOODCTIME__   @"goods_create_time"
 
 @interface LINGoodModel : NSObject
+@property (strong, nonatomic) NSString *goodID;
 @property (strong, nonatomic) NSString *goodName;
 @property (strong, nonatomic) NSString *goodHotel;
 @property (strong, nonatomic) NSString *goodPrice;
