@@ -34,6 +34,7 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property (nonatomic) BOOL needReflesh;
+
 @end
 
 @implementation LINPickFoodViewController
@@ -241,7 +242,12 @@
             return;
         }
     }
-
+    
+    //      转动HUD
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"正在努力加载...";
+    
     [self deleteGoodInDatabase];
     NSString *index = [NSString stringWithFormat:@"%li", (long)self.foodKindIndex];
     NSDictionary *infoDic = @{@"key": index};
@@ -278,7 +284,7 @@
 
 
         [self.fetchedResultsController performFetch:nil];
-        
+        [hud hide:YES];
         [self.tableView reloadData];
     } errorHandler:nil];
     
@@ -444,7 +450,8 @@
 }
 
 - (void)confirmOrder{
-    LINGoodModel *aGood = self.foodList[[self.pickedGoodNumber[0] integerValue]];
+//    LINGoodModel *aGood = self.foodList[[self.pickedGoodNumber[0] integerValue]];
+    NSManagedObject *aGood = self.fetchedResultsController.fetchedObjects[[self.pickedGoodNumber[0] integerValue]];
     LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
     LINUserModel *user = rootVC.user;
     
@@ -452,8 +459,8 @@
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
 
     NSString *goodName = self.pickedGoodName;
-    NSString *goodsHotel = [aGood.goodHotel  stringByAppendingString:@"(来自iOS客户端)"];
-    NSString *goodsPrice = aGood.goodPrice;
+    NSString *goodsHotel = [[aGood valueForKey:@"goodHotel"]  stringByAppendingString:@"(来自iOS客户端)"];
+    NSString *goodsPrice = [aGood valueForKey:@"goodPrice"];
     NSString *number = [NSString stringWithFormat:@"%li", (long)self.count];
     NSString *totalPrice = [NSString stringWithFormat:@"%.2lf", self.pickedGoodTotalPrice];
     NSString *username = user.userName;
@@ -494,11 +501,11 @@
         LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
         LINRecordViewController *recordVC = rootVC.viewControllers[1];
         
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tabBarController.view animated:YES];
         hud.mode = MBProgressHUDModeCustomView;
         hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
         hud.labelText = @"订单提交成功！";
-        [hud hide:YES afterDelay:1.5];
+        [hud hide:YES afterDelay:1];
         recordVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%li",(long)[recordVC.tabBarItem.badgeValue integerValue] + 1];
  //       [alertView show];
     } errorHandler:nil];
