@@ -12,8 +12,8 @@
 #import "CXAlertView.h"
 #import "LINRecordViewController.h"
 #import "MJRefresh.h"
-
-@interface LINPickFoodViewController ()<MJRefreshBaseViewDelegate>
+#import <CoreData/CoreData.h>
+@interface LINPickFoodViewController ()<MJRefreshBaseViewDelegate, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic)       NSInteger count;
 @property (nonatomic)       NSInteger addFoodCount;
@@ -28,6 +28,10 @@
 @property (nonatomic) NSInteger flag;////
 @property (nonatomic, strong) MJRefreshHeaderView *header;
 @property (nonatomic, strong) MKNetworkEngine *engine;
+
+//      CoreData Stuff
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @end
 
 @implementation LINPickFoodViewController
@@ -37,6 +41,8 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        id delegate = [[UIApplication sharedApplication] delegate];
+        self.managedObjectContext = [delegate managedObjectContext];
     }
     return self;
 }
@@ -493,6 +499,28 @@
     self.flag = 0;
     self.pickedGoodNumber = [NSMutableArray new];
     [self updateNavBar];
+}
+
+#pragma  mark - Core Data Related Methods
+- (NSFetchedResultsController *)fetchedResultsController{
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Good" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"" ascending:YES];
+    [fetchRequest setSortDescriptors:@[sortDescriptor]];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    aFetchedResultsController.delegate = self;
+    self.fetchedResultsController = aFetchedResultsController;
+    
+    NSError *error = nil;
+    if (![self.fetchedResultsController performFetch:&error]) {
+        NSLog(@"fetchrequest executed failed %@,%@", error, [error userInfo]);
+    }
+    return _fetchedResultsController;
 }
 @end
 

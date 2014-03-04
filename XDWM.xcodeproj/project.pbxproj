@@ -38,6 +38,8 @@
 		3E044BE218B72AA600695D91 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E044BD818B72AA600695D91 /* AFURLResponseSerialization.m */; };
 		3E044BE318B72AA600695D91 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E044BDA18B72AA600695D91 /* AFURLSessionManager.m */; };
 		3E044BE518B73A7C00695D91 /* SignUp Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E044BE418B73A7C00695D91 /* SignUp Info.plist */; };
+		3E159DD018C5C3F20013780E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E159DCF18C5C3F20013780E /* CoreData.framework */; };
+		3E159DD318C5C4100013780E /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3E159DD118C5C4100013780E /* Model.xcdatamodeld */; };
 		3E27F52C18AD26140010C77C /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F52B18AD26140010C77C /* TestViewController.m */; };
 		3E27F53118AD35CC0010C77C /* 个人.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E27F52D18AD35CC0010C77C /* 个人.png */; };
 		3E27F53218AD35CC0010C77C /* 公告.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E27F52E18AD35CC0010C77C /* 公告.png */; };
@@ -165,6 +167,8 @@
 		3E044BD918B72AA600695D91 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		3E044BDA18B72AA600695D91 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
 		3E044BE418B73A7C00695D91 /* SignUp Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SignUp Info.plist"; sourceTree = "<group>"; };
+		3E159DCF18C5C3F20013780E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		3E159DD218C5C4100013780E /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		3E27F52A18AD26140010C77C /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		3E27F52B18AD26140010C77C /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		3E27F52D18AD35CC0010C77C /* 个人.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "个人.png"; sourceTree = "<group>"; };
@@ -302,6 +306,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E159DD018C5C3F20013780E /* CoreData.framework in Frameworks */,
 				3E97675418A1299800AE48D3 /* CoreGraphics.framework in Frameworks */,
 				3E97675618A1299800AE48D3 /* UIKit.framework in Frameworks */,
 				3E97675218A1299800AE48D3 /* Foundation.framework in Frameworks */,
@@ -475,6 +480,7 @@
 		3E97674518A1299800AE48D3 = {
 			isa = PBXGroup;
 			children = (
+				3E159DD118C5C4100013780E /* Model.xcdatamodeld */,
 				3E97675718A1299800AE48D3 /* XDWM */,
 				3E97677618A1299800AE48D3 /* XDWMTests */,
 				3E97675018A1299800AE48D3 /* Frameworks */,
@@ -494,6 +500,7 @@
 		3E97675018A1299800AE48D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E159DCF18C5C3F20013780E /* CoreData.framework */,
 				3E044BC718B72AA600695D91 /* AFNetworking */,
 				3E044B6918B3B78E00695D91 /* MBProgressHUD */,
 				3EF0F00718B11F61007563DF /* MJRefresh */,
@@ -872,6 +879,7 @@
 				3ED2AFAC18A61679001AE706 /* MKNetworkEngine.m in Sources */,
 				3ED2AFA718A61679001AE706 /* NSDate+RFC1123.m in Sources */,
 				3ED2B01F18A78292001AE706 /* LFGlassView.m in Sources */,
+				3E159DD318C5C4100013780E /* Model.xcdatamodeld in Sources */,
 				3ED2AFA818A61679001AE706 /* NSDictionary+RequestEncoding.m in Sources */,
 				3ED2AFD318A652B0001AE706 /* SDWebImageCompat.m in Sources */,
 				3E27F54418ADFF160010C77C /* SHUCommentViewController.m in Sources */,
@@ -1111,6 +1119,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3E159DD118C5C4100013780E /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3E159DD218C5C4100013780E /* Model.xcdatamodel */,
+			);
+			currentVersion = 3E159DD218C5C4100013780E /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 3E97674618A1299800AE48D3 /* Project object */;
 }

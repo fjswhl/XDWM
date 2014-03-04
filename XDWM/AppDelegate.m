@@ -13,6 +13,9 @@
 #import "ADDRMACRO.h"
 #include "LINUserModel.h"
 @implementation AppDelegate
+@synthesize managedObjectModel = _managedObjectModel;
+@synthesize persistentStoreCoordinate = _persistentStoreCoordinate;
+@synthesize managedObjectContext = _managedObjectContext;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -151,6 +154,56 @@
     return _manager;
 }
 
+
+#pragma mark - Core Data Related Method
+- (NSManagedObjectModel *)managedObjectModel{
+    if (_managedObjectModel != nil) {
+        return _managedObjectModel;
+    }
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Model" withExtension:@"momd"];
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    return _managedObjectModel;
+}
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinate{
+    if (_persistentStoreCoordinate != nil) {
+        return _persistentStoreCoordinate;
+    }
+    NSURL *storeURL = [[self applicationDocumentDirectory] URLByAppendingPathComponent:@"XDWM.sqlite"];
+    
+    NSError *error = nil;
+    _persistentStoreCoordinate = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    if (![_persistentStoreCoordinate addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+        NSLog(@"Unresolved error%@,%@", error,[error userInfo]);
+    }
+    return _persistentStoreCoordinate;
+}
+
+- (NSManagedObjectContext *)managedObjectContext{
+    if (_managedObjectContext != nil) {
+        return _managedObjectContext;
+    }
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinate];
+    if (coordinator != nil) {
+        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    }
+    return _managedObjectContext;
+}
+
+- (NSURL *)applicationDocumentDirectory{
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+}
+
+- (void)saveContext{
+    NSError *error = nil;
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (managedObjectContext != nil) {
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+            NSLog(@"Unresolved error in saveContext %@,%@", error, [error userInfo]);
+        }
+    }
+}
 @end
 
 
