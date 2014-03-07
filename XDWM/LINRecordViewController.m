@@ -15,6 +15,9 @@
 #import "MJRefresh.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "MBProgressHUD.h"
+
+#import <CoreImage/CoreImage.h>
+
 @interface LINRecordViewController ()<UITableViewDataSource, UITableViewDelegate, MJRefreshBaseViewDelegate, UIActionSheetDelegate>
 @property (nonatomic) NSInteger count;  //表示下拉刷新时当前表已存在多少条记录，非常重要！ 用于正确获取服务器发来的数据
 
@@ -136,17 +139,35 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.contentView.layer.borderColor = [UIColor colorWithRed:134/255.0 green:34/255.0 blue:34/255.0 alpha:1.0].CGColor;
-    cell.contentView.layer.borderWidth = 1.0;
-    
-    UILabel *hotelLabel = (UILabel *)[cell.contentView viewWithTag:1];
-    UILabel *goodNameLabel = (UILabel *)[cell.contentView viewWithTag:2];
-    UILabel *totalPriceLabel = (UILabel *)[cell.contentView viewWithTag:3];
-    UILabel *numberLabel = (UILabel *)[cell.contentView viewWithTag:4];
-    UILabel *createtimeLabel = (UILabel *)[cell.contentView viewWithTag:5];
-    UILabel *orderlistIDLabel = (UILabel *)[cell.contentView viewWithTag:6];
-    
+//    cell.contentView.layer.borderColor = [UIColor colorWithRed:134/255.0 green:34/255.0 blue:34/255.0 alpha:1.0].CGColor;
+//    cell.contentView.layer.borderWidth = 1.0;
     NSDictionary *aRecord = self.orderList[indexPath.row];
+    
+    UIView *innerContentView = [cell.contentView viewWithTag:1];
+    
+    UIImageView *timeFlag = (UIImageView *)[innerContentView viewWithTag:30];
+    
+    UIImageView *backImage = (UIImageView *)[innerContentView viewWithTag:20];
+    backImage.layer.borderWidth = 1.0;
+    backImage.layer.cornerRadius = 6;
+    
+    //  处理菜的图片
+    //NSArray *goodsArray = [aRecord[__GOODSHOTEL__] componentsSeparatedByString:@","];
+    
+    UIImageView *goodImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"test.png"]];
+    [goodImage setClipsToBounds:YES];
+    goodImage.frame = CGRectMake(169, 48, 122, 94);
+    goodImage.layer.cornerRadius = 6;
+    [innerContentView insertSubview:goodImage belowSubview:timeFlag];
+    
+    UILabel *hotelLabel = (UILabel *)[innerContentView viewWithTag:10];
+    UILabel *goodNameLabel = (UILabel *)[innerContentView viewWithTag:2];
+    UILabel *totalPriceLabel = (UILabel *)[innerContentView viewWithTag:3];
+    UILabel *numberLabel = (UILabel *)[innerContentView viewWithTag:4];
+    UILabel *createtimeLabel = (UILabel *)[innerContentView viewWithTag:5];
+    UILabel *orderlistIDLabel = (UILabel *)[innerContentView viewWithTag:6];
+    
+
     hotelLabel.text = aRecord[__GOODSHOTEL__];
     goodNameLabel.text = aRecord[__GOODSNAME__];
     totalPriceLabel.text = [aRecord[__TOTALPRICE__] stringByAppendingString:@"元"];
@@ -322,6 +343,31 @@
 
 - (void)refresh{
     [self.header beginRefreshing];
+}
+
+
+#pragma mark - Core Image
+- (UIImage *)outputImage:(UIImage *)inputImage{
+    CIImage *moi2 = [[CIImage alloc] initWithCGImage:inputImage.CGImage];
+    CGRect moiextent = moi2.extent;
+    
+    CIFilter *grad = [CIFilter filterWithName:@"CIRadialGradient"];
+    CIVector *center = [CIVector vectorWithX:moiextent.size.width / 2 Y:moiextent.size.height / 2];
+    
+    [grad setValue:center forKey:@"inputCenter"];
+    [grad setValue:@20 forKey:@"inputRadius0"];
+    [grad setValue:@20 forKey:@"inputRadius1"];
+    CIImage *gradImage = [grad valueForKey:@"outputImage"];
+    
+    CIFilter *blend = [CIFilter filterWithName:@"CIBlendWithMask"];
+    [blend setValue:moi2 forKey:@"inputImage"];
+    [blend setValue:gradImage forKey:@"inputMaskImage"];
+    CGImageRef moi3 = [[CIContext contextWithOptions:nil] createCGImage:blend.outputImage fromRect:moiextent];
+    
+    UIImage *moi4 = [UIImage imageWithCGImage:moi3];
+    CGImageRelease(moi3);
+    
+    return moi4;
 }
 @end
 
