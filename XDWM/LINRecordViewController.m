@@ -139,6 +139,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+
 //    cell.contentView.layer.borderColor = [UIColor colorWithRed:134/255.0 green:34/255.0 blue:34/255.0 alpha:1.0].CGColor;
 //    cell.contentView.layer.borderWidth = 1.0;
     NSDictionary *aRecord = self.orderList[indexPath.row];
@@ -234,6 +235,8 @@
         }];
     }
 }
+
+
 #pragma mark - interact with server method
 
 - (void)fetchOrderListWithRefreshView:(MJRefreshBaseView *)refreshView{
