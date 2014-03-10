@@ -15,7 +15,7 @@
 #import "MKNetworkEngine.h"
 #import "MKNetworkOperation.h"
 #import "ADDRMACRO.h"
-
+#import "MBProgressHUD.h"
 @interface LINOrderViewController ()
 @property (strong, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic) NSInteger kFoodKindIndex;
@@ -59,7 +59,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return 3;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -75,6 +75,9 @@
     } else if (indexPath.section == 0 && indexPath.row == 1){
         titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.text = @"绿茉莉套餐（10选3）";
+    } else if (indexPath.section == 0 && indexPath.row == 2){
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        titleLabel.text = @"脆皮鸡烤肉饭";
     }
     return cell;
 }
@@ -94,7 +97,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 //    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 //    UILabel *titleLabel = (UILabel *)[cell.contentView viewWithTag:1];
-    
+    if (indexPath.row == 1) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"暂未开放,敬请期待!";
+        [hud hide:YES afterDelay:1.5];
+        [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
+        return;
+    }
     self.kFoodKindIndex = indexPath.row + 1;
     
     [self performSegueWithIdentifier:@"performFoodSegue" sender:self];

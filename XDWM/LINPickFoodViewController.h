@@ -16,6 +16,7 @@
 
 #define FoodHotelGBMF 1
 #define FoodHotelLML 2
+#define FoodHotelKRF 3
 @interface LINPickFoodViewController : UITableViewController
 
 @property (strong, nonatomic) NSArray *foodList;

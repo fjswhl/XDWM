@@ -18,6 +18,8 @@
 #define __CREATEDAY__       @"create_time_day"
 #define __ORDERLISTID__     @"orderlist_id"
 #define __ADDFOODNUM__      @"addfoodNumber"
+#define __WUWAN__           @"wuwan"
+#define __COMEFROM__        @"comefrom"
 @interface LINOrderList : NSObject
 
 @property (nonatomic) NSInteger orderID;

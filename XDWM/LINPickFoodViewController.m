@@ -13,7 +13,7 @@
 #import "LINRecordViewController.h"
 #import "MJRefresh.h"
 #import <CoreData/CoreData.h>
-@interface LINPickFoodViewController ()<MJRefreshBaseViewDelegate, NSFetchedResultsControllerDelegate>
+@interface LINPickFoodViewController ()<MJRefreshBaseViewDelegate, NSFetchedResultsControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic)       NSInteger count;
 @property (nonatomic)       NSInteger addFoodCount;
@@ -35,6 +35,11 @@
 
 @property (nonatomic) BOOL needReflesh;
 
+@property (strong, nonatomic) UITableView *infoTableView;
+//      下面的属性烤肉饭专用
+@property (strong, nonatomic) NSArray *flavors;
+@property (strong, nonatomic) NSArray *daxiao;
+@property (nonatomic) BOOL needSelectFlavor;
 @end
 
 @implementation LINPickFoodViewController
@@ -43,6 +48,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
+        
         // Custom initialization
 
     }
@@ -50,7 +56,7 @@
 }
 
 
-
+//          设置标题,并获取数据
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -97,9 +103,9 @@
         self.navigationItem.rightBarButtonItem = rightBarButton;
     }else if (self.foodKindIndex == 1){
         self.navigationItem.title = @"锅巴米饭";
+    }else if (self.foodKindIndex == FoodHotelKRF){
+        self.navigationItem.title = @"脆皮鸡烤肉饭";
     }
-    
-
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -111,12 +117,30 @@
     }
 }
 
+# pragma mark - Getter
 - (NSArray *)foodList{
     if (_foodList) {
         return _foodList;
     }
     _foodList = [NSArray new];
     return _foodList;
+}
+
+- (NSArray *)daxiao
+{
+    if (_daxiao) {
+        return _daxiao;
+    }
+    _daxiao = @[@"大份",@"小份"];
+    return _daxiao;
+}
+
+- (NSArray *)flavors{
+    if (_flavors) {
+        return _flavors;
+    }
+    _flavors = @[@"沙拉",@"土豆",@"黑椒",@"茄子",@"番茄",@"红酒",@"麻辣咖哩"];
+    return _flavors;
 }
 
 - (void)dealloc{
@@ -159,6 +183,12 @@
         if (section == 0) {
             return 1;
         }else if (section == 1){
+            if (self.foodKindIndex == FoodHotelKRF) {
+                if (self.needSelectFlavor == true) {
+                    return 6;
+                }
+                return 5;
+            }
             return 4;
         }
     }
@@ -201,6 +231,7 @@
 //    price.text = good.goodPrice;
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     NSString *image = [object valueForKey:@"goodImg"];
+    NSLog(@"%@", image);
     [img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, image]]];
     title.text = [object valueForKey:@"goodName"];
     price.text = [object valueForKey:@"goodPrice"];
@@ -220,6 +251,9 @@
 
 #pragma mark - tableview delegate
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([self isInfoTableView:tableView] && indexPath.row == 4) {
+        return indexPath;
+    }
     return nil;
 }
 
@@ -232,6 +266,35 @@
     }
     return 0;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([self isInfoTableView:tableView]) {
+        if (indexPath.row == 5) {
+            return 162;
+        }
+        return 44;
+    }
+    return 98;
+}
+//          infoTableView delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([self isInfoTableView:tableView]) {
+        NSIndexPath *addedIndexPath = [NSIndexPath indexPathForRow:5 inSection:1];
+        [self.infoTableView deselectRowAtIndexPath:indexPath animated:YES];
+        if (self.needSelectFlavor == NO) {
+            self.needSelectFlavor = YES;
+            [self.infoTableView insertRowsAtIndexPaths:@[addedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.infoTableView scrollToRowAtIndexPath:addedIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        }else if (self.needSelectFlavor == YES){
+            self.needSelectFlavor = NO;
+            [self.infoTableView deleteRowsAtIndexPaths:@[addedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+
+    }
+    return;
+}
+
 
 #pragma mark - interaction method
 
@@ -248,7 +311,7 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"正在努力加载...";
     
-    [self deleteGoodInDatabase];
+
     NSString *index = [NSString stringWithFormat:@"%li", (long)self.foodKindIndex];
     NSDictionary *infoDic = @{@"key": index};
     
@@ -270,6 +333,8 @@
             }
             return false;
         }];
+        
+        [self deleteGoodInDatabase];
         
         for (NSString *key in keys) {
             NSDictionary *aGood = [goodInfo objectForKey:key];
@@ -307,7 +372,7 @@
     self.pickedGoodPrice = [(NSString *)[pickedGood valueForKey:@"goodPrice"] floatValue];
     self.pickedGoodTotalPrice = self.pickedGoodPrice;
     
-    if (self.foodKindIndex == 1) {
+    if (self.foodKindIndex == 1 || self.foodKindIndex == FoodHotelKRF) {
         self.pickedGoodNumber = [NSMutableArray arrayWithObjects:@(cellIndexPath.row), nil];
         [self popUpConfirmView];
     }else if (self.foodKindIndex == 2){
@@ -387,6 +452,14 @@
                 }
             }
             self.pickedGoodName = [gecell.textLabel.text stringByReplacingOccurrencesOfString:@"菜名：" withString:@""];
+            
+            UISegmentedControl *seg = [[UISegmentedControl alloc] initWithItems:@[@"午", @"晚"]];
+            seg.tag = 10;
+            seg.selectedSegmentIndex = 0;
+            
+            seg.frame = CGRectMake(182, 0, 70, 29);
+            seg.center = CGPointMake(seg.center.x, gecell.contentView.frame.size.height / 2);
+            [gecell.contentView addSubview:seg];
         }else if (indexPath.row == 1){
             gecell.textLabel.text = [NSString stringWithFormat: @"单价：%.2f元", self.pickedGoodPrice];
             
@@ -429,6 +502,19 @@
             [stepper addTarget:self action:@selector(addFoodCountChanged:) forControlEvents:UIControlEventValueChanged];
             gecell.textLabel.text = [NSString stringWithFormat:@"加饭： %li份", (long)self.addFoodCount];
             [gecell.contentView addSubview:stepper];
+        }else if (indexPath.row == 4){
+            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.textLabel.text = @"口味&饭量:";
+            cell.detailTextLabel.text = @"大份沙拉";
+            return cell;
+        }else if (indexPath.row == 5){
+            UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
+
+            pickerView.frame = CGRectMake(0, 0, 320, 162);
+            pickerView.dataSource = self;
+            pickerView.delegate = self;
+            [gecell.contentView addSubview:pickerView];
         }
         return gecell;
     }
@@ -438,13 +524,14 @@
 
 - (void)orderAmountChanged:(UIStepper *)sender{
     self.count = (int)sender.value;
-    self.pickedGoodTotalPrice = self.count * self.pickedGoodPrice;
+    self.pickedGoodTotalPrice = self.count * self.pickedGoodPrice + self.addFoodCount;
     UITableView *infoTableview = (UITableView *)sender.superview.superview.superview.superview.superview;
     [infoTableview reloadData];
 }
 
 - (void)addFoodCountChanged:(UIStepper *)sender{
     self.addFoodCount = (int)sender.value;
+    self.pickedGoodTotalPrice = self.count * self.pickedGoodPrice + self.addFoodCount;
     UITableView *infoTableview = (UITableView *)sender.superview.superview.superview.superview.superview;
     [infoTableview reloadData];
 }
@@ -459,6 +546,12 @@
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
 
     NSString *goodName = self.pickedGoodName;
+//      处理脆皮鸡的订单名
+    if (self.foodKindIndex == FoodHotelKRF) {
+        UITableViewCell *cell = [self.infoTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:1]];
+        goodName = [goodName stringByAppendingFormat:@"(%@)", cell.detailTextLabel.text];
+    }
+    
     NSString *goodsHotel = [[aGood valueForKey:@"goodHotel"]  stringByAppendingString:@"(来自iOS客户端)"];
     NSString *goodsPrice = [aGood valueForKey:@"goodPrice"];
     NSString *number = [NSString stringWithFormat:@"%li", (long)self.count];
@@ -470,6 +563,11 @@
     NSString *userQuhao = user.userQuhao;
     NSString *userSushehao = user.userSushehao;
     NSString *userZuoyou = user.userZuoyou;
+    
+//      确定订单午晚
+    UITableViewCell *cell = [self.infoTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+    UISegmentedControl *seg = (UISegmentedControl *)[cell.contentView viewWithTag:10];
+    NSString *wuwan = [seg titleForSegmentAtIndex:seg.selectedSegmentIndex];
     
     NSString *addFoodNumber = [NSString stringWithFormat:@"%li", (long)self.addFoodCount];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -492,7 +590,10 @@
                                  __USERZUOYOU__:userZuoyou,
                                  __CREATETIME__:createTime,
                                  __CREATEDAY__:createDay,
-                                 __ADDFOODNUM__:addFoodNumber};
+                                 __ADDFOODNUM__:addFoodNumber,
+                                 __COMEFROM__:@"iOS",
+                                 __WUWAN__:wuwan,
+                                 __ADDFOODNUM__:[NSString stringWithFormat:@"%li", (long)self.addFoodCount]};
 
     MKNetworkOperation *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"submit_order.php"] params:forPostDic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
@@ -505,24 +606,29 @@
         hud.mode = MBProgressHUDModeCustomView;
         hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
         hud.labelText = @"订单提交成功！";
-        [hud hide:YES afterDelay:1];
+        [hud hide:YES afterDelay:1.0f];
         recordVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%li",(long)[recordVC.tabBarItem.badgeValue integerValue] + 1];
  //       [alertView show];
-    } errorHandler:nil];
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tabBarController.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"网络不给力,请稍后重试";
+        [hud hide:YES afterDelay:1.0f];
+    }];
     [self.engine enqueueOperation:op];
     
 }
 
 - (void)popUpConfirmView{
-    if (self.count != 0 || self.foodKindIndex == 1) {
-        UITableView *infoView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 280, 180) style:UITableViewStylePlain];
-        infoView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5);
-        CXAlertView *confirmOrderView = [[CXAlertView alloc] initWithTitle:@"确认订单" contentView:infoView cancelButtonTitle:nil];
-        
-        infoView.backgroundColor = [UIColor clearColor];
-        infoView.delegate = self;
-        infoView.dataSource = self;
-        infoView.tag = 1;
+    if (self.count != 0 || self.foodKindIndex == 1 || self.foodKindIndex == FoodHotelKRF) {
+        self.infoTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 280, 280) style:UITableViewStylePlain];
+        self.infoTableView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5);
+        CXAlertView *confirmOrderView = [[CXAlertView alloc] initWithTitle:@"确认订单" contentView:self.infoTableView cancelButtonTitle:nil];
+
+        self.infoTableView.backgroundColor = [UIColor clearColor];
+        self.infoTableView.delegate = self;
+        self.infoTableView.dataSource = self;
+        self.infoTableView.tag = 1;
         
         [confirmOrderView addButtonWithTitle:@"取消" type:CXAlertViewButtonTypeDefault handler:^(CXAlertView *alertView, CXAlertButtonItem *button) {
             [self resetOrderInfo];
@@ -533,6 +639,11 @@
             [self resetOrderInfo];
             [alertView dismiss];
         }];
+        if (self.foodKindIndex == FoodHotelGBMF){
+            confirmOrderView.contentScrollViewMaxHeight = 220;
+        }else if (self.foodKindIndex == FoodHotelKRF){
+            confirmOrderView.contentScrollViewMaxHeight = 270;
+        }
         [confirmOrderView show];
     }
 
@@ -593,6 +704,8 @@
     }else if (self.foodKindIndex == FoodHotelLML){
 //        [self.fetchedResultsController.fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"(goodHotel = '绿茉莉套餐')"]];
         [request setPredicate:[NSPredicate predicateWithFormat:@"(goodHotel = '绿茉莉套餐')"]];
+    }else if (self.foodKindIndex == FoodHotelKRF){
+        [request setPredicate:[NSPredicate predicateWithFormat:@"(goodHotel = '脆皮鸡烤肉饭')"]];
     }
 }
 
@@ -602,6 +715,58 @@
         [self.fetchedResultsController.managedObjectContext deleteObject:aObject];
     }
     [self.fetchedResultsController.managedObjectContext save:nil];
+}
+
+#pragma mark - Pickerview Delegate
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 2;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    if (component == 0) {
+        return 2;
+    }else if (component == 1){
+        return 7;
+    }
+    return 0;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    if (component == 0) {
+        return self.daxiao[row];
+    }else{
+        return self.flavors[row];
+    }
+    return nil;
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component{
+    if (component == 0) {
+        return 100;
+    }else if (component == 1){
+        return 220;
+    }
+    return 0;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    NSString *daxiao = nil;
+    NSString *flavor = nil;
+    if (component == 0) {
+        daxiao = self.daxiao[row];
+    }else if (component == 1){
+        flavor = self.flavors[row];
+    }
+    if (daxiao == nil) {
+        daxiao = self.daxiao[0];
+    }
+    if (flavor == nil) {
+        flavor = self.flavors[0];
+    }
+    UITableViewCell *cell = [self.infoTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:1]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@", daxiao, flavor];
+//    self.pickedGoodName = [cell.detailTextLabel.text stringByAppendingString:self.pickedGoodName];
 }
 @end
 
