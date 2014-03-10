@@ -15,7 +15,8 @@
 #import "MJRefresh.h"
 #import "AFHTTPRequestOperationManager.h"
 #import "MBProgressHUD.h"
-
+#import "UIImageView+WebCache.h"
+#import "LINGoodModel.h"
 #import <CoreImage/CoreImage.h>
 
 @interface LINRecordViewController ()<UITableViewDataSource, UITableViewDelegate, MJRefreshBaseViewDelegate, UIActionSheetDelegate>
@@ -154,7 +155,8 @@
     //  处理菜的图片
     //NSArray *goodsArray = [aRecord[__GOODSHOTEL__] componentsSeparatedByString:@","];
     
-    UIImageView *goodImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"test.png"]];
+    UIImageView *goodImage = [UIImageView new];
+    [goodImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, aRecord[__GOODPIC__]]]];
     [goodImage setClipsToBounds:YES];
     goodImage.frame = CGRectMake(169, 48, 122, 94);
     goodImage.layer.cornerRadius = 6;
@@ -259,7 +261,7 @@
 //        NSString *st = responseObject;
 //        NSDictionary *recordsInfo = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
         NSDictionary *recordsInfo = responseObject;
-        
+        NSLog(@"%@", recordsInfo);
         NSArray *keys = [[recordsInfo allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
             NSInteger in1 = [(NSString *)obj1 integerValue];
             NSInteger in2 = [(NSString *)obj2 integerValue];

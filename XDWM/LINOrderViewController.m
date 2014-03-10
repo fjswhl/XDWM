@@ -16,11 +16,16 @@
 #import "MKNetworkOperation.h"
 #import "ADDRMACRO.h"
 #import "MBProgressHUD.h"
+#import <CoreData/CoreData.h>
 @interface LINOrderViewController ()
 @property (strong, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic) NSInteger kFoodKindIndex;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property (strong, nonatomic) MKNetworkEngine *engine;
+
+
+
 @end
 
 @implementation LINOrderViewController
@@ -45,13 +50,36 @@
     self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
 }
 - (void)viewWillAppear:(BOOL)animated{
-    [self fetchUserInfoToRootVC];
+    NSFileManager *fm = [NSFileManager new];
+    NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    if (![fm fileExistsAtPath:[NSString stringWithFormat:@"%@/infoDic.plist", docPath]]) {
+        UINavigationController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"login"];
+        [self presentViewController:loginVC animated:YES completion:nil];
+        return;
+    }
+    
+    LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
+        
+    LINUserModel *user = rootVC.user;
+    if (self.needRefreshUserInfo == TRUE || user == nil) {
+        [self fetchUserInfoToRootVC];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (NSManagedObjectContext *)managedObjectContext{
+
+    if (!_managedObjectContext) {
+        id appDelegate = [[UIApplication sharedApplication] delegate];
+        _managedObjectContext = [appDelegate managedObjectContext];
+    }
+    return _managedObjectContext;
 }
 
 #pragma mark - tableview data source
@@ -123,37 +151,37 @@
 }
 
 - (void)fetchUserInfoToRootVC{
-    NSFileManager *fm = [NSFileManager new];
     NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    
-    if (![fm fileExistsAtPath:[NSString stringWithFormat:@"%@/infoDic.plist", docPath]]) {
-        UINavigationController *loginVC = [self.storyboard instantiateViewControllerWithIdentifier:@"login"];
-        [self presentViewController:loginVC animated:YES completion:nil];
-    }else{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tabBarController.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+
         NSDictionary *userInfo = [NSDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/infoDic.plist", docPath]];
         
         LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
-        rootVC.user.userName = userInfo[__USERNAME__];
-        rootVC.user.userPassword = userInfo[__PASSWORD__];
+        LINUserModel *user = [LINUserModel new];
         
-        MKNetworkOperation *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_user_info.php"] params:@{__USERNAME__:rootVC.user.userName} httpMethod:@"POST"];
+        user.userName = userInfo[__USERNAME__];
+        user.userPassword = userInfo[__PASSWORD__];
+        
+        MKNetworkOperation *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_user_info.php"] params:@{__USERNAME__:user.userName} httpMethod:@"POST"];
         [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
             NSString *st = [completedOperation responseString];
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
-            rootVC.user.userAddr = dic[__USERADDR__];
-            rootVC.user.userEmail = dic[__USEREMAIL__];
-            rootVC.user.userLouhao = dic[__USERLOUHAO__];
-            rootVC.user.userPoint = dic[__USERPOINT__];
-            rootVC.user.userQuhao = dic[__USERQUHAO__];
-            rootVC.user.userSex = dic[__USERSEX__];
-            rootVC.user.userSushehao = dic[__USERSUSHEHAO__];
-            rootVC.user.userTel = dic[__USERTEL__];
-            rootVC.user.userZuoyou = dic[__USERZUOYOU__];
-            
+            user.userAddr = dic[__USERADDR__];
+            user.userEmail = dic[__USEREMAIL__];
+            user.userLouhao = dic[__USERLOUHAO__];
+            user.userPoint = dic[__USERPOINT__];
+            user.userQuhao = dic[__USERQUHAO__];
+            user.userSex = dic[__USERSEX__];
+            user.userSushehao = dic[__USERSUSHEHAO__];
+            user.userTel = dic[__USERTEL__];
+            user.userZuoyou = dic[__USERZUOYOU__];
+            rootVC.user = user;
+            [hud hide:YES];
         } errorHandler:nil];
         [self.engine enqueueOperation:op];
-        
-    }
+
+    self.needRefreshUserInfo = false;
 }
 
 #pragma sign vc delegate method

@@ -234,7 +234,7 @@
 //    price.text = good.goodPrice;
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     NSString *image = [object valueForKey:@"goodImg"];
-    NSLog(@"%@", image);
+//    NSLog(@"%@", image);
     [img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, image]]];
     title.text = [object valueForKey:@"goodName"];
     price.text = [object valueForKey:@"goodPrice"];

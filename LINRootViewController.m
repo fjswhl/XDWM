@@ -36,10 +36,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (LINUserModel *)user{
-    if (!_user) {
-        _user = [LINUserModel new];
-    }
-    return _user;
-}
+//- (LINUserModel *)user{
+//    if (!_user) {
+//        _user = [LINUserModel new];
+//    }
+//    return _user;
+//}
 @end

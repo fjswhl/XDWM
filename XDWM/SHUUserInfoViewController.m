@@ -46,7 +46,8 @@
     }
     
     [self.tabBarController setSelectedIndex:0];
-    
+    LINOrderViewController *mainVC = (LINOrderViewController *)[self.tabBarController.viewControllers[0] topViewController];
+    mainVC.needRefreshUserInfo = YES;
 
 }
 

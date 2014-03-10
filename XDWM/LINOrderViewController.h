@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SHUSignViewController.h"
 @interface LINOrderViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic) BOOL needRefreshUserInfo;
 - (void)fetchUserInfoToRootVC;
+
 @end
