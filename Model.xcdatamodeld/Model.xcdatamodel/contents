@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Good" syncable="YES">
         <attribute name="goodCreateTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="goodHotel" optional="YES" attributeType="String" syncable="YES"/>
@@ -10,7 +10,21 @@
         <attribute name="goodNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="goodPrice" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="User" syncable="YES">
+        <attribute name="user_add" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_louhao" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_point" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_quhao" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_sex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_sushehao" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_tel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="user_zuoyou" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Good" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="User" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

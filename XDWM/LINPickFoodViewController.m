@@ -39,6 +39,9 @@
 //      下面的属性烤肉饭专用
 @property (strong, nonatomic) NSArray *flavors;
 @property (strong, nonatomic) NSArray *daxiao;
+@property (nonatomic) NSInteger pickedDaxiao;
+@property (nonatomic) NSInteger pickedFlavor;
+
 @property (nonatomic) BOOL needSelectFlavor;
 @end
 
@@ -506,14 +509,15 @@
             UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.textLabel.text = @"口味&饭量:";
-            cell.detailTextLabel.text = @"大份沙拉";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@", self.daxiao[self.pickedDaxiao], self.flavors[self.pickedFlavor]];
             return cell;
         }else if (indexPath.row == 5){
             UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
-
             pickerView.frame = CGRectMake(0, 0, 320, 162);
             pickerView.dataSource = self;
             pickerView.delegate = self;
+            [pickerView selectRow:self.pickedDaxiao inComponent:0 animated:YES];
+            [pickerView selectRow:self.pickedFlavor inComponent:1 animated:YES];
             [gecell.contentView addSubview:pickerView];
         }
         return gecell;
@@ -538,6 +542,11 @@
 
 - (void)confirmOrder{
 //    LINGoodModel *aGood = self.foodList[[self.pickedGoodNumber[0] integerValue]];
+    if (self.needSelectFlavor == YES) {
+        self.needSelectFlavor = NO;
+        [self.infoTableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:5 inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+
+    }
     NSManagedObject *aGood = self.fetchedResultsController.fetchedObjects[[self.pickedGoodNumber[0] integerValue]];
     LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
     LINUserModel *user = rootVC.user;
@@ -597,17 +606,26 @@
 
     MKNetworkOperation *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"submit_order.php"] params:forPostDic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
-        NSLog(@"%@", [completedOperation responseString]);
+
  //       CXAlertView *alertView = [[CXAlertView alloc] initWithTitle:nil message:@"订单成功提交！" cancelButtonTitle:@"确定"];
         LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
         LINRecordViewController *recordVC = rootVC.viewControllers[1];
+        NSString *restring = [completedOperation responseString];
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tabBarController.view animated:YES];
-        hud.mode = MBProgressHUDModeCustomView;
-        hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-        hud.labelText = @"订单提交成功！";
-        [hud hide:YES afterDelay:1.0f];
-        recordVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%li",(long)[recordVC.tabBarItem.badgeValue integerValue] + 1];
+        if (![restring isEqualToString:@"200"]) {
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = restring;
+            [hud hide:YES afterDelay:1.5];
+        }else{
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+            hud.labelText = @"订单提交成功！";
+            recordVC.tabBarItem.badgeValue = [NSString stringWithFormat:@"%li",(long)[recordVC.tabBarItem.badgeValue integerValue] + 1];
+            [hud hide:YES afterDelay:1.0f];
+        }
+
+
  //       [alertView show];
     } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tabBarController.view animated:YES];
@@ -755,18 +773,33 @@
     NSString *flavor = nil;
     if (component == 0) {
         daxiao = self.daxiao[row];
+        self.pickedDaxiao = row;
+        //调整单价
+        if (row == 0) {
+            self.pickedGoodPrice = 10;
+            [self needUpdateInfoTable];
+        }else if (row == 1){
+            self.pickedGoodPrice = 8;
+            [self needUpdateInfoTable];
+        }
     }else if (component == 1){
         flavor = self.flavors[row];
+        self.pickedFlavor = row;
     }
     if (daxiao == nil) {
-        daxiao = self.daxiao[0];
+        daxiao = self.daxiao[self.pickedDaxiao];
     }
     if (flavor == nil) {
-        flavor = self.flavors[0];
+        flavor = self.flavors[self.pickedFlavor];
     }
     UITableViewCell *cell = [self.infoTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:1]];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@", daxiao, flavor];
 //    self.pickedGoodName = [cell.detailTextLabel.text stringByAppendingString:self.pickedGoodName];
+}
+
+- (void)needUpdateInfoTable{
+    self.pickedGoodTotalPrice = self.pickedGoodPrice * self.count + self.addFoodCount;
+    [self.infoTableView reloadData];
 }
 @end
 

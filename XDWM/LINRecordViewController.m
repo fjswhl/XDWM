@@ -143,7 +143,6 @@
 //    cell.contentView.layer.borderColor = [UIColor colorWithRed:134/255.0 green:34/255.0 blue:34/255.0 alpha:1.0].CGColor;
 //    cell.contentView.layer.borderWidth = 1.0;
     NSDictionary *aRecord = self.orderList[indexPath.row];
-    
     UIView *innerContentView = [cell.contentView viewWithTag:1];
     
     UIImageView *timeFlag = (UIImageView *)[innerContentView viewWithTag:30];
@@ -167,14 +166,16 @@
     UILabel *numberLabel = (UILabel *)[innerContentView viewWithTag:4];
     UILabel *createtimeLabel = (UILabel *)[innerContentView viewWithTag:5];
     UILabel *orderlistIDLabel = (UILabel *)[innerContentView viewWithTag:6];
+    UILabel *addFoodLabel = (UILabel *)[innerContentView viewWithTag:7];
     
 
     hotelLabel.text = aRecord[__GOODSHOTEL__];
     goodNameLabel.text = aRecord[__GOODSNAME__];
     totalPriceLabel.text = [aRecord[__TOTALPRICE__] stringByAppendingString:@"元"];
-    numberLabel.text = [NSString stringWithFormat:@"数量：%@", aRecord[__NUMBER__]] ;
+    numberLabel.text = [NSString stringWithFormat:@"数量:%@", aRecord[__NUMBER__]] ;
     createtimeLabel.text = aRecord[__CREATETIME__];
     orderlistIDLabel.text = [NSString stringWithFormat:@"No.%@", aRecord[__ORDERLISTID__]];
+    addFoodLabel.text = [NSString stringWithFormat:@"加饭:%@", aRecord[@"addfood"]];
     return cell;
 }
 

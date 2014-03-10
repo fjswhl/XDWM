@@ -73,7 +73,7 @@
                                                         <action selector="textFiledDidDoneEdting:" destination="bmq-3F-d91" eventType="editingDidEndOnExit" id="xD3-4j-WUd"/>
                                                     </connections>
                                                 </textField>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="账户.png" translatesAutoresizingMaskIntoConstraints="NO" id="PmR-ut-YnN">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user-male-alt-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="PmR-ut-YnN">
                                                     <rect key="frame" x="10" y="7" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -96,7 +96,7 @@
                                                         <action selector="textFiledDidDoneEdting:" destination="bmq-3F-d91" eventType="editingDidEndOnExit" id="EVf-jt-LLE"/>
                                                     </connections>
                                                 </textField>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="密码.png" translatesAutoresizingMaskIntoConstraints="NO" id="bm8-H3-bRo">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="key-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="bm8-H3-bRo">
                                                     <rect key="frame" x="10" y="7" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -138,7 +138,7 @@
                                                         <action selector="textFiledDidDoneEdting:" destination="bmq-3F-d91" eventType="editingDidEndOnExit" id="c0G-JM-RKI"/>
                                                     </connections>
                                                 </textField>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="邮箱.png" translatesAutoresizingMaskIntoConstraints="NO" id="cO3-x1-K7D">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="message-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="cO3-x1-K7D">
                                                     <rect key="frame" x="10" y="7" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -161,7 +161,7 @@
                                                         <action selector="textFiledDidDoneEdting:" destination="bmq-3F-d91" eventType="editingDidEndOnExit" id="spC-Mh-dq6"/>
                                                     </connections>
                                                 </textField>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="电话.png" translatesAutoresizingMaskIntoConstraints="NO" id="kDb-5t-sf8">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="phone-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="kDb-5t-sf8">
                                                     <rect key="frame" x="10" y="7" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -184,7 +184,7 @@
                                                         <action selector="textFiledDidDoneEdting:" destination="bmq-3F-d91" eventType="editingDidEndOnExit" id="eUK-vk-Z48"/>
                                                     </connections>
                                                 </textField>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="宿舍.png" translatesAutoresizingMaskIntoConstraints="NO" id="vCb-z9-HNq">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="home-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="vCb-z9-HNq">
                                                     <rect key="frame" x="10" y="7" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -242,7 +242,7 @@
                                                         <segment title="II区"/>
                                                     </segments>
                                                 </segmentedControl>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="宿舍.png" translatesAutoresizingMaskIntoConstraints="NO" id="Scv-C1-zyw">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="home-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="Scv-C1-zyw">
                                                     <rect key="frame" x="10" y="6" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -340,7 +340,7 @@
                                                         <action selector="pickAdress:" destination="bmq-3F-d91" eventType="touchUpInside" id="5YS-ub-x2v"/>
                                                     </connections>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="位置.png" translatesAutoresizingMaskIntoConstraints="NO" id="XIw-pv-Aas">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sent-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="XIw-pv-Aas">
                                                     <rect key="frame" x="96" y="7" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -501,7 +501,7 @@
                                                             <rect key="frame" x="10" y="45" width="290" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <attributedString key="attributedText">
-                                                                <fragment content="菜名：">
+                                                                <fragment content="菜名:">
                                                                     <attributes>
                                                                         <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                                         <font key="NSFont" size="17" name="STHeitiSC-Light"/>
@@ -511,17 +511,17 @@
                                                             </attributedString>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="数量：" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o9b-Rw-4nb">
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="数量:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o9b-Rw-4nb">
                                                             <rect key="frame" x="10" y="74" width="128" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dtw-0m-lE5">
-                                                            <rect key="frame" x="10" y="121" width="52" height="21"/>
+                                                            <rect key="frame" x="10" y="132" width="52" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <attributedString key="attributedText">
-                                                                <fragment content="总价：">
+                                                                <fragment content="总价:">
                                                                     <attributes>
                                                                         <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                                         <font key="NSFont" size="17" name="STHeitiSC-Light"/>
@@ -549,16 +549,23 @@
                                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         </view>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="7.00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuF-wL-Uiq">
-                                                            <rect key="frame" x="61" y="121" width="42" height="21"/>
+                                                            <rect key="frame" x="61" y="132" width="42" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="1" green="0.4121189261" blue="0.4047043796" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" tag="30" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="图章1.png" translatesAutoresizingMaskIntoConstraints="NO" id="0w4-vN-eBG">
-                                                            <rect key="frame" x="118" y="65" width="75" height="74"/>
+                                                            <rect key="frame" x="238" y="132" width="47" height="47"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="7" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="加饭:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mu4-pe-I6K">
+                                                            <rect key="frame" x="10" y="103" width="128" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="1" green="0.97254901959999995" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 </view>
@@ -693,7 +700,7 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                             </textView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="账户.png" translatesAutoresizingMaskIntoConstraints="NO" id="ddc-El-tSo">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user-male-alt-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="ddc-El-tSo">
                                 <rect key="frame" x="279" y="198" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -799,7 +806,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <inset key="separatorInset" minX="47" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <sections>
                             <tableViewSection id="gvc-iu-mKj">
                                 <cells>
@@ -823,7 +830,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="账户.png" translatesAutoresizingMaskIntoConstraints="NO" id="PVP-Ki-qls">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user-male-alt-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="PVP-Ki-qls">
                                                     <rect key="frame" x="10" y="7" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -850,7 +857,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="积分.png" translatesAutoresizingMaskIntoConstraints="NO" id="VuS-3J-iKv">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="VuS-3J-iKv">
                                                     <rect key="frame" x="10" y="5" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -898,7 +905,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="电话.png" translatesAutoresizingMaskIntoConstraints="NO" id="Leo-lM-FvA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="phone-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="Leo-lM-FvA">
                                                     <rect key="frame" x="10" y="7" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -931,7 +938,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="邮箱.png" translatesAutoresizingMaskIntoConstraints="NO" id="HO4-Tv-IxG">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="message-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="HO4-Tv-IxG">
                                                     <rect key="frame" x="10" y="5" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -952,7 +959,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="宿舍.png" translatesAutoresizingMaskIntoConstraints="NO" id="TZp-ut-68u">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="home-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="TZp-ut-68u">
                                                     <rect key="frame" x="10" y="5" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1114,7 +1121,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="tintColor" red="0.69803921570000005" green="0.1333333333" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
-                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <inset key="separatorInset" minX="47" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <sections>
                             <tableViewSection headerTitle="    基本信息" id="dOV-Or-ogR">
                                 <cells>
@@ -1134,7 +1141,7 @@
                                                         <action selector="TextFiledDidFinshEditing:" destination="rMH-OL-glC" eventType="editingDidEndOnExit" id="50e-1Z-0yp"/>
                                                     </connections>
                                                 </textField>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="电话.png" translatesAutoresizingMaskIntoConstraints="NO" id="voE-3W-YDc">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="phone-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="voE-3W-YDc">
                                                     <rect key="frame" x="10" y="7" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1157,7 +1164,7 @@
                                                         <action selector="TextFiledDidFinshEditing:" destination="rMH-OL-glC" eventType="editingDidEndOnExit" id="bMp-f7-oQJ"/>
                                                     </connections>
                                                 </textField>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="邮箱.png" translatesAutoresizingMaskIntoConstraints="NO" id="c0t-7d-yvA">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="message-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="c0t-7d-yvA">
                                                     <rect key="frame" x="10" y="7" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1220,7 +1227,7 @@
                                                         <action selector="TextFiledDidFinshEditing:" destination="rMH-OL-glC" eventType="editingDidEndOnExit" id="Gb6-Ra-k0k"/>
                                                     </connections>
                                                 </textField>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="密码.png" translatesAutoresizingMaskIntoConstraints="NO" id="9LK-dP-z8j">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="key-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="9LK-dP-z8j">
                                                     <rect key="frame" x="10" y="7" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1250,7 +1257,7 @@
                                                         <action selector="TextFiledDidFinshEditing:" destination="rMH-OL-glC" eventType="editingDidEndOnExit" id="zXA-Vl-bFI"/>
                                                     </connections>
                                                 </textField>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="密码.png" translatesAutoresizingMaskIntoConstraints="NO" id="om4-he-XME">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="key-vector.png" translatesAutoresizingMaskIntoConstraints="NO" id="om4-he-XME">
                                                     <rect key="frame" x="10" y="8" width="30" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
@@ -1620,25 +1627,25 @@
     </scenes>
     <resources>
         <image name="cellbackground.png" width="620" height="428"/>
+        <image name="home-vector.png" width="50" height="50"/>
+        <image name="key-vector.png" width="50" height="50"/>
+        <image name="message-vector.png" width="50" height="50"/>
+        <image name="phone-vector.png" width="50" height="50"/>
+        <image name="sent-vector.png" width="50" height="50"/>
+        <image name="star-vector.png" width="50" height="50"/>
+        <image name="user-male-alt-vector.png" width="50" height="50"/>
         <image name="个人.png" width="30" height="30"/>
-        <image name="位置.png" width="60" height="60"/>
         <image name="公告.png" width="30" height="30"/>
         <image name="图章1.png" width="100" height="100"/>
-        <image name="宿舍.png" width="60" height="60"/>
-        <image name="密码.png" width="60" height="60"/>
         <image name="密码text.png" width="814" height="134"/>
         <image name="对话框.png" width="585" height="859"/>
         <image name="性别.png" width="50" height="50"/>
         <image name="注册button.png" width="816" height="152"/>
-        <image name="电话.png" width="60" height="60"/>
         <image name="留言.png" width="30" height="35"/>
         <image name="登录button.png" width="816" height="152"/>
-        <image name="积分.png" width="60" height="60"/>
         <image name="订餐.png" width="32" height="32"/>
         <image name="记录.png" width="30" height="30"/>
         <image name="账号text.png" width="814" height="134"/>
-        <image name="账户.png" width="60" height="60"/>
-        <image name="邮箱.png" width="60" height="60"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
