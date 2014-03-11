@@ -57,7 +57,6 @@
 		3E71349218C989090068E733 /* 订餐.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E71347E18C989090068E733 /* 订餐.png */; };
 		3E71349318C989090068E733 /* 记录.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E71347F18C989090068E733 /* 记录.png */; };
 		3E71349518C98A7A0068E733 /* cellbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E71349418C98A7A0068E733 /* cellbackground.png */; };
-		3E71349718C98A8F0068E733 /* Main3.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E71349618C98A8F0068E733 /* Main3.storyboard */; };
 		3E71349918C99F980068E733 /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E71349818C99F980068E733 /* test.png */; };
 		3E97675218A1299800AE48D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E97675118A1299800AE48D3 /* Foundation.framework */; };
 		3E97675418A1299800AE48D3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E97675318A1299800AE48D3 /* CoreGraphics.framework */; };
@@ -199,7 +198,6 @@
 		3E71347E18C989090068E733 /* 订餐.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "订餐.png"; sourceTree = "<group>"; };
 		3E71347F18C989090068E733 /* 记录.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "记录.png"; sourceTree = "<group>"; };
 		3E71349418C98A7A0068E733 /* cellbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cellbackground.png; sourceTree = "<group>"; };
-		3E71349618C98A8F0068E733 /* Main3.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main3.storyboard; sourceTree = "<group>"; };
 		3E71349818C99F980068E733 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		3E97674E18A1299800AE48D3 /* XDWM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XDWM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E97675118A1299800AE48D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -526,7 +524,6 @@
 				3E97676118A1299800AE48D3 /* AppDelegate.m */,
 				3E044B6118B38E2600695D91 /* XinViewController.h */,
 				3E044B6218B38E2600695D91 /* XinViewController.m */,
-				3E71349618C98A8F0068E733 /* Main3.storyboard */,
 				3ECAF93818A26304007D3ECE /* Main.storyboard */,
 				3E27F55418AE00160010C77C /* Main2.storyboard */,
 				3E27F52A18AD26140010C77C /* TestViewController.h */,
@@ -796,7 +793,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E71349718C98A8F0068E733 /* Main3.storyboard in Resources */,
 				3E71348918C989090068E733 /* 性别.png in Resources */,
 				3E71348818C989090068E733 /* user-male-alt-vector.png in Resources */,
 				3E71348B18C989090068E733 /* 图章1.png in Resources */,

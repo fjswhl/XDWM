@@ -13,6 +13,12 @@
 #import "LINRecordViewController.h"
 #import "MJRefresh.h"
 #import <CoreData/CoreData.h>
+#import "LINGoodModel.h"
+#import "LINOrderList.h"
+#import "LINRootViewController.h"
+#import "MKNetworkEngine.h"
+#import "MKNetworkOperation.h"
+#import "MBProgressHUD.h"
 @interface LINPickFoodViewController ()<MJRefreshBaseViewDelegate, NSFetchedResultsControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic)       NSInteger count;
@@ -36,6 +42,8 @@
 @property (nonatomic) BOOL needReflesh;
 
 @property (strong, nonatomic) UITableView *infoTableView;
+
+//@property (nonatomic) BOOL wuwan; //0午1晚
 //      下面的属性烤肉饭专用
 @property (strong, nonatomic) NSArray *flavors;
 @property (strong, nonatomic) NSArray *daxiao;
@@ -72,6 +80,7 @@
     self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
 
     self.header = [MJRefreshHeaderView header];
+
     self.header.delegate = self;
     self.header.scrollView = self.tableView;
 //    [self.header beginRefreshing];
@@ -530,14 +539,14 @@
     self.count = (int)sender.value;
     self.pickedGoodTotalPrice = self.count * self.pickedGoodPrice + self.addFoodCount;
     UITableView *infoTableview = (UITableView *)sender.superview.superview.superview.superview.superview;
-    [infoTableview reloadData];
+    [infoTableview reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:1],[NSIndexPath indexPathForRow:2 inSection:1], [NSIndexPath indexPathForRow:3 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)addFoodCountChanged:(UIStepper *)sender{
     self.addFoodCount = (int)sender.value;
     self.pickedGoodTotalPrice = self.count * self.pickedGoodPrice + self.addFoodCount;
     UITableView *infoTableview = (UITableView *)sender.superview.superview.superview.superview.superview;
-    [infoTableview reloadData];
+    [infoTableview reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:1],[NSIndexPath indexPathForRow:2 inSection:1], [NSIndexPath indexPathForRow:3 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)confirmOrder{
@@ -604,6 +613,8 @@
                                  __WUWAN__:wuwan,
                                  __ADDFOODNUM__:[NSString stringWithFormat:@"%li", (long)self.addFoodCount]};
 
+
+    
     MKNetworkOperation *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@", __PHPDIR__, @"submit_order.php"] params:forPostDic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
 
@@ -611,9 +622,9 @@
         LINRootViewController *rootVC = (LINRootViewController *)self.tabBarController;
         LINRecordViewController *recordVC = rootVC.viewControllers[1];
         NSString *restring = [completedOperation responseString];
-        
+        NSLog(@"%@", restring);
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tabBarController.view animated:YES];
-        if (![restring isEqualToString:@"200"]) {
+        if (![restring hasPrefix:@"200"]) {
             hud.mode = MBProgressHUDModeText;
             hud.labelText = restring;
             [hud hide:YES afterDelay:1.5];
@@ -802,16 +813,6 @@
     [self.infoTableView reloadData];
 }
 @end
-
-
-
-
-
-
-
-
-
-
 
 
 

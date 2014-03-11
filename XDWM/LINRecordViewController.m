@@ -57,6 +57,7 @@
 
 //    self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
 	// Do any additional setup after loading the view.
+    self.tableview.backgroundColor = [UIColor colorWithRed:255/255.0 green:248/255.0 blue:220/255.0 alpha:1.0];
     self.header = [MJRefreshHeaderView header];
     self.header.scrollView = self.tableview;
     self.header.delegate = self;
