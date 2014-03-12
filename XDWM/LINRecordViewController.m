@@ -57,7 +57,7 @@
 
 //    self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
 	// Do any additional setup after loading the view.
-    self.tableview.backgroundColor = [UIColor colorWithRed:255/255.0 green:248/255.0 blue:220/255.0 alpha:1.0];
+    self.tableview.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
     self.header = [MJRefreshHeaderView header];
     self.header.scrollView = self.tableview;
     self.header.delegate = self;
@@ -151,12 +151,13 @@
     
     UIImageView *backImage = (UIImageView *)[innerContentView viewWithTag:20];
     backImage.layer.borderWidth = 1.0;
-    backImage.layer.cornerRadius = 6;
+    //backImage.layer.cornerRadius = 6;
     
     //  处理菜的图片
     //NSArray *goodsArray = [aRecord[__GOODSHOTEL__] componentsSeparatedByString:@","];
     
     UIImageView *goodImage = [UIImageView new];
+    NSLog(@"%@", aRecord[__GOODPIC__]);
     [goodImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, aRecord[__GOODPIC__]]]];
     [goodImage setClipsToBounds:YES];
     goodImage.frame = CGRectMake(169, 48, 122, 94);
@@ -262,7 +263,6 @@
 //        NSString *st = responseObject;
 //        NSDictionary *recordsInfo = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
         NSDictionary *recordsInfo = responseObject;
-        NSLog(@"%@", recordsInfo);
         NSArray *keys = [[recordsInfo allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
             NSInteger in1 = [(NSString *)obj1 integerValue];
             NSInteger in2 = [(NSString *)obj2 integerValue];

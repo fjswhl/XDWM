@@ -101,11 +101,12 @@
     _sex.text = self.user.userSex;
     _tel.text = self.user.userTel;
     _mail.text = self.user.userEmail;
-    _adress.text = self.user.userAddr;
-    _apartnumber.text = self.user.userLouhao;
-    _gate.text = self.user.userSushehao;
-    _direction.text = self.user.userZuoyou;
-    _area.text = self.user.userQuhao;
+    _adress.text = [NSString stringWithFormat:@"%@%@楼%@%@%@室", self.user.userAddr,self.user.userLouhao,
+                    self.user.userQuhao,self.user.userSushehao,self.user.userZuoyou];
+//    _apartnumber.text = self.user.userLouhao;
+//    _gate.text = self.user.userSushehao;
+//    _direction.text = self.user.userZuoyou;
+//    _area.text = self.user.userQuhao;
 }
 
 //- (void)getUserInfo
