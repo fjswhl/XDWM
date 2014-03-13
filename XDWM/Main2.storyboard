@@ -554,7 +554,7 @@
                                                             <color key="textColor" red="1" green="0.4121189261" blue="0.4047043796" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" tag="30" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="图章1.png" translatesAutoresizingMaskIntoConstraints="NO" id="0w4-vN-eBG">
+                                                        <imageView userInteractionEnabled="NO" tag="30" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0w4-vN-eBG">
                                                             <rect key="frame" x="238" y="130" width="47" height="47"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
@@ -565,6 +565,16 @@
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" tag="40" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkj-dI-w8A">
+                                                            <rect key="frame" x="12" y="170" width="30" height="26"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <state key="normal" title="Button" image="lajitong.jpg">
+                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="deleteOrder:" destination="jyc-d8-fkk" eventType="touchUpInside" id="WXX-ln-ssr"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 </view>
@@ -1548,6 +1558,7 @@
         <image name="cellbackground.png" width="620" height="428"/>
         <image name="home-vector.png" width="50" height="50"/>
         <image name="key-vector.png" width="50" height="50"/>
+        <image name="lajitong.jpg" width="256" height="256"/>
         <image name="message-vector.png" width="50" height="50"/>
         <image name="phone-vector.png" width="50" height="50"/>
         <image name="sent-vector.png" width="50" height="50"/>
@@ -1555,7 +1566,6 @@
         <image name="user-male-alt-vector.png" width="50" height="50"/>
         <image name="个人.png" width="30" height="30"/>
         <image name="公告.png" width="30" height="30"/>
-        <image name="图章1.png" width="100" height="100"/>
         <image name="密码text.png" width="814" height="134"/>
         <image name="对话框.png" width="585" height="859"/>
         <image name="性别.png" width="50" height="50"/>

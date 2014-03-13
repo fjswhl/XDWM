@@ -148,9 +148,16 @@
     UIView *innerContentView = [cell.contentView viewWithTag:1];
     
     UIImageView *timeFlag = (UIImageView *)[innerContentView viewWithTag:30];
+    NSString *wuwan = aRecord[__WUWAN__];
+    if ([wuwan rangeOfString:@"午"].location != NSNotFound) {
+        [timeFlag setImage:[UIImage imageNamed:@"wu.png"]];
+    }else if ([wuwan rangeOfString:@"晚"].location != NSNotFound){
+        [timeFlag setImage:[UIImage imageNamed:@"wan.png"]];
+    }
     
     UIImageView *backImage = (UIImageView *)[innerContentView viewWithTag:20];
     backImage.layer.borderWidth = 1.0;
+    backImage.layer.borderColor = [UIColor lightGrayColor].CGColor;
     //backImage.layer.cornerRadius = 6;
     
     //  处理菜的图片
@@ -215,12 +222,26 @@
     }
 }
 
+#pragma mark - ActionSheet
+- (void)popUpDeleteConfirmActionSheetWithIndexPaht:(NSIndexPath *)indexPath{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"确认删除这条订单吗?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
+    
+    UITableViewCell *cell = [self.tableview cellForRowAtIndexPath:indexPath];
+    UILabel *idLabel = (UILabel *)[cell.contentView viewWithTag:6];
+    NSLog(@"%@", idLabel.text);
+    self.orderIDForDelete = [idLabel.text substringFromIndex:3];
+    [actionSheet showFromTabBar:self.tabBarController.tabBar];
+    //        [self updateRemoteDatabaseWithOrderID: [idLabel.text substringFromIndex:3]];
+    //        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    self.indexPathForDelete = indexPath;
+}
+
 //      若用户确认删除，则更新数据库
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == actionSheet.destructiveButtonIndex) {
         [self.orderList removeObjectAtIndex:self.indexPathForDelete.row];
         self.count = [self.orderList count];
-        [self.tableview deleteRowsAtIndexPaths:@[self.indexPathForDelete] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableview deleteRowsAtIndexPaths:@[self.indexPathForDelete] withRowAnimation:UITableViewRowAnimationFade];
         
         [self updateRemoteDatabaseWithOrderID:self.orderIDForDelete];
         [actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
@@ -231,14 +252,20 @@
     if (![self.indexSet containsObject:indexPath]) {
         [self.indexSet addObject:indexPath];
         UIView *mainView = cell.contentView;
-        mainView.transform = CGAffineTransformMakeRotation(-M_PI_2 / 3);
-        mainView.transform = CGAffineTransformTranslate(mainView.transform, -500, 200);
-        mainView.alpha = 0.5;
+        mainView.transform = CGAffineTransformMakeRotation(-M_PI_2 / 5);
+        mainView.transform = CGAffineTransformTranslate(mainView.transform, -400, 400);
+        mainView.alpha = 0;
         [UIView animateWithDuration:0.7 animations:^{
             mainView.transform = CGAffineTransformIdentity;
             mainView.alpha = 1;
         }];
     }
+}
+- (IBAction)deleteOrder:(UIButton *)sender {
+    UITableViewCell *correspondedCell = (UITableViewCell *)sender.superview.superview.superview.superview;
+    NSIndexPath *indexPath = [self.tableview indexPathForCell:correspondedCell];
+    NSLog(@"%@", indexPath);
+    [self popUpDeleteConfirmActionSheetWithIndexPaht:indexPath];
 }
 
 

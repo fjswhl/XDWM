@@ -43,7 +43,7 @@
 
 @property (strong, nonatomic) UITableView *infoTableView;
 
-//@property (nonatomic) BOOL wuwan; //0午1晚
+@property (nonatomic) BOOL wuwan; //0午1晚
 //      下面的属性烤肉饭专用
 @property (strong, nonatomic) NSArray *flavors;
 @property (strong, nonatomic) NSArray *daxiao;
@@ -245,6 +245,12 @@
     NSString *image = [object valueForKey:@"goodImg"];
 //    NSLog(@"%@", image);
     [img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, image]]];
+    
+    UIImageView *placeHolder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PlaceHolder1.png"]];
+    placeHolder.frame = CGRectMake(0, 0, 30, 30);
+    placeHolder.center = img.center;
+    [cell.contentView insertSubview:placeHolder belowSubview:img];
+    
     title.text = [object valueForKey:@"goodName"];
     price.text = [object valueForKey:@"goodPrice"];
     
@@ -467,7 +473,8 @@
             
             UISegmentedControl *seg = [[UISegmentedControl alloc] initWithItems:@[@"午", @"晚"]];
             seg.tag = 10;
-            seg.selectedSegmentIndex = 0;
+            [seg addTarget:self action:@selector(chooseTime:) forControlEvents:UIControlEventValueChanged];
+            seg.selectedSegmentIndex = (int)self.wuwan;
             
             seg.frame = CGRectMake(182, 0, 70, 29);
             seg.center = CGPointMake(seg.center.x, gecell.contentView.frame.size.height / 2);
@@ -514,6 +521,10 @@
             [stepper addTarget:self action:@selector(addFoodCountChanged:) forControlEvents:UIControlEventValueChanged];
             gecell.textLabel.text = [NSString stringWithFormat:@"加饭： %li份", (long)self.addFoodCount];
             [gecell.contentView addSubview:stepper];
+            
+            if (self.foodKindIndex == FoodHotelKRF) {
+                stepper.enabled = NO;
+            }
         }else if (indexPath.row == 4){
             UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -547,6 +558,14 @@
     self.pickedGoodTotalPrice = self.count * self.pickedGoodPrice + self.addFoodCount;
     UITableView *infoTableview = (UITableView *)sender.superview.superview.superview.superview.superview;
     [infoTableview reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:1],[NSIndexPath indexPathForRow:2 inSection:1], [NSIndexPath indexPathForRow:3 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)chooseTime:(UISegmentedControl *)sender{
+    if (sender.selectedSegmentIndex == 0) {
+        self.wuwan = false;
+    }else if (sender.selectedSegmentIndex == 1){
+        self.wuwan = true;
+    }
 }
 
 - (void)confirmOrder{
