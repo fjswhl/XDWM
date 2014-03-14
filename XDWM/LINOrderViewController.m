@@ -23,7 +23,7 @@
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @property (strong, nonatomic) MKNetworkEngine *engine;
-
+@property (strong, nonatomic) NSArray *imageArray;
 
 
 @end
@@ -48,7 +48,10 @@
     self.tableview.delegate = self;
     self.tableview.dataSource = self;
     self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+    
+
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     NSFileManager *fm = [NSFileManager new];
     NSString *docPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -82,6 +85,13 @@
     return _managedObjectContext;
 }
 
+- (NSArray *)imageArray{
+    if (!_imageArray) {
+        _imageArray = @[[UIImage imageNamed:@"number1.png"],[UIImage imageNamed:@"number2.png"],[UIImage imageNamed:@"number3.png"]];
+    }
+    return _imageArray;
+}
+
 #pragma mark - tableview data source
 
 
@@ -96,16 +106,30 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"foodKind"];
-    UILabel *titleLabel = (UILabel *)[cell.contentView viewWithTag:1];
+//    UILabel *titleLabel = (UILabel *)[cell.contentView viewWithTag:1];
     if (indexPath.section == 0 && indexPath.row == 0) {
-
-        titleLabel.textAlignment = NSTextAlignmentCenter;
+        cell.textLabel.text = @"锅巴米饭";
+        cell.detailTextLabel.text = @"(新综合楼二楼)";
+        cell.textLabel.textColor = [UIColor colorWithRed:134/255.0 green:34/255.0 blue:34/255.0 alpha:1.0f];
+//        titleLabel.textAlignment = NSTextAlignmentCenter;
+        cell.imageView.image = self.imageArray[indexPath.row];
+        cell.imageView.contentMode = UIViewContentModeCenter;
     } else if (indexPath.section == 0 && indexPath.row == 1){
-        titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.text = @"绿茉莉套餐（10选3）";
+//        titleLabel.textAlignment = NSTextAlignmentCenter;
+//        titleLabel.text = @"绿茉莉套餐（10选3）";
+        cell.textLabel.text = @"绿茉莉套餐(10选3)";
+        cell.textLabel.textColor = [UIColor colorWithRed:134/255.0 green:34/255.0 blue:34/255.0 alpha:1.0f];
+        cell.detailTextLabel.text = @"";
+        cell.imageView.image = self.imageArray[indexPath.row];
+                cell.imageView.contentMode = UIViewContentModeCenter;
     } else if (indexPath.section == 0 && indexPath.row == 2){
-        titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.text = @"脆皮鸡烤肉饭";
+//        titleLabel.textAlignment = NSTextAlignmentCenter;
+//        titleLabel.text = @"脆皮鸡烤肉饭";
+        cell.textLabel.text = @"烤肉饭";
+        cell.detailTextLabel.text = @"(新综合楼一楼)";
+        cell.textLabel.textColor = [UIColor colorWithRed:134/255.0 green:34/255.0 blue:34/255.0 alpha:1.0f];
+        cell.imageView.image = self.imageArray[indexPath.row];
+                cell.imageView.contentMode = UIViewContentModeCenter;
     }
     return cell;
 }

@@ -19,7 +19,7 @@
 #import "MKNetworkEngine.h"
 #import "MKNetworkOperation.h"
 #import "MBProgressHUD.h"
-@interface LINPickFoodViewController ()<MJRefreshBaseViewDelegate, NSFetchedResultsControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface LINPickFoodViewController ()<MJRefreshBaseViewDelegate, NSFetchedResultsControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic)       NSInteger count;
 @property (nonatomic)       NSInteger addFoodCount;
@@ -308,12 +308,30 @@
             self.needSelectFlavor = NO;
             [self.infoTableView deleteRowsAtIndexPaths:@[addedIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
-
+        self.infoTableView.scrollEnabled = !self.infoTableView.scrollEnabled;
     }
     return;
 }
 
+#pragma mark - ScrollView Delegate
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+        [UIView animateWithDuration:1.0f animations:^{
+            self.tabBarController.tabBar.transform = CGAffineTransformMakeTranslation(0, 50);
+        }];
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
+    [UIView animateWithDuration:0.7f animations:^{
+        self.tabBarController.tabBar.transform = CGAffineTransformIdentity;
+    }];
+}
+
+//- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
+//    [UIView animateWithDuration:0.7f animations:^{
+//        self.tabBarController.tabBar.transform = CGAffineTransformIdentity;
+//    }];
+//}
 #pragma mark - interaction method
 
 - (void)fetchGoodsInfoWithRefreshView:(MJRefreshBaseView *)refreshView{
@@ -453,7 +471,9 @@
         cell.textLabel.text = [NSString stringWithFormat: @"收货人:%@   %@", username, userTel];
         cell.textLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:16];
         cell.detailTextLabel.text = [NSString stringWithFormat: @"地址：%@%@号楼%@%@%@室",userAddr, userLouhao,userQuhao,userSushehao,userZuoyou];
-        cell.contentView.backgroundColor = [UIColor colorWithRed:135/255.0 green:206/255.0 blue:250/255.0 alpha:1.0];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.detailTextLabel.textColor = [UIColor whiteColor];
+        cell.contentView.backgroundColor = [UIColor colorWithRed:134/255.0 green:34/255.0 blue:34/255.0 alpha:1.0];
         
         return cell;
     }else if (indexPath.section == 1){
@@ -687,8 +707,10 @@
             [self resetOrderInfo];
             [alertView dismiss];
         }];
+        confirmOrderView.buttonColor = [UIColor colorWithRed:134/255.0 green:34/255.0 blue:34/255.0 alpha:1.0f];
+        confirmOrderView.tintColor = [UIColor colorWithRed:134/255.0 green:34/255.0 blue:34/255.0 alpha:1.0f];
         if (self.foodKindIndex == FoodHotelGBMF){
-            confirmOrderView.contentScrollViewMaxHeight = 220;
+            confirmOrderView.contentScrollViewMaxHeight = 230;
         }else if (self.foodKindIndex == FoodHotelKRF){
             confirmOrderView.contentScrollViewMaxHeight = 270;
         }
@@ -799,10 +821,10 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    NSString *daxiao = nil;
-    NSString *flavor = nil;
+//    NSString *daxiao = nil;
+//    NSString *flavor = nil;
     if (component == 0) {
-        daxiao = self.daxiao[row];
+//        daxiao = self.daxiao[row];
         self.pickedDaxiao = row;
         //调整单价
         if (row == 0) {
@@ -813,24 +835,28 @@
             [self needUpdateInfoTable];
         }
     }else if (component == 1){
-        flavor = self.flavors[row];
+//        flavor = self.flavors[row];
         self.pickedFlavor = row;
+        [self.infoTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:4 inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
-    if (daxiao == nil) {
-        daxiao = self.daxiao[self.pickedDaxiao];
-    }
-    if (flavor == nil) {
-        flavor = self.flavors[self.pickedFlavor];
-    }
-    UITableViewCell *cell = [self.infoTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:1]];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@", daxiao, flavor];
+//    if (daxiao == nil) {
+//        daxiao = self.daxiao[self.pickedDaxiao];
+//    }
+//    if (flavor == nil) {
+//        flavor = self.flavors[self.pickedFlavor];
+//    }
+//   UITableViewCell *cell = [self.infoTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:1]];
+//   cell.detailTextLabel.text = [NSString stringWithFormat:@"%@%@", daxiao, flavor];
+
 //    self.pickedGoodName = [cell.detailTextLabel.text stringByAppendingString:self.pickedGoodName];
 }
 
 - (void)needUpdateInfoTable{
     self.pickedGoodTotalPrice = self.pickedGoodPrice * self.count + self.addFoodCount;
-    [self.infoTableView reloadData];
+        [self.infoTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:4 inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
+
+
 @end
 
 

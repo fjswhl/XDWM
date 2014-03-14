@@ -29,8 +29,7 @@
 
     LINRootViewController *tbc = (LINRootViewController *)self.window.rootViewController;
     tbc.delegate = self;
-    
-
+    [application setStatusBarStyle:UIStatusBarStyleLightContent];
     return YES;
 }
 							

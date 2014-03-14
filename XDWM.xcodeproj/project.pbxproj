@@ -35,6 +35,9 @@
 		3E27F55318ADFFCC0010C77C /* SHUCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F55218ADFFCC0010C77C /* SHUCommentModel.m */; };
 		3E27F55518AE00160010C77C /* Main2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E27F55418AE00160010C77C /* Main2.storyboard */; };
 		3E27F55818AF67E50010C77C /* LINRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E27F55718AF67E50010C77C /* LINRecordViewController.m */; };
+		3E6FD37018D2E86500C4AC46 /* number1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6FD36D18D2E86500C4AC46 /* number1.png */; };
+		3E6FD37118D2E86500C4AC46 /* number2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6FD36E18D2E86500C4AC46 /* number2.png */; };
+		3E6FD37218D2E86500C4AC46 /* number3.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E6FD36F18D2E86500C4AC46 /* number3.png */; };
 		3E71348018C989090068E733 /* Settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E71346A18C989090068E733 /* Settings.png */; };
 		3E71348118C989090068E733 /* 个人.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E71346B18C989090068E733 /* 个人.png */; };
 		3E71348218C989090068E733 /* home-vector.png in Resources */ = {isa = PBXBuildFile; fileRef = 3E71346D18C989090068E733 /* home-vector.png */; };
@@ -178,6 +181,9 @@
 		3E27F55418AE00160010C77C /* Main2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main2.storyboard; sourceTree = "<group>"; };
 		3E27F55618AF67E50010C77C /* LINRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LINRecordViewController.h; sourceTree = "<group>"; };
 		3E27F55718AF67E50010C77C /* LINRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LINRecordViewController.m; sourceTree = "<group>"; };
+		3E6FD36D18D2E86500C4AC46 /* number1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = number1.png; sourceTree = "<group>"; };
+		3E6FD36E18D2E86500C4AC46 /* number2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = number2.png; sourceTree = "<group>"; };
+		3E6FD36F18D2E86500C4AC46 /* number3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = number3.png; sourceTree = "<group>"; };
 		3E71346A18C989090068E733 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Settings.png; sourceTree = "<group>"; };
 		3E71346B18C989090068E733 /* 个人.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "个人.png"; sourceTree = "<group>"; };
 		3E71346D18C989090068E733 /* home-vector.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-vector.png"; sourceTree = "<group>"; };
@@ -349,6 +355,9 @@
 				3E71349418C98A7A0068E733 /* cellbackground.png */,
 				3EEAFDC518D1C4940028A0E5 /* PlaceHolder1.png */,
 				3EEAFDC718D1C6F20028A0E5 /* lajitong.jpg */,
+				3E6FD36D18D2E86500C4AC46 /* number1.png */,
+				3E6FD36E18D2E86500C4AC46 /* number2.png */,
+				3E6FD36F18D2E86500C4AC46 /* number3.png */,
 				3E71346918C989090068E733 /* button */,
 				3E044BC518B6538700695D91 /* Default-480h@2x.png */,
 				3EEAFDBF18D1C0840028A0E5 /* AppIcon.png */,
@@ -804,6 +813,7 @@
 				3E71348818C989090068E733 /* user-male-alt-vector.png in Resources */,
 				3E71348B18C989090068E733 /* wu.png in Resources */,
 				3E71348D18C989090068E733 /* 留言.png in Resources */,
+				3E6FD37118D2E86500C4AC46 /* number2.png in Resources */,
 				3E71348518C989090068E733 /* phone-vector.png in Resources */,
 				3E71348318C989090068E733 /* key-vector.png in Resources */,
 				3E71349118C989090068E733 /* 账号text.png in Resources */,
@@ -819,10 +829,12 @@
 				3E71348418C989090068E733 /* message-vector.png in Resources */,
 				3E71348618C989090068E733 /* sent-vector.png in Resources */,
 				3E044BC618B6538700695D91 /* Default-480h@2x.png in Resources */,
+				3E6FD37018D2E86500C4AC46 /* number1.png in Resources */,
 				3ECAF93918A26304007D3ECE /* Main.storyboard in Resources */,
 				3E71348018C989090068E733 /* Settings.png in Resources */,
 				3EEAFDC018D1C0840028A0E5 /* AppIcon.png in Resources */,
 				3E044BE518B73A7C00695D91 /* SignUp Info.plist in Resources */,
+				3E6FD37218D2E86500C4AC46 /* number3.png in Resources */,
 				3EEAFDC618D1C4940028A0E5 /* PlaceHolder1.png in Resources */,
 				3E71349018C989090068E733 /* 登录button.png in Resources */,
 				3E71348718C989090068E733 /* star-vector.png in Resources */,

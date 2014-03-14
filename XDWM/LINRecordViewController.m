@@ -127,7 +127,24 @@
     LINRecordViewController *recordVC = rootVC.viewControllers[1];
     
     recordVC.tabBarItem.badgeValue = nil;
-
+    if ([self.orderList count] == 0) {
+        UIView *v = [self.view viewWithTag:999];
+        if (v == nil) {
+            UIView *v = [[UIView alloc] initWithFrame:self.view.frame];
+            v.tag = 999;
+            UILabel *label = [UILabel new];
+            label.text = @"暂时没有记录,赶快去订餐吧!";
+            [label sizeToFit];
+            label.center = v.center;
+            [v addSubview:label];
+            [self.tableview addSubview:v];
+        }
+    }else{
+        UIView *v = [self.view viewWithTag:999];
+        if (v != nil) {
+            [v removeFromSuperview];
+        }
+    }
 }
 
 #pragma mark - tableview datasource
@@ -190,37 +207,37 @@
     return cell;
 }
 
-#pragma mark - tableview delegate
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    UILabel *timeLabel = (UILabel *)[cell.contentView viewWithTag:5];
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSString *today = [dateFormatter stringFromDate:[NSDate date]];
-    
-    if ([today isEqualToString:[timeLabel.text substringToIndex:10]]) {
-        return UITableViewCellEditingStyleDelete;
-    }
-    return UITableViewCellEditingStyleNone;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        [self.orderList removeObjectAtIndex:indexPath.row];
-//        self.count = [self.orderList count];
-        
-        //  弹出确认删除的ActionSheet
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"确认删除这条订单吗?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
-        
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        UILabel *idLabel = (UILabel *)[cell.contentView viewWithTag:6];
-        self.orderIDForDelete = [idLabel.text substringFromIndex:3];
-        [actionSheet showFromTabBar:self.tabBarController.tabBar];
-//        [self updateRemoteDatabaseWithOrderID: [idLabel.text substringFromIndex:3]];
-//        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        self.indexPathForDelete = indexPath;
-    }
-}
+//#pragma mark - tableview delegate
+//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//    UILabel *timeLabel = (UILabel *)[cell.contentView viewWithTag:5];
+//    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+//    NSString *today = [dateFormatter stringFromDate:[NSDate date]];
+//    
+//    if ([today isEqualToString:[timeLabel.text substringToIndex:10]]) {
+//        return UITableViewCellEditingStyleDelete;
+//    }
+//    return UITableViewCellEditingStyleNone;
+//}
+//
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+////        [self.orderList removeObjectAtIndex:indexPath.row];
+////        self.count = [self.orderList count];
+//        
+//        //  弹出确认删除的ActionSheet
+//        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"确认删除这条订单吗?" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"确定" otherButtonTitles: nil];
+//        
+//        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//        UILabel *idLabel = (UILabel *)[cell.contentView viewWithTag:6];
+//        self.orderIDForDelete = [idLabel.text substringFromIndex:3];
+//        [actionSheet showFromTabBar:self.tabBarController.tabBar];
+////        [self updateRemoteDatabaseWithOrderID: [idLabel.text substringFromIndex:3]];
+////        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        self.indexPathForDelete = indexPath;
+//    }
+//}
 
 #pragma mark - ActionSheet
 - (void)popUpDeleteConfirmActionSheetWithIndexPaht:(NSIndexPath *)indexPath{
@@ -261,9 +278,24 @@
         }];
     }
 }
+
 - (IBAction)deleteOrder:(UIButton *)sender {
     UITableViewCell *correspondedCell = (UITableViewCell *)sender.superview.superview.superview.superview;
     NSIndexPath *indexPath = [self.tableview indexPathForCell:correspondedCell];
+    
+    NSDictionary *aRecord = self.orderList[indexPath.row];
+    NSString *orderDate = [aRecord[__CREATETIME__] substringToIndex:10];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *today = [NSDate date];
+    NSString *todayDate = [dateFormatter stringFromDate:today];
+    if (![orderDate isEqualToString:todayDate]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.tabBarController.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"只可删除当天的订单";
+        [hud hide:YES afterDelay:1.0];
+        return;
+    }
     NSLog(@"%@", indexPath);
     [self popUpDeleteConfirmActionSheetWithIndexPaht:indexPath];
 }
