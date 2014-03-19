@@ -31,7 +31,7 @@
 @property (strong, nonatomic) MJRefreshHeaderView *header;
 @property (strong, nonatomic) MJRefreshFooterView *footer;
 
-//@property (strong, nonatomic) MKNetworkEngine *engine;
+@property (strong, nonatomic) MKNetworkEngine *engine;
 @property (strong, nonatomic) AFHTTPRequestOperationManager *manager;
 
 @property (strong, nonatomic) UIView *buttonView;
@@ -67,6 +67,8 @@
     self.footer.delegate = self;
     
     [self.header beginRefreshing];
+    
+        self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -181,8 +183,8 @@
     //  处理菜的图片
     //NSArray *goodsArray = [aRecord[__GOODSHOTEL__] componentsSeparatedByString:@","];
     
-    UIImageView *goodImage = [UIImageView new];
-    NSLog(@"%@", aRecord[__GOODPIC__]);
+    UIImageView *goodImage = (UIImageView *)[innerContentView viewWithTag:50];
+    //NSLog(@"%@", aRecord[__GOODPIC__]);
     [goodImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, aRecord[__GOODPIC__]]]];
     [goodImage setClipsToBounds:YES];
     goodImage.frame = CGRectMake(169, 48, 122, 94);
@@ -316,13 +318,11 @@
     NSDictionary *dicForPost = @{__USERNAME__:rootVC.user.userName,
                                  @"key":[NSString stringWithFormat:@"%li", (long)self.count]};
     
-//    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
-//    MKNetworkOperation  *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_orderlist.php"] params:dicForPost httpMethod:@"POST"];
+
+    MKNetworkOperation  *op = [self.engine operationWithPath:[NSString stringWithFormat:@"%@%@",__PHPDIR__,@"fetch_orderlist.php"] params:dicForPost httpMethod:@"POST"];
     
-    [self.manager POST:[NSString stringWithFormat:@"%@%@", __DIR__,@"fetch_orderlist.php"]  parameters:dicForPost success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSString *st = responseObject;
-//        NSDictionary *recordsInfo = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
-        NSDictionary *recordsInfo = responseObject;
+    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        NSDictionary *recordsInfo = [completedOperation responseJSON];
         NSArray *keys = [[recordsInfo allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
             NSInteger in1 = [(NSString *)obj1 integerValue];
             NSInteger in2 = [(NSString *)obj2 integerValue];
@@ -334,7 +334,7 @@
         
         //      如果是下拉刷新，则重置一些数据
         if ([refreshView isKindOfClass:[MJRefreshHeaderView class]]) {
-//            self.count = 0;
+            //            self.count = 0;
             self.orderList = [NSMutableArray new];
         }
         
@@ -347,11 +347,14 @@
             [refreshView endRefreshing];
         }
         [self.tableview reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
         if (refreshView) {
             [refreshView endRefreshing];
         }
-    }];
+    } ];
+//        NSString *st = responseObject;
+//        NSDictionary *recordsInfo = [NSJSONSerialization JSONObjectWithData:[st dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:nil];
+
 //    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
 ////        NSLog(@"%@", [completedOperation responseString]);
 //        NSString *st = [completedOperation responseString];
@@ -377,7 +380,7 @@
 //        [self.tableview reloadData];
 //
 //    } errorHandler:nil];
-//    [self.engine enqueueOperation:op];
+    [self.engine enqueueOperation:op];
     
 }
 

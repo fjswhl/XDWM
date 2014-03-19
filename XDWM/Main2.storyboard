@@ -571,6 +571,10 @@
                                                                 <action selector="deleteOrder:" destination="jyc-d8-fkk" eventType="touchUpInside" id="WXX-ln-ssr"/>
                                                             </connections>
                                                         </button>
+                                                        <imageView userInteractionEnabled="NO" tag="50" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="3xa-Yn-ZtW">
+                                                            <rect key="frame" x="130" y="31" width="150" height="107"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.94117647059999998" green="0.94117647059999998" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 </view>
