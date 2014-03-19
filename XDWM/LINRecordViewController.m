@@ -71,7 +71,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [self setBarTitle];
-    [self.tableview reloadData];
+ //   [self.tableview reloadData];
     
     [self addRefreshButton];
 
@@ -120,6 +120,7 @@
         [self.indexSet removeAllObjects];
     }
     [self fetchOrderListWithRefreshView:refreshView];
+
 }
 
 - (void)refreshViewEndRefreshing:(MJRefreshBaseView *)refreshView{
