@@ -245,7 +245,7 @@
     NSString *image = [object valueForKey:@"goodImg"];
 //    NSLog(@"%@", image);
     [img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, image]]];
-    
+
     UIImageView *placeHolder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"PlaceHolder1.png"]];
     placeHolder.frame = CGRectMake(0, 0, 30, 30);
     placeHolder.center = img.center;

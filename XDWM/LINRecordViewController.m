@@ -69,6 +69,7 @@
     [self.header beginRefreshing];
     
         self.engine = [[MKNetworkEngine alloc] initWithHostName:__HOSTNAME__];
+    self.tableview.contentInset = UIEdgeInsetsMake(10, 0, 0, 0);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -186,6 +187,7 @@
     UIImageView *goodImage = (UIImageView *)[innerContentView viewWithTag:50];
     //NSLog(@"%@", aRecord[__GOODPIC__]);
     [goodImage setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", __IMGDIR__, aRecord[__GOODPIC__]]]];
+
     [goodImage setClipsToBounds:YES];
     goodImage.frame = CGRectMake(169, 48, 122, 94);
     goodImage.layer.cornerRadius = 6;

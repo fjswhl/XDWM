@@ -241,7 +241,7 @@
     
     cell.createTime.text = [_dates objectAtIndex:indexPath.row];
 //        [cell.createTime sizeToFit];
-    
+
     if (![cell viewWithTag:100]) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         label.tag = 100;

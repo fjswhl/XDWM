@@ -30,6 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 70, 0)];
     
     label.text = @"fasdfjhasldkjfnlasdnmjfovijoasidnflkchjxoizvjoasdnfsdfsadfsdaffjlksdajfoasfnsakdlfnovisancovihasdnfasd";
